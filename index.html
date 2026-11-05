@@ -7,9 +7,13 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 .note{background:#fff8e6;border-left:4px solid #e6a700;padding:12px 16px} .data{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0 18px}
 .data th,.data td{border-bottom:1px solid #e6ebf1;padding:8px 10px;text-align:right;white-space:nowrap} .data th:first-child,.data td:first-child{text-align:left;white-space:normal}
 .scroll{overflow-x:auto} code{background:#eef2f7;padding:2px 5px;border-radius:4px} a{color:#075ea8} .formula{background:#eef3f7;border-left:4px solid #245b86;padding:13px 16px;margin:10px 0;font-family:Consolas,monospace;overflow-x:auto} .inline-chart{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}
+.tabs{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap} .tabs button{font:inherit;font-size:15px;padding:8px 18px;border:1px solid #c9d6e3;background:#fff;color:#123d64;border-radius:999px;cursor:pointer} .tabs button[aria-selected="true"]{background:#123d64;color:#fff;border-color:#123d64} .tabs button:focus-visible{outline:2px solid #e6a700;outline-offset:2px}
+.read{background:#eef6f0;border-left:4px solid #3c8d5a;padding:12px 16px;margin:14px 0 4px} .gallery h3{margin:0 0 8px;color:#123d64} [hidden]{display:none!important}
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
 <p>Báo cáo tự động từ dữ liệu công ty–năm. Đây là bài thực hành OLS trên dữ liệu bảng gộp, có kiểm tra độ bền bằng hiệu ứng cố định công ty; không phải kết luận nhân quả.</p></header>
+<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button></nav>
+<div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
 <p>Về kinh tế, trả chậm có thể hỗ trợ vốn lưu động và duy trì hoạt động, nhưng phụ thuộc quá nhiều cũng có thể phản ánh thiếu tiền hoặc tạo áp lực thanh toán. Doanh nghiệp thanh khoản tốt có khả năng quản lý nghĩa vụ với nhà cung cấp khác doanh nghiệp thiếu thanh khoản; đó là cơ sở của biến tương tác. Mục tiêu của bài thực hành là đo <b>mối liên hệ có điều kiện</b> bằng OLS, không khẳng định khoản phải trả là nguyên nhân gây thay đổi hiệu quả.</p></section>
@@ -718,7 +722,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>0.4422</td>
     </tr>
   </tbody>
-</table></div></section>
+</table></div><div class="read"><b>Ý nghĩa kết quả:</b> ATO có trung bình 1.11 lần nhưng trung vị chỉ 0.77 và Max tới 25.6: trung bình bị kéo lên bởi một số ít công ty có vòng quay rất cao (Skewness 5.1). LIQ cũng vậy: Max 297 lần trong khi trung vị 1.53. Trung vị TPR là 6.4%, tức một nửa số công ty–năm có phải trả người bán dưới 6.4% tổng tài sản. Các đuôi dài này là lý do cần winsor hóa trước khi hồi quy.</div></section>
 <section class="card"><h2>6. Winsor2 (1;99) nghĩa là gì?</h2>
 <p><b>Winsor2 (1;99)</b> nghĩa là xử lý hai đuôi của <b>từng biến liên tục</b> theo phân vị 1% và 99%:</p>
 <ul><li><b>p1:</b> ngưỡng mà khoảng 1% giá trị nằm thấp hơn.</li><li><b>p99:</b> ngưỡng mà khoảng 1% giá trị nằm cao hơn.</li><li>Giá trị thấp hơn p1 được thay bằng đúng p1.</li><li>Giá trị cao hơn p99 được thay bằng đúng p99.</li><li>98% giá trị nằm giữa hai ngưỡng được giữ nguyên.</li></ul>
@@ -779,7 +783,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>142</td>
     </tr>
   </tbody>
-</table></div></section>
+</table></div><div class="read"><b>Ý nghĩa kết quả:</b> Mỗi biến có khoảng 71 giá trị bị nâng lên p1 và 71 giá trị bị hạ xuống p99, đúng khoảng 1% mỗi đuôi của 7,014 quan sát. Ví dụ mọi công ty có ATO trên 8.02 lần đều được đặt bằng 8.02.</div></section>
 <section class="card"><h2>7. Thống kê mô tả sau winsor hóa</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -879,7 +883,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <circle cx="455" cy="625" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/><text x="470" y="630" font-family="Arial" font-size="13" fill="#263746">Trung vị</text>
 <polygon points="620,616 629,625 620,634 611,625" fill="#b44c4c"/><text x="638" y="630" font-family="Arial" font-size="13" fill="#263746">Trung bình</text>
 <text x="500.0" y="657" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.</text>
-</svg><p>Biểu đồ dùng thang đo riêng cho từng dòng. Đường mảnh là Min–Max, đoạn xanh là p25–p75, vòng tròn là trung vị và hình thoi đỏ là trung bình.</p></section>
+</svg><p>Biểu đồ dùng thang đo riêng cho từng dòng. Đường mảnh là Min–Max, đoạn xanh là p25–p75, vòng tròn là trung vị và hình thoi đỏ là trung bình.</p><div class="read"><b>Ý nghĩa kết quả:</b> Sau winsor hóa, độ lệch chuẩn của ATO giảm từ 1.46 xuống 1.22, của LIQ từ 7.36 xuống 3.83; trung vị, p25 và p75 giữ nguyên. Winsor chỉ thu hẹp hai đuôi, không làm thay đổi phần giữa của dữ liệu.</div></section>
 <section class="card"><h2>8. Skewness, Kurtosis, CV và kiểm định Jarque–Bera</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -965,7 +969,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>Bác bỏ H0 chuẩn</td>
     </tr>
   </tbody>
-</table></div><p><b>RE2</b> là phần dư mô hình tương tác liên tục; <b>RE3</b> là phần dư mô hình tương tác dummy. <b>Kurtosis:</b> phân phối chuẩn có giá trị 3. <b>CV:</b> SD chia trị tuyệt đối của Mean, dùng để xem độ biến động tương đối; CV không có ý nghĩa cho phần dư vì trung bình phần dư gần 0. <b>Jarque–Bera:</b> H0 là phân phối chuẩn; p-value &lt; 0,05 dẫn đến bác bỏ H0.</p><p class="note">Với mẫu 7,014 quan sát, JB rất nhạy nên một sai lệch nhỏ cũng có thể cho p-value gần 0. OLS không yêu cầu từng X hoặc Y phải phân phối chuẩn. Phân phối phần dư liên quan trực tiếp hơn đến suy luận mẫu nhỏ; ở đây báo cáo dùng sai số chuẩn gom cụm và xấp xỉ mẫu lớn.</p></section>
+</table></div><p><b>RE2</b> là phần dư mô hình tương tác liên tục; <b>RE3</b> là phần dư mô hình tương tác dummy. <b>Kurtosis:</b> phân phối chuẩn có giá trị 3. <b>CV:</b> SD chia trị tuyệt đối của Mean, dùng để xem độ biến động tương đối; CV không có ý nghĩa cho phần dư vì trung bình phần dư gần 0. <b>Jarque–Bera:</b> H0 là phân phối chuẩn; p-value &lt; 0,05 dẫn đến bác bỏ H0.</p><p class="note">Với mẫu 7,014 quan sát, JB rất nhạy nên một sai lệch nhỏ cũng có thể cho p-value gần 0. OLS không yêu cầu từng X hoặc Y phải phân phối chuẩn. Phân phối phần dư liên quan trực tiếp hơn đến suy luận mẫu nhỏ; ở đây báo cáo dùng sai số chuẩn gom cụm và xấp xỉ mẫu lớn.</p><div class="read"><b>Ý nghĩa kết quả:</b> Cả bốn biến và phần dư đều bác bỏ giả thuyết phân phối chuẩn (p-value gần 0). Kurtosis của ATO là 16.0, cao hơn nhiều mức 3 của phân phối chuẩn, tức đuôi dày. Với mẫu lớn và sai số chuẩn gom cụm, điều này không làm hệ số OLS bị chệch; nó chỉ nhắc rằng p-value là xấp xỉ và cần đọc thận trọng.</div></section>
 <section class="card"><h2>9. Trung bình các biến chính theo năm</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
 <title id="title">Tỷ lệ phải trả và hiệu quả hoạt động trung bình theo năm</title>
 <desc id="desc">Biểu đồ hai trục từ năm 2021 đến 2025, đường xanh là phải trả người bán trên tổng tài sản, đường đỏ là vòng quay tổng tài sản.</desc>
@@ -1012,7 +1016,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text x="500.0" y="526" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Năm tài chính</text>
 <line x1="285" y1="548" x2="330" y2="548" stroke="#245b86" stroke-width="2.2"/><circle cx="307" cy="548" r="5" fill="#245b86"/><text x="340" y="553" font-family="Arial" font-size="14" fill="#263746">Phải trả / tổng tài sản</text>
 <line x1="575" y1="548" x2="620" y2="548" stroke="#b44c4c" stroke-width="2.2"/><polygon points="597,541 604,548 597,555 590,548" fill="#b44c4c"/><text x="630" y="553" font-family="Arial" font-size="14" fill="#263746">Hiệu quả hoạt động</text>
-</svg><p>Đây là dạng hai trục gần với hình Stata tham khảo. Hai đường có đơn vị khác nhau nên chỉ dùng để xem xu hướng theo năm, không so sánh trực tiếp độ cao của hai đường.</p></section>
+</svg><p>Đây là dạng hai trục gần với hình Stata tham khảo. Hai đường có đơn vị khác nhau nên chỉ dùng để xem xu hướng theo năm, không so sánh trực tiếp độ cao của hai đường.</p><div class="read"><b>Ý nghĩa kết quả:</b> TPR trung bình theo năm: 2021: 10.9%, 2022: 11.2%, 2023: 10.6%, 2024: 10.7%, 2025: 10.2%. ATO trung bình: 2021: 1.04, 2022: 1.14, 2023: 1.04, 2024: 1.09, 2025: 1.08. Năm có TPR cao nhất là 2022, năm có ATO cao nhất là 2022. Biến động theo năm nhỏ so với khác biệt giữa các công ty; biến giả năm trong mô hình dùng để hấp thụ các biến động chung này.</div></section>
 <section class="card"><h2>10. Ma trận tương quan Pearson</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1321,7 +1325,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text x="838" y="569.5" font-family="Arial" font-size="12" fill="#202b3c">−0.50</text>
 <text x="838" y="706.0" font-family="Arial" font-size="12" fill="#202b3c">−1.00</text>
 <text x="460.0" y="796" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1</text>
-</svg><p>Tên được rút gọn còn ba chữ: <b>ATO</b> hiệu quả, <b>TPR</b> tỷ lệ phải trả, <b>LIQ</b> thanh khoản, <b>SIZ</b> quy mô, <b>DLI</b> dummy thanh khoản, <b>TLI</b> tương tác TPR×LIQ và <b>TLD</b> tương tác TPR×DLI. Corr nằm từ −1 đến +1 và chỉ đo quan hệ tuyến tính cặp đôi. Tương quan cao không chứng minh quan hệ nhân quả.</p></section>
+</svg><p>Tên được rút gọn còn ba chữ: <b>ATO</b> hiệu quả, <b>TPR</b> tỷ lệ phải trả, <b>LIQ</b> thanh khoản, <b>SIZ</b> quy mô, <b>DLI</b> dummy thanh khoản, <b>TLI</b> tương tác TPR×LIQ và <b>TLD</b> tương tác TPR×DLI. Corr nằm từ −1 đến +1 và chỉ đo quan hệ tuyến tính cặp đôi. Tương quan cao không chứng minh quan hệ nhân quả.</p><div class="read"><b>Ý nghĩa kết quả:</b> ATO tương quan dương với TPR (r = 0.26), âm nhẹ với LIQ (r = -0.13) và SIZ (r = -0.15). Tương quan giữa các biến giải thích chính TPR, LIQ, SIZ cao nhất chỉ 0.27, nên mô hình cơ sở ít bị đa cộng tuyến. TLI tương quan -0.80 với LIQ và TLD tương quan 0.82 với TPR là do hai biến tương tác được tạo từ chính các biến này.</div></section>
 <section class="card"><h2>11. VIF</h2><h3>Mô hình 1 — không có tương tác</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1422,7 +1426,22 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>3.1593</td>
     </tr>
   </tbody>
-</table></div><p>VIF tính từ các biến giải thích chính, không tính biến giả năm. Quy tắc 5 hoặc 10 chỉ là mốc tham khảo. VIF lớn nhất của mô hình tương tác là 11.71, vượt mốc tham khảo 10. Đây là dấu hiệu đa cộng tuyến giữa thanh khoản và tích số; hệ số có thể nhạy với đặc tả mô hình. Không nên xóa biến tương tác chỉ để hạ VIF, vì nó là biến cốt lõi của giả thuyết; cần báo cáo giới hạn và kiểm tra độ bền. VIF lớn nhất của mô hình dummy là 3.28.</p></section>
+</table></div><p>VIF tính từ các biến giải thích chính, không tính biến giả năm. Quy tắc 5 hoặc 10 chỉ là mốc tham khảo. VIF lớn nhất của mô hình tương tác là 11.71, vượt mốc tham khảo 10. Đây là dấu hiệu đa cộng tuyến giữa thanh khoản và tích số; hệ số có thể nhạy với đặc tả mô hình. Không nên xóa biến tương tác chỉ để hạ VIF, vì nó là biến cốt lõi của giả thuyết; cần báo cáo giới hạn và kiểm tra độ bền. VIF lớn nhất của mô hình dummy là 3.28.</p><div class="read"><b>Ý nghĩa kết quả:</b> Mô hình 1 có VIF lớn nhất 1.12, dưới mốc 5 nên không đáng lo. Ở mô hình 2, LIQ và TLI có VIF khoảng 11.7: sai số chuẩn của hai hệ số này bị phóng to khoảng √VIF ≈ 3.4 lần so với khi không có đa cộng tuyến, nên hệ số LIQ ở mô hình 2 kém ổn định. Mô hình 3 có VIF lớn nhất 3.28, chấp nhận được.</div></section>
+<section class="card"><h2>Hướng dẫn: OLS là gì và cách đọc bảng hồi quy</h2>
+<p><b>OLS (Ordinary Least Squares – bình phương nhỏ nhất thông thường)</b> là phương pháp tìm đường thẳng, hoặc mặt phẳng khi có nhiều biến, mô tả tốt nhất quan hệ giữa biến cần giải thích Y và các biến giải thích X. "Tốt nhất" nghĩa là tổng bình phương phần dư nhỏ nhất, trong đó phần dư là chênh lệch giữa ATO thực tế và ATO mô hình dự báo.</p>
+<div class="formula">ATO_it = β0 + β1·TPR_it + β2·LIQ_it + … + ε_it &nbsp;&nbsp;→&nbsp;&nbsp; chọn β sao cho Σ ε̂² nhỏ nhất</div>
+<p><b>Cách đọc từng cột trong bảng hồi quy:</b></p>
+<ul>
+<li><b>Hệ số OLS (β):</b> khi biến đó tăng 1 đơn vị và các biến khác giữ nguyên, ATO trung bình thay đổi β lần. TPR là tỷ lệ (0,10 = 10%), nên tăng 1 đơn vị nghĩa là tăng 100 điểm phần trăm; dễ đọc hơn là chia β cho 100 để có tác động của 1 điểm %.</li>
+<li><b>SE gom cụm:</b> sai số chuẩn, đo độ không chắc chắn của β. Gom cụm theo mã vì cùng một công ty xuất hiện nhiều năm và sai số của nó có thể liên quan với nhau.</li>
+<li><b>t/z:</b> β chia SE. Trị tuyệt đối lớn hơn khoảng 1,96 tương ứng p-value nhỏ hơn 0,05.</li>
+<li><b>p-value:</b> nếu thực tế β = 0, xác suất thu được ước lượng xa 0 như vậy là bao nhiêu. p &lt; 0,05 thường được gọi là có ý nghĩa thống kê ở mức 5%. p-value không phải xác suất giả thuyết đúng.</li>
+<li><b>CI 95%:</b> khoảng tin cậy 95% của β. Nếu khoảng không chứa 0 thì hệ số có ý nghĩa ở mức 5%.</li>
+<li><b>Hằng số (CON):</b> ATO dự báo khi các biến giải thích bằng 0; vì TPR và LIQ đã trừ trung bình nên ở đây là ATO tại mức TPR, LIQ trung bình, chỉ dùng để tính dự báo.</li>
+<li><b>Y22–Y25:</b> chênh lệch ATO của từng năm so với năm gốc 2021, sau khi kiểm soát các biến khác.</li>
+<li><b>R² và R² hiệu chỉnh:</b> tỷ lệ khác biệt về ATO mà mô hình giải thích được; R² hiệu chỉnh trừ bớt phần tăng do thêm biến.</li>
+</ul>
+<p><b>Giả định quan trọng nhất</b> để đọc β là quan hệ nhân quả: sai số ε không tương quan với các biến X. Điều này khó đúng với dữ liệu doanh nghiệp vì còn nhiều yếu tố bị bỏ sót như ngành hay năng lực quản lý, nên bài này chỉ diễn giải β là <i>mối liên hệ</i>. Các giả định khác gồm quan hệ tuyến tính và không có đa cộng tuyến hoàn hảo (kiểm tra bằng VIF ở mục 11); phương sai sai số không đều được xử lý bằng sai số chuẩn gom cụm.</p></section>
 <section class="card"><h2>12. OLS thông thường: chỉ Y và X</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1455,7 +1474,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>3.1084</td>
     </tr>
   </tbody>
-</table></div><p>Mô hình này cho thấy quan hệ thô; chưa đưa thanh khoản, quy mô và năm vào nên không dùng làm kết luận cuối.</p></section>
+</table></div><p>Mô hình này cho thấy quan hệ thô; chưa đưa thanh khoản, quy mô và năm vào nên không dùng làm kết luận cuối.</p><div class="read"><b>Ý nghĩa kết quả:</b> Hệ số TPR = 2.5672 (có ý nghĩa thống kê ở mức 1%). Vì TPR là tỷ lệ, nên đọc theo 1 điểm phần trăm: TPR cao hơn 0,01 gắn với ATO cao hơn khoảng 0.026 lần; công ty có TPR cao hơn 10 điểm % có ATO cao hơn khoảng 0.26 lần. R² = 0.069: riêng TPR giải thích khoảng 6.9% khác biệt về ATO. Hằng số 1.077 là ATO trung bình tại TPR trung bình (vì TPR đã trừ trung bình).</div></section>
 <section class="card"><h2>13. Mô hình cơ sở chưa có tương tác</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1542,7 +1561,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>0.1178</td>
     </tr>
   </tbody>
-</table></div></section>
+</table></div><div class="read"><b>Ý nghĩa kết quả:</b> Khi giữ LIQ, SIZ và năm không đổi, 1 điểm % TPR gắn với ATO cao hơn 0.022 lần (có ý nghĩa thống kê ở mức 1%); hệ số giảm từ 2.57 ở mô hình 0 xuống 2.18, tức một phần quan hệ thô đến từ thanh khoản và quy mô. LIQ tăng 1 lần gắn với ATO thay đổi -0.028 (có ý nghĩa thống kê ở mức 1%). SIZ tăng 1 đơn vị (tổng tài sản lớn gấp khoảng 2,7 lần) gắn với ATO thay đổi -0.098 (có ý nghĩa thống kê ở mức 1%): công ty lớn hơn có vòng quay thấp hơn. Y22 = 0.098 nghĩa là năm 2022 ATO cao hơn năm gốc 2021 khoảng 0.098 lần sau khi kiểm soát các biến khác (có ý nghĩa thống kê ở mức 1%).</div></section>
 <section class="card"><h2>14. Mô hình có tương tác liên tục</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1638,7 +1657,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>0.1237</td>
     </tr>
   </tbody>
-</table></div></section>
+</table></div><div class="read"><b>Ý nghĩa kết quả:</b> Tác động biên của TPR = β1 + β4 × (LIQ − trung bình). Với β1 = 5.069 và β4 = 1.657: tại LIQ p25 (1.10), 1 điểm % TPR gắn với ATO cao hơn 0.024 lần; tại p50 (1.53) là 0.031; tại p75 (2.67) là 0.050. Hệ số TLI dương và có ý nghĩa thống kê ở mức 1%: trong pooled OLS, công ty thanh khoản cao hơn có quan hệ TPR–ATO dốc hơn. Lưu ý LIQ trung bình mẫu khá cao do đuôi phải, nên β1 là độ dốc tại mức LIQ cao hơn trung vị.</div></section>
 <section class="card"><h2>15. Mô hình có tương tác với dummy</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1734,7 +1753,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>0.1159</td>
     </tr>
   </tbody>
-</table></div><p>Hệ số <code>TLD</code> = <b>1.9066</b> (p ≈ 0.0009047) là chênh lệch độ dốc giữa nhóm DLI=1 và DLI=0, không phải mức chênh lệch ATO đơn thuần.</p></section>
+</table></div><p>Hệ số <code>TLD</code> = <b>1.9066</b> (p ≈ 0.0009047) là chênh lệch độ dốc giữa nhóm DLI=1 và DLI=0, không phải mức chênh lệch ATO đơn thuần.</p><div class="read"><b>Ý nghĩa kết quả:</b> Nhóm DLI = 0 (tài sản ngắn hạn không đủ trả nợ ngắn hạn) có độ dốc TPR là 1.318 (có ý nghĩa thống kê ở mức 1%), tức 1 điểm % TPR gắn với ATO cao hơn 0.013 lần. Nhóm DLI = 1 có độ dốc 3.225 (1.318 + 1.907); chênh lệch độ dốc 1.907 có ý nghĩa thống kê ở mức 1%. Hệ số DLI = 0.314: tại TPR trung bình, nhóm đủ thanh khoản có ATO cao hơn nhóm còn lại khoảng 0.31 lần.</div></section>
 <section class="card"><h2>16. Biểu đồ tương tác liên tục kiểu marginsplot</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 610" role="img" aria-labelledby="title desc">
 <title id="title">Biểu đồ tương tác giữa phải trả người bán và thanh khoản</title>
 <desc id="desc">Dự báo vòng quay tài sản theo tỷ lệ phải trả người bán ở ba mức thanh khoản, giữ quy mô ở trung bình và năm gốc 2021.</desc>
@@ -1774,7 +1793,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text transform="translate(25 272.5) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản dự báo (lần)</text>
 <text x="512.5" y="528" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tổng tài sản</text>
 <text x="500" y="585" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
-</svg><p>Ba đường là giá trị Y dự báo ở thanh khoản p25, p50 và p75, giữ quy mô tại trung bình và năm ở mức gốc 2021. Đường không phải dữ liệu thô; nó được tính từ hệ số mô hình 2 để nhìn trực tiếp ý nghĩa của tương tác.</p></section>
+</svg><p>Ba đường là giá trị Y dự báo ở thanh khoản p25, p50 và p75, giữ quy mô tại trung bình và năm ở mức gốc 2021. Đường không phải dữ liệu thô; nó được tính từ hệ số mô hình 2 để nhìn trực tiếp ý nghĩa của tương tác.</p><div class="read"><b>Ý nghĩa kết quả:</b> Ba đường đều dốc lên, nghĩa là TPR cao hơn đi kèm ATO dự báo cao hơn ở cả ba mức thanh khoản. Đường p75 dốc nhất và khoảng cách giữa các đường mở rộng khi TPR tăng: đây là hình ảnh trực quan của hệ số tương tác dương. Biểu đồ tính từ pooled OLS nên mang cùng giới hạn của mô hình 2 (xem mục 19).</div></section>
 <section class="card"><h2>17. Biểu đồ tương tác với dummy 0–1</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
 <title id="title">Tương tác giữa phải trả người bán và dummy thanh khoản</title>
 <desc id="desc">Hai đường dự báo vòng quay tổng tài sản cho nhóm có và không có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</desc>
@@ -1806,7 +1825,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="155" y1="535" x2="195" y2="535" stroke="#8a5a9e" stroke-width="2.5"/><text x="205" y="540" font-family="Arial" font-size="13" fill="#263746">D=0: tài sản ngắn hạn &lt; nợ ngắn hạn</text>
 <line x1="550" y1="535" x2="590" y2="535" stroke="#245b86" stroke-width="2.5"/><text x="600" y="540" font-family="Arial" font-size="13" fill="#263746">D=1: tài sản ngắn hạn ≥ nợ ngắn hạn</text>
 <text x="500" y="580" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
-</svg><p>Hai đường cho biết quan hệ dự báo giữa X và Y khác nhau thế nào giữa nhóm không đủ và đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</p></section>
+</svg><p>Hai đường cho biết quan hệ dự báo giữa X và Y khác nhau thế nào giữa nhóm không đủ và đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</p><div class="read"><b>Ý nghĩa kết quả:</b> Đường DLI = 1 dốc hơn đường DLI = 0 (độ dốc 3.22 so với 1.32) và nằm cao hơn ở phần lớn khoảng TPR. Trong pooled OLS, quan hệ TPR–ATO mạnh hơn ở nhóm có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</div></section>
 <section class="card"><h2>18. Kiểm tra và diễn giải kết quả</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
@@ -1860,7 +1879,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>9,287.4834</td>
     </tr>
   </tbody>
-</table></div><p>Trong mẫu này, tại mức thanh khoản trung bình, tỷ lệ phải trả người bán có liên hệ dương với vòng quay tài sản. Hệ số tương tác dương cho thấy độ dốc dương mạnh hơn khi thanh khoản cao hơn. Kết quả này khác dấu tác động chính được tóm tắt trong bài nghiên cứu tham khảo; không được diễn giải là ‘thanh khoản làm dịu tác động âm’.</p><p>Cụ thể, mô hình 2 cho β1 = <b>5.0694</b> (p ≈ 2.728e-24) và β4 = <b>1.6573</b> (p ≈ 4.741e-11). R² tăng từ 0.0911 lên 0.1161, tức mô hình có tương tác giải thích thêm một phần biến thiên nhưng mức R² vẫn còn thấp. Đây là mối liên hệ có điều kiện trong mẫu, không phải bằng chứng nhân quả.</p><p>Hệ số LIQ đổi dấu từ -0.0284 ở mô hình 1 sang 0.1350 ở mô hình 2. Trong mô hình 2, hệ số này là độ dốc của LIQ tại mức TPR trung bình nên không cùng nghĩa với mô hình 1; kết hợp với VIF cao, hệ số LIQ nhạy với đặc tả và không nên diễn giải riêng.</p><p>Cột <code>t/z</code> là hệ số chia cho sai số chuẩn gom cụm; p-value/CI dùng xấp xỉ chuẩn với mẫu lớn. Không diễn giải p-value như xác suất giả thuyết đúng.</p><p class="note"><b>Giới hạn:</b> phân ngành mới ở mức mẫu biểu BCTC; mô hình pooled chưa kiểm soát ngành nên hệ số có thể phản ánh khác biệt giữa các nhóm doanh nghiệp (xem mục 19); VIF của mô hình tương tác liên tục cao; dấu kết quả khác bài tham khảo. Cần thận trọng khi suy rộng.</p></section>
+</table></div><p>Trong mẫu này, tại mức thanh khoản trung bình, tỷ lệ phải trả người bán có liên hệ dương với vòng quay tài sản. Hệ số tương tác dương cho thấy độ dốc dương mạnh hơn khi thanh khoản cao hơn. Kết quả này khác dấu tác động chính được tóm tắt trong bài nghiên cứu tham khảo; không được diễn giải là ‘thanh khoản làm dịu tác động âm’.</p><p>Cụ thể, mô hình 2 cho β1 = <b>5.0694</b> (p ≈ 2.728e-24) và β4 = <b>1.6573</b> (p ≈ 4.741e-11). R² tăng từ 0.0911 lên 0.1161, tức mô hình có tương tác giải thích thêm một phần biến thiên nhưng mức R² vẫn còn thấp. Đây là mối liên hệ có điều kiện trong mẫu, không phải bằng chứng nhân quả.</p><p>Hệ số LIQ đổi dấu từ -0.0284 ở mô hình 1 sang 0.1350 ở mô hình 2. Trong mô hình 2, hệ số này là độ dốc của LIQ tại mức TPR trung bình nên không cùng nghĩa với mô hình 1; kết hợp với VIF cao, hệ số LIQ nhạy với đặc tả và không nên diễn giải riêng.</p><p>Cột <code>t/z</code> là hệ số chia cho sai số chuẩn gom cụm; p-value/CI dùng xấp xỉ chuẩn với mẫu lớn. Không diễn giải p-value như xác suất giả thuyết đúng.</p><p class="note"><b>Giới hạn:</b> phân ngành mới ở mức mẫu biểu BCTC; mô hình pooled chưa kiểm soát ngành nên hệ số có thể phản ánh khác biệt giữa các nhóm doanh nghiệp (xem mục 19); VIF của mô hình tương tác liên tục cao; dấu kết quả khác bài tham khảo. Cần thận trọng khi suy rộng.</p><div class="read"><b>Ý nghĩa kết quả:</b> R² hiệu chỉnh tăng từ 0.069 (mô hình 0) lên 0.090 (mô hình 1), 0.115 (mô hình 2) và 0.104 (mô hình 3). Thêm tương tác có cải thiện mức giải thích, nhưng mọi mô hình chỉ giải thích khoảng 12% khác biệt về ATO; phần lớn còn lại đến từ yếu tố ngoài mô hình như ngành và chiến lược kinh doanh. R² thấp là bình thường với dữ liệu doanh nghiệp và không làm hệ số sai, nhưng không nên dùng mô hình để dự báo ATO của từng công ty.</div></section>
 <section class="card"><h2>19. Kiểm tra độ bền: hiệu ứng cố định công ty</h2><p>Pooled OLS so sánh cả giữa các công ty lẫn trong cùng công ty. Công ty thương mại, bán lẻ thường vừa có tỷ lệ phải trả cao vừa có vòng quay tài sản cao, nên một phần quan hệ trong pooled OLS có thể đến từ khác biệt ngành. Mô hình hiệu ứng cố định (FE) trừ trung bình riêng của từng công ty, nên chỉ dùng biến động <i>trong cùng một công ty qua các năm</i>; mọi đặc điểm không đổi theo thời gian như ngành đều được kiểm soát. Hằng số bị hấp thụ vào hiệu ứng cố định; công ty chỉ có một năm bị loại khỏi FE.</p>
 <div class="formula">ATO_it − ATO̅_i = β1·(TPRc_it − TPRc̅_i) + … + hiệu ứng năm + (ε_it − ε̅_i)</div>
 <div class="scroll"><table class="dataframe data">
@@ -1959,6 +1978,1865 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><p>Ô bảng: hệ số (SE gom cụm theo mã). *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10. R² của FE là R² within.</p>
-<p>Khi thêm hiệu ứng cố định công ty, hệ số TPR ở mô hình 2 đi từ 5.0694 xuống 1.1550 (p ≈ 0.00144); hệ số TLI đi từ 1.6573 xuống 0.2998 (p ≈ 0.153). Hệ số TLD của mô hình 3 giữ dấu: 1.9066 trong pooled OLS và 0.0977 trong FE (p ≈ 0.809). Trong FE, cả TLI và TLD đều không có ý nghĩa thống kê ở mức 10%: vai trò điều tiết của thanh khoản không còn rõ khi chỉ xét biến động trong cùng một công ty. Hệ số TPR vẫn dương nhưng nhỏ hơn nhiều so với pooled OLS.</p><p class="note">Phần lớn độ lớn của hệ số trong pooled OLS đến từ khác biệt giữa các doanh nghiệp. Kết luận nên dựa trên kết quả nhất quán giữa hai cách ước lượng; kết quả chỉ xuất hiện trong pooled OLS cần được diễn giải là khác biệt giữa doanh nghiệp, không phải tác động khi một doanh nghiệp thay đổi tỷ lệ phải trả.</p></section>
+<p>Khi thêm hiệu ứng cố định công ty, hệ số TPR ở mô hình 2 đi từ 5.0694 xuống 1.1550 (p ≈ 0.00144); hệ số TLI đi từ 1.6573 xuống 0.2998 (p ≈ 0.153). Hệ số TLD của mô hình 3 giữ dấu: 1.9066 trong pooled OLS và 0.0977 trong FE (p ≈ 0.809). Trong FE, cả TLI và TLD đều không có ý nghĩa thống kê ở mức 10%: vai trò điều tiết của thanh khoản không còn rõ khi chỉ xét biến động trong cùng một công ty. Hệ số TPR vẫn dương nhưng nhỏ hơn nhiều so với pooled OLS.</p><p class="note">Phần lớn độ lớn của hệ số trong pooled OLS đến từ khác biệt giữa các doanh nghiệp. Kết luận nên dựa trên kết quả nhất quán giữa hai cách ước lượng; kết quả chỉ xuất hiện trong pooled OLS cần được diễn giải là khác biệt giữa doanh nghiệp, không phải tác động khi một doanh nghiệp thay đổi tỷ lệ phải trả.</p><div class="read"><b>Ý nghĩa kết quả:</b> Pooled OLS trả lời câu hỏi: công ty có TPR cao hơn công ty khác thì ATO có cao hơn không. FE trả lời: khi chính một công ty tăng TPR qua các năm thì ATO của nó có tăng không. Trong FE, 1 điểm % TPR gắn với ATO cao hơn 0.007 lần ở mô hình 1 (có ý nghĩa thống kê ở mức 5%), nhỏ hơn nhiều so với pooled OLS. TLI (không có ý nghĩa thống kê) và TLD (không có ý nghĩa thống kê) trong FE cho thấy: kết luận vững là TPR có liên hệ dương với ATO, còn vai trò điều tiết của thanh khoản chưa đủ bằng chứng.</div></section>
 <section class="card"><h2>Nguồn và tính tái lập</h2><p>Nguồn dữ liệu báo cáo tài chính: <a href="https://stock.quanganh.org/vi/downloads">trang tải dữ liệu cổ phiếu Việt Nam của Quang Anh</a>; nguồn được trang này ghi cho chỉ số cổ phiếu là Vietcap và bổ sung SSI đối với một số chuỗi chỉ số. Bộ dữ liệu kèm theo trong thư mục <code>data_source</code>.</p><p>Bài tham khảo: <a href="https://nckh.tapchicongthuong.vn/j/nckh/articles/3252-the-effects-of-trade-payables-on-the-performance-of-firms-listed-on-the-vietnam-stock-exchange?lang=en-US">The effects of trade payables on the performance of firms listed on the Vietnam Stock Exchange</a>. Tóm tắt bài báo đề cập panel 2011–2022, thanh khoản điều tiết quan hệ và sử dụng OLS, FE, RE, 2SLS. Bài này dùng 2021–2025 để thực hành, vì vậy khác kỳ nghiên cứu gốc.</p></section>
+</div>
+<div id="tab-tables" hidden><section class="card gallery"><h3>Bảng 1. Nhóm ngành theo mẫu biểu BCTC trước khi loại</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Số quan sát</th>
+      <th>Số mã</th>
+    </tr>
+    <tr>
+      <th>industry_group</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Phi tài chính (mẫu biểu chung)</th>
+      <td>7,101</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Chứng khoán</th>
+      <td>210</td>
+      <td>43</td>
+    </tr>
+    <tr>
+      <th>Ngân hàng</th>
+      <td>150</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>Bảo hiểm</th>
+      <td>64</td>
+      <td>13</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 2. Luồng chọn mẫu</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Số quan sát</th>
+      <th>Số mã</th>
+    </tr>
+    <tr>
+      <th>Bước</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Ghép được báo cáo KQKD và bảng cân đối theo mã-năm</th>
+      <td>7,525</td>
+      <td>1,546</td>
+    </tr>
+    <tr>
+      <th>Loại ngân hàng, chứng khoán và bảo hiểm</th>
+      <td>7,101</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Có đủ 5 khoản mục gốc để tạo biến</th>
+      <td>7,101</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Tổng tài sản &gt; 0</th>
+      <td>7,101</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Bảng cân đối khớp (lệch ≤ 0,5%)</th>
+      <td>7,101</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Tổng tài sản ≥ 1 tỷ đồng</th>
+      <td>7,098</td>
+      <td>1,460</td>
+    </tr>
+    <tr>
+      <th>Doanh thu thuần &gt; 0</th>
+      <td>7,014</td>
+      <td>1,454</td>
+    </tr>
+    <tr>
+      <th>Nợ ngắn hạn &gt; 0</th>
+      <td>7,014</td>
+      <td>1,454</td>
+    </tr>
+    <tr>
+      <th>Tài sản ngắn hạn và phải trả người bán không âm</th>
+      <td>7,014</td>
+      <td>1,454</td>
+    </tr>
+    <tr>
+      <th>Các biến mô hình hữu hạn và đầy đủ</th>
+      <td>7,014</td>
+      <td>1,454</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 3. Kiểm tra tính đúng đắn của dữ liệu gốc</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Số dòng vi phạm</th>
+      <th>Xử lý</th>
+    </tr>
+    <tr>
+      <th>Kiểm tra</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Trùng mã–năm sau khi ghép</th>
+      <td>0</td>
+      <td>Giữ bản công bố mới nhất</td>
+    </tr>
+    <tr>
+      <th>Doanh thu thuần ≠ doanh thu − giảm trừ (lệch &gt; 0,5%)</th>
+      <td>0</td>
+      <td>Không có</td>
+    </tr>
+    <tr>
+      <th>Tổng tài sản ≠ TS ngắn hạn + TS dài hạn (lệch &gt; 0,5%)</th>
+      <td>0</td>
+      <td>Loại</td>
+    </tr>
+    <tr>
+      <th>Tổng tài sản ≠ nợ phải trả + vốn chủ sở hữu (lệch &gt; 0,5%)</th>
+      <td>3</td>
+      <td>Giữ: đối chiếu CafeF cho thấy nguồn sai khoản VCSH, không dùng trong mô hình</td>
+    </tr>
+    <tr>
+      <th>Nợ phải trả ≠ nợ ngắn hạn + nợ dài hạn (lệch &gt; 0,5%)</th>
+      <td>0</td>
+      <td>Không có</td>
+    </tr>
+    <tr>
+      <th>Phải trả người bán &gt; nợ ngắn hạn</th>
+      <td>0</td>
+      <td>Không có</td>
+    </tr>
+    <tr>
+      <th>Tổng tài sản &lt; 1 tỷ đồng</th>
+      <td>3</td>
+      <td>Loại (doanh nghiệp gần như ngừng hoạt động)</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 4. Đối chiếu với CafeF</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Năm</th>
+      <th>Khoản mục</th>
+      <th>Dữ liệu bài (tỷ đồng)</th>
+      <th>CafeF (tỷ đồng)</th>
+      <th>Ghi chú</th>
+    </tr>
+    <tr>
+      <th>Mã</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Tổng tài sản</td>
+      <td>132.50</td>
+      <td>132.50</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Tài sản ngắn hạn</td>
+      <td>60.09</td>
+      <td>60.09</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Nợ ngắn hạn</td>
+      <td>11.72</td>
+      <td>11.72</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Phải trả người bán ngắn hạn</td>
+      <td>1.42</td>
+      <td>1.42</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Doanh thu thuần</td>
+      <td>102.96</td>
+      <td>102.96</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>KSD</th>
+      <td>2022</td>
+      <td>Vốn chủ sở hữu (không dùng trong mô hình)</td>
+      <td>128.47</td>
+      <td>120.78</td>
+      <td>Nguồn sai khoản VCSH</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Tổng tài sản</td>
+      <td>116.64</td>
+      <td>116.64</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Tài sản ngắn hạn</td>
+      <td>90.64</td>
+      <td>90.64</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Nợ ngắn hạn</td>
+      <td>131.55</td>
+      <td>131.55</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Phải trả người bán ngắn hạn</td>
+      <td>37.12</td>
+      <td>37.12</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Doanh thu thuần</td>
+      <td>11.53</td>
+      <td>11.53</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>LQN</th>
+      <td>2023</td>
+      <td>Vốn chủ sở hữu (không dùng trong mô hình)</td>
+      <td>-33.85</td>
+      <td>-14.92</td>
+      <td>Nguồn sai khoản VCSH</td>
+    </tr>
+    <tr>
+      <th>MEC</th>
+      <td>2024</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>432.67 / 657.53 / 816.63 / 158.04 / 80.47</td>
+      <td>432.67 / 657.53 / 816.63 / 158.04 / 80.47</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>PLA</th>
+      <td>2024</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>76.25 / 136.24 / 22.68 / 0.47 / 54.38</td>
+      <td>76.25 / 136.24 / 22.68 / 0.47 / 54.38</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>S4A</th>
+      <td>2022</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>168.32 / 1010.95 / 229.61 / 0.73 / 308.14</td>
+      <td>168.32 / 1010.95 / 229.61 / 0.73 / 308.14</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>PLP</th>
+      <td>2024</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>1514.44 / 2391.99 / 1196.78 / 170.46 / 2002.72</td>
+      <td>1514.44 / 2391.99 / 1196.78 / 170.46 / 2002.72</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>TVT</th>
+      <td>2025</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>961.96 / 1306.31 / 694.84 / 97.47 / 1603.39</td>
+      <td>961.96 / 1306.31 / 694.84 / 97.47 / 1603.39</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>NAF</th>
+      <td>2022</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>1166.76 / 1743.75 / 772.28 / 126.34 / 1766.51</td>
+      <td>1166.76 / 1743.75 / 772.28 / 126.34 / 1766.51</td>
+      <td>Khớp</td>
+    </tr>
+    <tr>
+      <th>NBW</th>
+      <td>2023</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>143.35 / 304.59 / 127.01 / 85.71 / 888.86</td>
+      <td>141.42 / 302.66 / 126.62 / 85.71 / 888.86</td>
+      <td>TS lệch ~0,6% (khả năng số điều chỉnh hồi tố)</td>
+    </tr>
+    <tr>
+      <th>HPA</th>
+      <td>2025</td>
+      <td>TSNH / Tổng TS / Nợ NH / Phải trả NB / DT thuần</td>
+      <td>2665.37 / 4700.32 / 1501.14 / 176.68 / 8116.01</td>
+      <td>2665.40 / 4700.35 / 1501.14 / 176.68 / 8116.01</td>
+      <td>Khớp (lệch làm tròn)</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 5. Chú thích tên biến</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Tên biến</th>
+      <th>Tên trong code</th>
+      <th>Cách tính</th>
+      <th>Vai trò</th>
+    </tr>
+    <tr>
+      <th>Mã</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>Vòng quay tổng tài sản</td>
+      <td>asset_turnover</td>
+      <td>Doanh thu thuần / Tổng tài sản</td>
+      <td>Y – hiệu quả hoạt động cần giải thích</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>Tỷ lệ phải trả người bán</td>
+      <td>payables_ratio</td>
+      <td>Phải trả người bán / Tổng tài sản</td>
+      <td>X – tín dụng từ nhà cung cấp</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>Thanh khoản hiện hành</td>
+      <td>liquidity</td>
+      <td>Tài sản ngắn hạn / Nợ ngắn hạn</td>
+      <td>Z – biến điều tiết</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>Quy mô doanh nghiệp</td>
+      <td>size_ln</td>
+      <td>ln(Tổng tài sản tính bằng tỷ đồng)</td>
+      <td>Biến kiểm soát</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>Tương tác TPR × LIQ</td>
+      <td>interaction</td>
+      <td>TPR đã trừ TB × LIQ đã trừ TB</td>
+      <td>Kiểm tra độ dốc TPR–ATO có đổi theo LIQ</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td>Dummy đủ thanh khoản</td>
+      <td>high_liquidity_dummy</td>
+      <td>1 nếu LIQ ≥ 1; ngược lại 0</td>
+      <td>Biến giả 0–1</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>Tương tác TPR × DLI</td>
+      <td>interaction_dummy</td>
+      <td>TPR đã trừ TB × DLI</td>
+      <td>So sánh độ dốc giữa DLI=1 và DLI=0</td>
+    </tr>
+    <tr>
+      <th>YDM</th>
+      <td>Biến giả năm</td>
+      <td>Năm_2022…Năm_2025</td>
+      <td>Năm gốc 2021</td>
+      <td>Kiểm soát cú sốc chung từng năm</td>
+    </tr>
+    <tr>
+      <th>CON</th>
+      <td>Hằng số</td>
+      <td>Hằng số</td>
+      <td>Hệ số chặn do OLS ước lượng</td>
+      <td>ATO dự báo tại TPR, LIQ trung bình, SIZ = 0 (tài sản 1 tỷ), năm 2021; chỉ dùng để tính dự báo</td>
+    </tr>
+    <tr>
+      <th>Y22–Y25</th>
+      <td>Dummy từng năm</td>
+      <td>Năm_2022…Năm_2025</td>
+      <td>1 nếu thuộc năm tương ứng; ngược lại 0</td>
+      <td>Các hệ số năm trong bảng OLS; năm gốc 2021</td>
+    </tr>
+    <tr>
+      <th>RE2</th>
+      <td>Phần dư mô hình 2</td>
+      <td>residual2</td>
+      <td>ATO thực tế − ATO dự báo từ mô hình 2</td>
+      <td>Kiểm tra phân phối sai số mô hình tương tác liên tục</td>
+    </tr>
+    <tr>
+      <th>RE3</th>
+      <td>Phần dư mô hình 3</td>
+      <td>residual3</td>
+      <td>ATO thực tế − ATO dự báo từ mô hình 3</td>
+      <td>Kiểm tra phân phối sai số mô hình tương tác dummy</td>
+    </tr>
+    <tr>
+      <th>PAT</th>
+      <td>ATO dự báo</td>
+      <td>predicted_asset_turnover</td>
+      <td>Giá trị dự báo từ hệ số OLS</td>
+      <td>Dữ liệu vẽ biểu đồ tương tác</td>
+    </tr>
+    <tr>
+      <th>LPQ</th>
+      <td>Phân vị LIQ</td>
+      <td>liquidity_quantile</td>
+      <td>p25, p50 hoặc p75 của LIQ</td>
+      <td>Chọn ba mức thanh khoản cho biểu đồ</td>
+    </tr>
+    <tr>
+      <th>GRP</th>
+      <td>Nhãn nhóm</td>
+      <td>label</td>
+      <td>Tên nhóm hiển thị trên biểu đồ</td>
+      <td>Phân biệt các đường dự báo</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 6. Nguồn khoản mục và cách tính biến</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Khoản mục gốc</th>
+      <th>Mã nguồn</th>
+      <th>Báo cáo doanh nghiệp</th>
+      <th>Cách đưa vào biến</th>
+    </tr>
+    <tr>
+      <th>Mã biến</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>Doanh thu thuần; Tổng cộng tài sản</td>
+      <td>isa3; bsa53</td>
+      <td>Báo cáo KQKD; Bảng cân đối kế toán</td>
+      <td>isa3 / bsa53</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>Phải trả người bán; Tổng cộng tài sản</td>
+      <td>bsa57; bsa53</td>
+      <td>Bảng cân đối kế toán</td>
+      <td>bsa57 / bsa53</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>Tài sản ngắn hạn; Nợ ngắn hạn</td>
+      <td>bsa1; bsa55</td>
+      <td>Bảng cân đối kế toán</td>
+      <td>bsa1 / bsa55</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>Tổng cộng tài sản</td>
+      <td>bsa53</td>
+      <td>Bảng cân đối kế toán</td>
+      <td>ln(bsa53 / 1 tỷ đồng)</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td>Tạo từ LIQ</td>
+      <td>Không có trực tiếp</td>
+      <td>Biến do nghiên cứu xây dựng</td>
+      <td>1 nếu LIQ ≥ 1; ngược lại 0</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>Tạo từ TPR và LIQ</td>
+      <td>Không có trực tiếp</td>
+      <td>Biến do nghiên cứu xây dựng</td>
+      <td>(TPR − TB) × (LIQ − TB)</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>Tạo từ TPR và DLI</td>
+      <td>Không có trực tiếp</td>
+      <td>Biến do nghiên cứu xây dựng</td>
+      <td>(TPR − TB) × DLI</td>
+    </tr>
+    <tr>
+      <th>YDM</th>
+      <td>Năm tài chính</td>
+      <td>year</td>
+      <td>Thông tin kỳ báo cáo</td>
+      <td>Dummy 2022–2025; gốc 2021</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 7. Phân bổ biến giả thanh khoản DLI</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Số quan sát</th>
+      <th>Tỷ lệ mẫu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>DLI=0</th>
+      <td>1,254</td>
+      <td>0.1788</td>
+    </tr>
+    <tr>
+      <th>DLI=1</th>
+      <td>5,760</td>
+      <td>0.8212</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 8. Thống kê mô tả trước winsor hóa</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Obs</th>
+      <th>Mean</th>
+      <th>SD</th>
+      <th>Min</th>
+      <th>p25</th>
+      <th>p50</th>
+      <th>p75</th>
+      <th>Max</th>
+      <th>Skewness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>7,014</td>
+      <td>1.1101</td>
+      <td>1.4626</td>
+      <td>0.0000</td>
+      <td>0.3206</td>
+      <td>0.7673</td>
+      <td>1.3623</td>
+      <td>25.6266</td>
+      <td>5.1409</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>7,014</td>
+      <td>0.1140</td>
+      <td>0.1872</td>
+      <td>0.0000</td>
+      <td>0.0212</td>
+      <td>0.0641</td>
+      <td>0.1470</td>
+      <td>5.1739</td>
+      <td>9.3431</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>7,014</td>
+      <td>2.9986</td>
+      <td>7.3642</td>
+      <td>0.0015</td>
+      <td>1.1023</td>
+      <td>1.5294</td>
+      <td>2.6750</td>
+      <td>297.0152</td>
+      <td>16.6497</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>7,014</td>
+      <td>6.5231</td>
+      <td>1.7137</td>
+      <td>0.5431</td>
+      <td>5.2960</td>
+      <td>6.4005</td>
+      <td>7.5573</td>
+      <td>13.9276</td>
+      <td>0.4422</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 9. Ngưỡng Winsor2 p1–p99</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>p1</th>
+      <th>p99</th>
+      <th>Dưới p1</th>
+      <th>Trên p99</th>
+      <th>Tổng giá trị bị chặn</th>
+    </tr>
+    <tr>
+      <th>Biến</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>0.0077</td>
+      <td>8.0159</td>
+      <td>71</td>
+      <td>71</td>
+      <td>142</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>0.0000</td>
+      <td>0.6532</td>
+      <td>71</td>
+      <td>71</td>
+      <td>142</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>0.0906</td>
+      <td>27.1752</td>
+      <td>71</td>
+      <td>71</td>
+      <td>142</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>2.9320</td>
+      <td>11.0517</td>
+      <td>71</td>
+      <td>71</td>
+      <td>142</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 10. Thống kê mô tả sau winsor hóa</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Obs</th>
+      <th>Mean</th>
+      <th>SD</th>
+      <th>Min</th>
+      <th>p25</th>
+      <th>p50</th>
+      <th>p75</th>
+      <th>Max</th>
+      <th>Skewness</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>7,014</td>
+      <td>1.0765</td>
+      <td>1.2164</td>
+      <td>0.0077</td>
+      <td>0.3206</td>
+      <td>0.7673</td>
+      <td>1.3623</td>
+      <td>8.0159</td>
+      <td>3.1325</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>7,014</td>
+      <td>0.1073</td>
+      <td>0.1249</td>
+      <td>0.0000</td>
+      <td>0.0212</td>
+      <td>0.0641</td>
+      <td>0.1470</td>
+      <td>0.6532</td>
+      <td>2.0564</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>7,014</td>
+      <td>2.7108</td>
+      <td>3.8265</td>
+      <td>0.0906</td>
+      <td>1.1023</td>
+      <td>1.5294</td>
+      <td>2.6750</td>
+      <td>27.1752</td>
+      <td>4.2611</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>7,014</td>
+      <td>6.5210</td>
+      <td>1.6800</td>
+      <td>2.9320</td>
+      <td>5.2960</td>
+      <td>6.4005</td>
+      <td>7.5573</td>
+      <td>11.0517</td>
+      <td>0.4020</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Biểu đồ 1. Thống kê mô tả sau Winsor2</h3><div class="scroll"><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 670" role="img" aria-labelledby="title desc">
+<title id="title">Thống kê mô tả sau Winsor2</title>
+<desc id="desc">Mỗi biến có thang đo riêng. Đường mảnh là min đến max, đường đậm là p25 đến p75, chấm tròn là trung vị và hình thoi là trung bình.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="500.0" y="36" text-anchor="middle" font-family="Arial" font-size="22" fill="#245b86">Thống kê mô tả sau Winsor2 (p1–p99)</text>
+<text x="30" y="125" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản</text>
+<line x1="325" y1="120" x2="925" y2="120" stroke="#d9e0e7" stroke-width="4"/>
+<line x1="348.4" y1="120" x2="426.5" y2="120" stroke="#245b86" stroke-width="12"/>
+<circle cx="381.9" cy="120" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/>
+<polygon points="405.1,111 414.1,120 405.1,129 396.1,120" fill="#b44c4c"/>
+<text x="625.0" y="152" text-anchor="middle" font-family="Arial" font-size="12" fill="#263746">Min 0.008 · p25 0.321 · p50 0.767 · Mean 1.077 · p75 1.362 · Max 8.016</text>
+<text x="30" y="255" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tài sản</text>
+<line x1="325" y1="250" x2="925" y2="250" stroke="#d9e0e7" stroke-width="4"/>
+<line x1="344.4" y1="250" x2="460.0" y2="250" stroke="#245b86" stroke-width="12"/>
+<circle cx="383.8" cy="250" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/>
+<polygon points="423.6,241 432.6,250 423.6,259 414.6,250" fill="#b44c4c"/>
+<text x="625.0" y="282" text-anchor="middle" font-family="Arial" font-size="12" fill="#263746">Min 0.000 · p25 0.021 · p50 0.064 · Mean 0.107 · p75 0.147 · Max 0.653</text>
+<text x="30" y="385" font-family="Arial" font-size="15" fill="#263746">Thanh khoản hiện hành</text>
+<line x1="325" y1="380" x2="925" y2="380" stroke="#d9e0e7" stroke-width="4"/>
+<line x1="347.4" y1="380" x2="382.3" y2="380" stroke="#245b86" stroke-width="12"/>
+<circle cx="356.9" cy="380" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/>
+<polygon points="383.0,371 392.0,380 383.0,389 374.0,380" fill="#b44c4c"/>
+<text x="625.0" y="412" text-anchor="middle" font-family="Arial" font-size="12" fill="#263746">Min 0.091 · p25 1.102 · p50 1.529 · Mean 2.711 · p75 2.675 · Max 27.175</text>
+<text x="30" y="515" font-family="Arial" font-size="15" fill="#263746">Quy mô: ln(tổng tài sản)</text>
+<line x1="325" y1="510" x2="925" y2="510" stroke="#d9e0e7" stroke-width="4"/>
+<line x1="499.7" y1="510" x2="666.8" y2="510" stroke="#245b86" stroke-width="12"/>
+<circle cx="581.3" cy="510" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/>
+<polygon points="590.2,501 599.2,510 590.2,519 581.2,510" fill="#b44c4c"/>
+<text x="625.0" y="542" text-anchor="middle" font-family="Arial" font-size="12" fill="#263746">Min 2.932 · p25 5.296 · p50 6.401 · Mean 6.521 · p75 7.557 · Max 11.052</text>
+<line x1="235" y1="625" x2="280" y2="625" stroke="#245b86" stroke-width="12"/><text x="290" y="630" font-family="Arial" font-size="13" fill="#263746">Khoảng p25–p75</text>
+<circle cx="455" cy="625" r="7" fill="#ffffff" stroke="#245b86" stroke-width="3"/><text x="470" y="630" font-family="Arial" font-size="13" fill="#263746">Trung vị</text>
+<polygon points="620,616 629,625 620,634 611,625" fill="#b44c4c"/><text x="638" y="630" font-family="Arial" font-size="13" fill="#263746">Trung bình</text>
+<text x="500.0" y="657" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.</text>
+</svg></div></section>
+<section class="card gallery"><h3>Bảng 11. Skewness, Kurtosis, CV và Jarque–Bera</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Obs</th>
+      <th>Skewness</th>
+      <th>Kurtosis (chuẩn=3)</th>
+      <th>CV (%)</th>
+      <th>JB statistic</th>
+      <th>JB p-value</th>
+      <th>Kết luận ở mức 5%</th>
+    </tr>
+    <tr>
+      <th>Biến số</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>7,014</td>
+      <td>3.132</td>
+      <td>16.007</td>
+      <td>112.995</td>
+      <td>60,906.126</td>
+      <td>&lt; 1e-300</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>7,014</td>
+      <td>2.056</td>
+      <td>7.771</td>
+      <td>116.331</td>
+      <td>11,594.277</td>
+      <td>&lt; 1e-300</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>7,014</td>
+      <td>4.260</td>
+      <td>24.099</td>
+      <td>141.160</td>
+      <td>151,317.467</td>
+      <td>&lt; 1e-300</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>7,014</td>
+      <td>0.402</td>
+      <td>2.940</td>
+      <td>25.763</td>
+      <td>189.848</td>
+      <td>5.958e-42</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+    <tr>
+      <th>RE2</th>
+      <td>7,014</td>
+      <td>3.299</td>
+      <td>17.943</td>
+      <td>—</td>
+      <td>77,973.625</td>
+      <td>&lt; 1e-300</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+    <tr>
+      <th>RE3</th>
+      <td>7,014</td>
+      <td>3.311</td>
+      <td>18.009</td>
+      <td>—</td>
+      <td>78,652.629</td>
+      <td>&lt; 1e-300</td>
+      <td>Bác bỏ H0 chuẩn</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Biểu đồ 2. Phải trả người bán và hiệu quả hoạt động theo năm</h3><div class="scroll"><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+<title id="title">Tỷ lệ phải trả và hiệu quả hoạt động trung bình theo năm</title>
+<desc id="desc">Biểu đồ hai trục từ năm 2021 đến 2025, đường xanh là phải trả người bán trên tổng tài sản, đường đỏ là vòng quay tổng tài sản.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="500.0" y="34" text-anchor="middle" font-family="Arial" font-size="22" fill="#245b86">Phải trả người bán và hiệu quả hoạt động theo năm</text>
+<rect x="95" y="75" width="810" height="395" fill="#ffffff" stroke="#66727e" stroke-width="1"/>
+<line x1="95" y1="470.0" x2="905" y2="470.0" stroke="#d9e0e7"/>
+<text x="83" y="475.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">10.12%</text>
+<text x="917" y="475.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.025</text>
+<line x1="95" y1="391.0" x2="905" y2="391.0" stroke="#d9e0e7"/>
+<text x="83" y="396.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">10.35%</text>
+<text x="917" y="396.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.049</text>
+<line x1="95" y1="312.0" x2="905" y2="312.0" stroke="#d9e0e7"/>
+<text x="83" y="317.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">10.58%</text>
+<text x="917" y="317.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.074</text>
+<line x1="95" y1="233.0" x2="905" y2="233.0" stroke="#d9e0e7"/>
+<text x="83" y="238.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">10.82%</text>
+<text x="917" y="238.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.098</text>
+<line x1="95" y1="154.0" x2="905" y2="154.0" stroke="#d9e0e7"/>
+<text x="83" y="159.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">11.05%</text>
+<text x="917" y="159.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.123</text>
+<line x1="95" y1="75.0" x2="905" y2="75.0" stroke="#d9e0e7"/>
+<text x="83" y="80.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">11.29%</text>
+<text x="917" y="80.0" text-anchor="start" font-family="Arial" font-size="13" fill="#263746">1.147</text>
+<text x="95.0" y="498" text-anchor="middle" font-family="Arial" font-size="14" fill="#263746">2021</text>
+<circle cx="95.0" cy="200.8" r="5" fill="#245b86"/>
+<polygon points="95.0,424.8 102.0,431.8 95.0,438.8 88.0,431.8" fill="#b44c4c"/>
+<text x="297.5" y="498" text-anchor="middle" font-family="Arial" font-size="14" fill="#263746">2022</text>
+<circle cx="297.5" cy="113.2" r="5" fill="#245b86"/>
+<polygon points="297.5,106.2 304.5,113.2 297.5,120.2 290.5,113.2" fill="#b44c4c"/>
+<text x="500.0" y="498" text-anchor="middle" font-family="Arial" font-size="14" fill="#263746">2023</text>
+<circle cx="500.0" cy="296.6" r="5" fill="#245b86"/>
+<polygon points="500.0,398.7 507.0,405.7 500.0,412.7 493.0,405.7" fill="#b44c4c"/>
+<text x="702.5" y="498" text-anchor="middle" font-family="Arial" font-size="14" fill="#263746">2024</text>
+<circle cx="702.5" cy="264.6" r="5" fill="#245b86"/>
+<polygon points="702.5,258.0 709.5,265.0 702.5,272.0 695.5,265.0" fill="#b44c4c"/>
+<text x="905.0" y="498" text-anchor="middle" font-family="Arial" font-size="14" fill="#263746">2025</text>
+<circle cx="905.0" cy="431.8" r="5" fill="#245b86"/>
+<polygon points="905.0,293.9 912.0,300.9 905.0,307.9 898.0,300.9" fill="#b44c4c"/>
+<polyline points="95.0,200.8 297.5,113.2 500.0,296.6 702.5,264.6 905.0,431.8" fill="none" stroke="#245b86" stroke-width="2.2"/>
+<polyline points="95.0,431.8 297.5,113.2 500.0,405.7 702.5,265.0 905.0,300.9" fill="none" stroke="#b44c4c" stroke-width="2.2"/>
+<text transform="translate(24 272.5) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tổng tài sản (%)</text>
+<text transform="translate(980 272.5) rotate(90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản (lần)</text>
+<text x="500.0" y="526" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Năm tài chính</text>
+<line x1="285" y1="548" x2="330" y2="548" stroke="#245b86" stroke-width="2.2"/><circle cx="307" cy="548" r="5" fill="#245b86"/><text x="340" y="553" font-family="Arial" font-size="14" fill="#263746">Phải trả / tổng tài sản</text>
+<line x1="575" y1="548" x2="620" y2="548" stroke="#b44c4c" stroke-width="2.2"/><polygon points="597,541 604,548 597,555 590,548" fill="#b44c4c"/><text x="630" y="553" font-family="Arial" font-size="14" fill="#263746">Hiệu quả hoạt động</text>
+</svg></div></section>
+<section class="card gallery"><h3>Bảng 12. Ma trận tương quan Pearson</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ATO</th>
+      <th>TPR</th>
+      <th>LIQ</th>
+      <th>SIZ</th>
+      <th>DLI</th>
+      <th>TLI</th>
+      <th>TLD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ATO</th>
+      <td>1.0000</td>
+      <td>0.2635</td>
+      <td>-0.1297</td>
+      <td>-0.1468</td>
+      <td>0.0631</td>
+      <td>0.0271</td>
+      <td>0.2722</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>0.2635</td>
+      <td>1.0000</td>
+      <td>-0.2729</td>
+      <td>-0.1154</td>
+      <td>-0.1727</td>
+      <td>-0.2876</td>
+      <td>0.8189</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>-0.1297</td>
+      <td>-0.2729</td>
+      <td>1.0000</td>
+      <td>-0.1512</td>
+      <td>0.2551</td>
+      <td>-0.7989</td>
+      <td>-0.2872</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.1468</td>
+      <td>-0.1154</td>
+      <td>-0.1512</td>
+      <td>1.0000</td>
+      <td>0.0532</td>
+      <td>0.1918</td>
+      <td>-0.0475</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td>0.0631</td>
+      <td>-0.1727</td>
+      <td>0.2551</td>
+      <td>0.0532</td>
+      <td>1.0000</td>
+      <td>-0.0299</td>
+      <td>-0.0379</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>0.0271</td>
+      <td>-0.2876</td>
+      <td>-0.7989</td>
+      <td>0.1918</td>
+      <td>-0.0299</td>
+      <td>1.0000</td>
+      <td>-0.0884</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>0.2722</td>
+      <td>0.8189</td>
+      <td>-0.2872</td>
+      <td>-0.0475</td>
+      <td>-0.0379</td>
+      <td>-0.0884</td>
+      <td>1.0000</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Biểu đồ 3. Heatmap tương quan Pearson</h3><div class="scroll"><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 820" role="img" aria-labelledby="title desc">
+<title id="title">Ma trận hệ số tương quan Pearson</title>
+<desc id="desc">Heatmap tương quan giữa biến phụ thuộc, biến giải thích, biến điều tiết, quy mô, dummy và hai biến tương tác.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="460.0" y="42" text-anchor="middle" font-family="Arial" font-size="23" font-weight="bold" fill="#202b3c">Ma trận hệ số tương quan Pearson</text>
+<text transform="translate(269.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">ATO</text>
+<text transform="translate(347.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">TPR</text>
+<text transform="translate(425.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">LIQ</text>
+<text transform="translate(503.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">SIZ</text>
+<text transform="translate(581.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">DLI</text>
+<text transform="translate(659.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">TLI</text>
+<text transform="translate(737.0 143) rotate(-45)" text-anchor="start" font-family="Arial" font-size="13" fill="#202b3c">TLD</text>
+<text x="218" y="199.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">ATO</text>
+<rect x="230" y="155" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="308" y="155" width="78" height="78" fill="#e8bec2" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.264</text>
+<rect x="386" y="155" width="78" height="78" fill="#dfe3ee" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.130</text>
+<rect x="464" y="155" width="78" height="78" fill="#dce0ed" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.147</text>
+<rect x="542" y="155" width="78" height="78" fill="#f3e9ea" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.063</text>
+<rect x="620" y="155" width="78" height="78" fill="#f5f1f2" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.027</text>
+<rect x="698" y="155" width="78" height="78" fill="#e7bcc0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="199.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.272</text>
+<text x="218" y="277.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">TPR</text>
+<rect x="230" y="233" width="78" height="78" fill="#e8bec2" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.264</text>
+<rect x="308" y="233" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="386" y="233" width="78" height="78" fill="#c5cce4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.273</text>
+<rect x="464" y="233" width="78" height="78" fill="#e2e5ef" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.115</text>
+<rect x="542" y="233" width="78" height="78" fill="#d7dceb" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.173</text>
+<rect x="620" y="233" width="78" height="78" fill="#c2cae3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.288</text>
+<rect x="698" y="233" width="78" height="78" fill="#c84552" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="277.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">0.819</text>
+<text x="218" y="355.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">LIQ</text>
+<rect x="230" y="311" width="78" height="78" fill="#dfe3ee" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.130</text>
+<rect x="308" y="311" width="78" height="78" fill="#c5cce4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.273</text>
+<rect x="386" y="311" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="464" y="311" width="78" height="78" fill="#dbdfec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.151</text>
+<rect x="542" y="311" width="78" height="78" fill="#e8c0c3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.255</text>
+<rect x="620" y="311" width="78" height="78" fill="#647abe" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">-0.799</text>
+<rect x="698" y="311" width="78" height="78" fill="#c2cae3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="355.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.287</text>
+<text x="218" y="433.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">SIZ</text>
+<rect x="230" y="389" width="78" height="78" fill="#dce0ed" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.147</text>
+<rect x="308" y="389" width="78" height="78" fill="#e2e5ef" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.115</text>
+<rect x="386" y="389" width="78" height="78" fill="#dbdfec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.151</text>
+<rect x="464" y="389" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="542" y="389" width="78" height="78" fill="#f4ebec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.053</text>
+<rect x="620" y="389" width="78" height="78" fill="#eccdd0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.192</text>
+<rect x="698" y="389" width="78" height="78" fill="#eef0f4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="433.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.047</text>
+<text x="218" y="511.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">DLI</text>
+<rect x="230" y="467" width="78" height="78" fill="#f3e9ea" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.063</text>
+<rect x="308" y="467" width="78" height="78" fill="#d7dceb" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.173</text>
+<rect x="386" y="467" width="78" height="78" fill="#e8c0c3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.255</text>
+<rect x="464" y="467" width="78" height="78" fill="#f4ebec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.053</text>
+<rect x="542" y="467" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="620" y="467" width="78" height="78" fill="#f1f2f5" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.030</text>
+<rect x="698" y="467" width="78" height="78" fill="#f0f1f4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="511.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.038</text>
+<text x="218" y="589.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">TLI</text>
+<rect x="230" y="545" width="78" height="78" fill="#f5f1f2" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.027</text>
+<rect x="308" y="545" width="78" height="78" fill="#c2cae3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.288</text>
+<rect x="386" y="545" width="78" height="78" fill="#647abe" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">-0.799</text>
+<rect x="464" y="545" width="78" height="78" fill="#eccdd0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.192</text>
+<rect x="542" y="545" width="78" height="78" fill="#f1f2f5" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.030</text>
+<rect x="620" y="545" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="698" y="545" width="78" height="78" fill="#e7e9f1" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="589.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.088</text>
+<text x="218" y="667.0" text-anchor="end" font-family="Arial" font-size="13" fill="#202b3c">TLD</text>
+<rect x="230" y="623" width="78" height="78" fill="#e7bcc0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="269.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">0.272</text>
+<rect x="308" y="623" width="78" height="78" fill="#c84552" stroke="#ffffff" stroke-width="1.5"/>
+<text x="347.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">0.819</text>
+<rect x="386" y="623" width="78" height="78" fill="#c2cae3" stroke="#ffffff" stroke-width="1.5"/>
+<text x="425.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.287</text>
+<rect x="464" y="623" width="78" height="78" fill="#eef0f4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="503.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.047</text>
+<rect x="542" y="623" width="78" height="78" fill="#f0f1f4" stroke="#ffffff" stroke-width="1.5"/>
+<text x="581.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.038</text>
+<rect x="620" y="623" width="78" height="78" fill="#e7e9f1" stroke="#ffffff" stroke-width="1.5"/>
+<text x="659.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#202b3c">-0.088</text>
+<rect x="698" y="623" width="78" height="78" fill="#be1e2d" stroke="#ffffff" stroke-width="1.5"/>
+<text x="737.0" y="667.0" text-anchor="middle" font-family="Arial" font-size="13" fill="#ffffff">1.000</text>
+<rect x="808" y="155.0" width="22" height="6.5" fill="#be1e2d"/>
+<rect x="808" y="160.5" width="22" height="6.5" fill="#bf2231"/>
+<rect x="808" y="165.9" width="22" height="6.5" fill="#c02735"/>
+<rect x="808" y="171.4" width="22" height="6.5" fill="#c12b39"/>
+<rect x="808" y="176.8" width="22" height="6.5" fill="#c3303d"/>
+<rect x="808" y="182.3" width="22" height="6.5" fill="#c43441"/>
+<rect x="808" y="187.8" width="22" height="6.5" fill="#c53845"/>
+<rect x="808" y="193.2" width="22" height="6.5" fill="#c63d4a"/>
+<rect x="808" y="198.7" width="22" height="6.5" fill="#c7414e"/>
+<rect x="808" y="204.1" width="22" height="6.5" fill="#c84552"/>
+<rect x="808" y="209.6" width="22" height="6.5" fill="#ca4a56"/>
+<rect x="808" y="215.1" width="22" height="6.5" fill="#cb4e5a"/>
+<rect x="808" y="220.5" width="22" height="6.5" fill="#cc535e"/>
+<rect x="808" y="226.0" width="22" height="6.5" fill="#cd5762"/>
+<rect x="808" y="231.4" width="22" height="6.5" fill="#ce5b66"/>
+<rect x="808" y="236.9" width="22" height="6.5" fill="#cf606a"/>
+<rect x="808" y="242.4" width="22" height="6.5" fill="#d0646e"/>
+<rect x="808" y="247.8" width="22" height="6.5" fill="#d26972"/>
+<rect x="808" y="253.3" width="22" height="6.5" fill="#d36d76"/>
+<rect x="808" y="258.7" width="22" height="6.5" fill="#d4717b"/>
+<rect x="808" y="264.2" width="22" height="6.5" fill="#d5767f"/>
+<rect x="808" y="269.7" width="22" height="6.5" fill="#d67a83"/>
+<rect x="808" y="275.1" width="22" height="6.5" fill="#d77e87"/>
+<rect x="808" y="280.6" width="22" height="6.5" fill="#d8838b"/>
+<rect x="808" y="286.0" width="22" height="6.5" fill="#da878f"/>
+<rect x="808" y="291.5" width="22" height="6.5" fill="#db8c93"/>
+<rect x="808" y="297.0" width="22" height="6.5" fill="#dc9097"/>
+<rect x="808" y="302.4" width="22" height="6.5" fill="#dd949b"/>
+<rect x="808" y="307.9" width="22" height="6.5" fill="#de999f"/>
+<rect x="808" y="313.3" width="22" height="6.5" fill="#df9da3"/>
+<rect x="808" y="318.8" width="22" height="6.5" fill="#e1a2a7"/>
+<rect x="808" y="324.3" width="22" height="6.5" fill="#e2a6ac"/>
+<rect x="808" y="329.7" width="22" height="6.5" fill="#e3aab0"/>
+<rect x="808" y="335.2" width="22" height="6.5" fill="#e4afb4"/>
+<rect x="808" y="340.6" width="22" height="6.5" fill="#e5b3b8"/>
+<rect x="808" y="346.1" width="22" height="6.5" fill="#e6b7bc"/>
+<rect x="808" y="351.6" width="22" height="6.5" fill="#e7bcc0"/>
+<rect x="808" y="357.0" width="22" height="6.5" fill="#e9c0c4"/>
+<rect x="808" y="362.5" width="22" height="6.5" fill="#eac5c8"/>
+<rect x="808" y="367.9" width="22" height="6.5" fill="#ebc9cc"/>
+<rect x="808" y="373.4" width="22" height="6.5" fill="#eccdd0"/>
+<rect x="808" y="378.9" width="22" height="6.5" fill="#edd2d4"/>
+<rect x="808" y="384.3" width="22" height="6.5" fill="#eed6d8"/>
+<rect x="808" y="389.8" width="22" height="6.5" fill="#f0dbdc"/>
+<rect x="808" y="395.2" width="22" height="6.5" fill="#f1dfe1"/>
+<rect x="808" y="400.7" width="22" height="6.5" fill="#f2e3e5"/>
+<rect x="808" y="406.2" width="22" height="6.5" fill="#f3e8e9"/>
+<rect x="808" y="411.6" width="22" height="6.5" fill="#f4eced"/>
+<rect x="808" y="417.1" width="22" height="6.5" fill="#f5f0f1"/>
+<rect x="808" y="422.5" width="22" height="6.5" fill="#f6f5f5"/>
+<rect x="808" y="428.0" width="22" height="6.5" fill="#f5f5f6"/>
+<rect x="808" y="433.5" width="22" height="6.5" fill="#f1f2f5"/>
+<rect x="808" y="438.9" width="22" height="6.5" fill="#eeeff3"/>
+<rect x="808" y="444.4" width="22" height="6.5" fill="#eaecf2"/>
+<rect x="808" y="449.8" width="22" height="6.5" fill="#e6e9f1"/>
+<rect x="808" y="455.3" width="22" height="6.5" fill="#e3e6ef"/>
+<rect x="808" y="460.8" width="22" height="6.5" fill="#dfe3ee"/>
+<rect x="808" y="466.2" width="22" height="6.5" fill="#dbdfec"/>
+<rect x="808" y="471.7" width="22" height="6.5" fill="#d7dceb"/>
+<rect x="808" y="477.1" width="22" height="6.5" fill="#d4d9e9"/>
+<rect x="808" y="482.6" width="22" height="6.5" fill="#d0d6e8"/>
+<rect x="808" y="488.1" width="22" height="6.5" fill="#ccd3e7"/>
+<rect x="808" y="493.5" width="22" height="6.5" fill="#c9d0e5"/>
+<rect x="808" y="499.0" width="22" height="6.5" fill="#c5cce4"/>
+<rect x="808" y="504.4" width="22" height="6.5" fill="#c1c9e2"/>
+<rect x="808" y="509.9" width="22" height="6.5" fill="#bdc6e1"/>
+<rect x="808" y="515.4" width="22" height="6.5" fill="#bac3df"/>
+<rect x="808" y="520.8" width="22" height="6.5" fill="#b6c0de"/>
+<rect x="808" y="526.3" width="22" height="6.5" fill="#b2bddc"/>
+<rect x="808" y="531.7" width="22" height="6.5" fill="#afbadb"/>
+<rect x="808" y="537.2" width="22" height="6.5" fill="#abb6da"/>
+<rect x="808" y="542.7" width="22" height="6.5" fill="#a7b3d8"/>
+<rect x="808" y="548.1" width="22" height="6.5" fill="#a3b0d7"/>
+<rect x="808" y="553.6" width="22" height="6.5" fill="#a0add5"/>
+<rect x="808" y="559.0" width="22" height="6.5" fill="#9caad4"/>
+<rect x="808" y="564.5" width="22" height="6.5" fill="#98a7d2"/>
+<rect x="808" y="570.0" width="22" height="6.5" fill="#94a3d1"/>
+<rect x="808" y="575.4" width="22" height="6.5" fill="#91a0d0"/>
+<rect x="808" y="580.9" width="22" height="6.5" fill="#8d9dce"/>
+<rect x="808" y="586.3" width="22" height="6.5" fill="#899acd"/>
+<rect x="808" y="591.8" width="22" height="6.5" fill="#8697cb"/>
+<rect x="808" y="597.3" width="22" height="6.5" fill="#8294ca"/>
+<rect x="808" y="602.7" width="22" height="6.5" fill="#7e91c8"/>
+<rect x="808" y="608.2" width="22" height="6.5" fill="#7a8dc7"/>
+<rect x="808" y="613.6" width="22" height="6.5" fill="#778ac6"/>
+<rect x="808" y="619.1" width="22" height="6.5" fill="#7387c4"/>
+<rect x="808" y="624.6" width="22" height="6.5" fill="#6f84c3"/>
+<rect x="808" y="630.0" width="22" height="6.5" fill="#6c81c1"/>
+<rect x="808" y="635.5" width="22" height="6.5" fill="#687ec0"/>
+<rect x="808" y="640.9" width="22" height="6.5" fill="#647bbe"/>
+<rect x="808" y="646.4" width="22" height="6.5" fill="#6077bd"/>
+<rect x="808" y="651.9" width="22" height="6.5" fill="#5d74bb"/>
+<rect x="808" y="657.3" width="22" height="6.5" fill="#5971ba"/>
+<rect x="808" y="662.8" width="22" height="6.5" fill="#556eb9"/>
+<rect x="808" y="668.2" width="22" height="6.5" fill="#526bb7"/>
+<rect x="808" y="673.7" width="22" height="6.5" fill="#4e68b6"/>
+<rect x="808" y="679.2" width="22" height="6.5" fill="#4a64b4"/>
+<rect x="808" y="684.6" width="22" height="6.5" fill="#4661b3"/>
+<rect x="808" y="690.1" width="22" height="6.5" fill="#435eb1"/>
+<rect x="808" y="695.5" width="22" height="6.5" fill="#3f5bb0"/>
+<text x="838" y="160.0" font-family="Arial" font-size="12" fill="#202b3c">1.00</text>
+<text x="838" y="296.5" font-family="Arial" font-size="12" fill="#202b3c">0.50</text>
+<text x="838" y="433.0" font-family="Arial" font-size="12" fill="#202b3c">0.00</text>
+<text x="838" y="569.5" font-family="Arial" font-size="12" fill="#202b3c">−0.50</text>
+<text x="838" y="706.0" font-family="Arial" font-size="12" fill="#202b3c">−1.00</text>
+<text x="460.0" y="796" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1</text>
+</svg></div></section>
+<section class="card gallery"><h3>Bảng 13. VIF mô hình 1</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R2 phụ</th>
+      <th>VIF</th>
+    </tr>
+    <tr>
+      <th>Biến giải thích</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>0.0996</td>
+      <td>1.1106</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>0.1083</td>
+      <td>1.1214</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>0.0494</td>
+      <td>1.0519</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 14. VIF mô hình 2</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R2 phụ</th>
+      <th>VIF</th>
+    </tr>
+    <tr>
+      <th>Biến giải thích</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>0.7844</td>
+      <td>4.6385</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>0.9146</td>
+      <td>11.7124</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>0.0518</td>
+      <td>1.0547</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>0.9146</td>
+      <td>11.7114</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 15. VIF mô hình 3</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>R2 phụ</th>
+      <th>VIF</th>
+    </tr>
+    <tr>
+      <th>Biến giải thích</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>0.6954</td>
+      <td>3.2832</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td>0.0626</td>
+      <td>1.0668</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>0.0204</td>
+      <td>1.0208</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>0.6835</td>
+      <td>3.1593</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 16. Mô hình 0: OLS đơn giản ATO ~ TPR</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hệ số OLS</th>
+      <th>SE gom cụm</th>
+      <th>t/z</th>
+      <th>p-value xấp xỉ</th>
+      <th>CI 95% thấp</th>
+      <th>CI 95% cao</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CON</th>
+      <td>1.0765</td>
+      <td>0.0297</td>
+      <td>36.2320</td>
+      <td>0.0000</td>
+      <td>1.0183</td>
+      <td>1.1348</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>2.5672</td>
+      <td>0.2761</td>
+      <td>9.2976</td>
+      <td>0.0000</td>
+      <td>2.0260</td>
+      <td>3.1084</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 17. Mô hình 1: cơ sở chưa có tương tác</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hệ số OLS</th>
+      <th>SE gom cụm</th>
+      <th>t/z</th>
+      <th>p-value xấp xỉ</th>
+      <th>CI 95% thấp</th>
+      <th>CI 95% cao</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CON</th>
+      <td>1.6606</td>
+      <td>0.1063</td>
+      <td>15.6250</td>
+      <td>0.0000</td>
+      <td>1.4523</td>
+      <td>1.8689</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>2.1777</td>
+      <td>0.2912</td>
+      <td>7.4785</td>
+      <td>0.0000</td>
+      <td>1.6069</td>
+      <td>2.7484</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>-0.0284</td>
+      <td>0.0041</td>
+      <td>-6.9023</td>
+      <td>0.0000</td>
+      <td>-0.0365</td>
+      <td>-0.0203</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.0978</td>
+      <td>0.0144</td>
+      <td>-6.8077</td>
+      <td>0.0000</td>
+      <td>-0.1259</td>
+      <td>-0.0696</td>
+    </tr>
+    <tr>
+      <th>Y22</th>
+      <td>0.0981</td>
+      <td>0.0147</td>
+      <td>6.6762</td>
+      <td>0.0000</td>
+      <td>0.0693</td>
+      <td>0.1269</td>
+    </tr>
+    <tr>
+      <th>Y23</th>
+      <td>0.0234</td>
+      <td>0.0163</td>
+      <td>1.4369</td>
+      <td>0.1507</td>
+      <td>-0.0085</td>
+      <td>0.0553</td>
+    </tr>
+    <tr>
+      <th>Y24</th>
+      <td>0.0679</td>
+      <td>0.0178</td>
+      <td>3.8027</td>
+      <td>0.0001</td>
+      <td>0.0329</td>
+      <td>0.1028</td>
+    </tr>
+    <tr>
+      <th>Y25</th>
+      <td>0.0778</td>
+      <td>0.0204</td>
+      <td>3.8054</td>
+      <td>0.0001</td>
+      <td>0.0377</td>
+      <td>0.1178</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 18. Mô hình 2: tương tác TPR × LIQ</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hệ số OLS</th>
+      <th>SE gom cụm</th>
+      <th>t/z</th>
+      <th>p-value xấp xỉ</th>
+      <th>CI 95% thấp</th>
+      <th>CI 95% cao</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CON</th>
+      <td>1.8379</td>
+      <td>0.1080</td>
+      <td>17.0228</td>
+      <td>0.0000</td>
+      <td>1.6263</td>
+      <td>2.0495</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>5.0694</td>
+      <td>0.4985</td>
+      <td>10.1690</td>
+      <td>0.0000</td>
+      <td>4.0923</td>
+      <td>6.0464</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>0.1350</td>
+      <td>0.0260</td>
+      <td>5.2024</td>
+      <td>0.0000</td>
+      <td>0.0842</td>
+      <td>0.1859</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.0918</td>
+      <td>0.0140</td>
+      <td>-6.5732</td>
+      <td>0.0000</td>
+      <td>-0.1192</td>
+      <td>-0.0644</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>1.6573</td>
+      <td>0.2519</td>
+      <td>6.5789</td>
+      <td>0.0000</td>
+      <td>1.1635</td>
+      <td>2.1510</td>
+    </tr>
+    <tr>
+      <th>Y22</th>
+      <td>0.0922</td>
+      <td>0.0151</td>
+      <td>6.1222</td>
+      <td>0.0000</td>
+      <td>0.0627</td>
+      <td>0.1218</td>
+    </tr>
+    <tr>
+      <th>Y23</th>
+      <td>0.0220</td>
+      <td>0.0165</td>
+      <td>1.3313</td>
+      <td>0.1831</td>
+      <td>-0.0104</td>
+      <td>0.0544</td>
+    </tr>
+    <tr>
+      <th>Y24</th>
+      <td>0.0694</td>
+      <td>0.0180</td>
+      <td>3.8528</td>
+      <td>0.0001</td>
+      <td>0.0341</td>
+      <td>0.1047</td>
+    </tr>
+    <tr>
+      <th>Y25</th>
+      <td>0.0834</td>
+      <td>0.0205</td>
+      <td>4.0592</td>
+      <td>0.0000</td>
+      <td>0.0431</td>
+      <td>0.1237</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 19. Mô hình 3: tương tác TPR × DLI</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Hệ số OLS</th>
+      <th>SE gom cụm</th>
+      <th>t/z</th>
+      <th>p-value xấp xỉ</th>
+      <th>CI 95% thấp</th>
+      <th>CI 95% cao</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>CON</th>
+      <td>1.3930</td>
+      <td>0.1110</td>
+      <td>12.5499</td>
+      <td>0.0000</td>
+      <td>1.1754</td>
+      <td>1.6105</td>
+    </tr>
+    <tr>
+      <th>TPR</th>
+      <td>1.3182</td>
+      <td>0.5081</td>
+      <td>2.5943</td>
+      <td>0.0095</td>
+      <td>0.3223</td>
+      <td>2.3140</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td>0.3139</td>
+      <td>0.0644</td>
+      <td>4.8746</td>
+      <td>0.0000</td>
+      <td>0.1877</td>
+      <td>0.4402</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.0937</td>
+      <td>0.0133</td>
+      <td>-7.0261</td>
+      <td>0.0000</td>
+      <td>-0.1198</td>
+      <td>-0.0676</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>1.9066</td>
+      <td>0.5745</td>
+      <td>3.3186</td>
+      <td>0.0009</td>
+      <td>0.7805</td>
+      <td>3.0326</td>
+    </tr>
+    <tr>
+      <th>Y22</th>
+      <td>0.0927</td>
+      <td>0.0150</td>
+      <td>6.1735</td>
+      <td>0.0000</td>
+      <td>0.0633</td>
+      <td>0.1222</td>
+    </tr>
+    <tr>
+      <th>Y23</th>
+      <td>0.0246</td>
+      <td>0.0163</td>
+      <td>1.5088</td>
+      <td>0.1314</td>
+      <td>-0.0074</td>
+      <td>0.0566</td>
+    </tr>
+    <tr>
+      <th>Y24</th>
+      <td>0.0685</td>
+      <td>0.0179</td>
+      <td>3.8195</td>
+      <td>0.0001</td>
+      <td>0.0334</td>
+      <td>0.1037</td>
+    </tr>
+    <tr>
+      <th>Y25</th>
+      <td>0.0761</td>
+      <td>0.0203</td>
+      <td>3.7478</td>
+      <td>0.0002</td>
+      <td>0.0363</td>
+      <td>0.1159</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Biểu đồ 4. Tương tác phải trả người bán × thanh khoản</h3><div class="scroll"><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 610" role="img" aria-labelledby="title desc">
+<title id="title">Biểu đồ tương tác giữa phải trả người bán và thanh khoản</title>
+<desc id="desc">Dự báo vòng quay tài sản theo tỷ lệ phải trả người bán ở ba mức thanh khoản, giữ quy mô ở trung bình và năm gốc 2021.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="500" y="34" text-anchor="middle" font-family="Arial" font-size="22" fill="#245b86">Tác động tương tác: phải trả người bán × thanh khoản</text>
+<rect x="95" y="75" width="835" height="395" fill="#ffffff" stroke="#66727e" stroke-width="1"/>
+<line x1="95" y1="470.0" x2="930" y2="470.0" stroke="#d9e0e7"/>
+<text x="83" y="475.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">0.57</text>
+<line x1="95" y1="391.0" x2="930" y2="391.0" stroke="#d9e0e7"/>
+<text x="83" y="396.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">0.89</text>
+<line x1="95" y1="312.0" x2="930" y2="312.0" stroke="#d9e0e7"/>
+<text x="83" y="317.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.21</text>
+<line x1="95" y1="233.0" x2="930" y2="233.0" stroke="#d9e0e7"/>
+<text x="83" y="238.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.53</text>
+<line x1="95" y1="154.0" x2="930" y2="154.0" stroke="#d9e0e7"/>
+<text x="83" y="159.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.86</text>
+<line x1="95" y1="75.0" x2="930" y2="75.0" stroke="#d9e0e7"/>
+<text x="83" y="80.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">2.18</text>
+<text x="95.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">0.6%</text>
+<text x="262.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">5.7%</text>
+<text x="429.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">10.9%</text>
+<text x="596.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">16.1%</text>
+<text x="763.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">21.3%</text>
+<text x="930.0" y="498" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">26.5%</text>
+<polyline points="95.0,418.8 115.9,415.0 136.8,411.2 157.6,407.3 178.5,403.5 199.4,399.7 220.2,395.9 241.1,392.0 262.0,388.2 282.9,384.4 303.8,380.6 324.6,376.8 345.5,372.9 366.4,369.1 387.2,365.3 408.1,361.5 429.0,357.7 449.9,353.8 470.8,350.0 491.6,346.2 512.5,342.4 533.4,338.6 554.2,334.7 575.1,330.9 596.0,327.1 616.9,323.3 637.8,319.5 658.6,315.6 679.5,311.8 700.4,308.0 721.2,304.2 742.1,300.4 763.0,296.5 783.9,292.7 804.7,288.9 825.6,285.1 846.5,281.2 867.4,277.4 888.2,273.6 909.1,269.8 930.0,266.0" fill="none" stroke="#8a5a9e" stroke-width="2.5"/>
+<line x1="175" y1="535" x2="213" y2="535" stroke="#8a5a9e" stroke-width="2.5"/>
+<circle cx="194" cy="535" r="4" fill="#8a5a9e"/>
+<text x="222" y="540" font-family="Arial" font-size="13" fill="#263746">Thanh khoản thấp (p25)</text>
+<polyline points="95.0,422.3 115.9,417.4 136.8,412.4 157.6,407.5 178.5,402.5 199.4,397.6 220.2,392.6 241.1,387.7 262.0,382.8 282.9,377.8 303.8,372.9 324.6,367.9 345.5,363.0 366.4,358.0 387.2,353.1 408.1,348.1 429.0,343.2 449.9,338.2 470.8,333.3 491.6,328.3 512.5,323.4 533.4,318.5 554.2,313.5 575.1,308.6 596.0,303.6 616.9,298.7 637.8,293.7 658.6,288.8 679.5,283.8 700.4,278.9 721.2,273.9 742.1,269.0 763.0,264.1 783.9,259.1 804.7,254.2 825.6,249.2 846.5,244.3 867.4,239.3 888.2,234.4 909.1,229.4 930.0,224.5" fill="none" stroke="#245b86" stroke-width="2.5"/>
+<line x1="430" y1="535" x2="468" y2="535" stroke="#245b86" stroke-width="2.5"/>
+<circle cx="449" cy="535" r="4" fill="#245b86"/>
+<text x="477" y="540" font-family="Arial" font-size="13" fill="#263746">Thanh khoản trung vị (p50)</text>
+<polyline points="95.0,431.8 115.9,423.8 136.8,415.8 157.6,407.9 178.5,399.9 199.4,392.0 220.2,384.0 241.1,376.0 262.0,368.1 282.9,360.1 303.8,352.1 324.6,344.2 345.5,336.2 366.4,328.2 387.2,320.3 408.1,312.3 429.0,304.4 449.9,296.4 470.8,288.4 491.6,280.5 512.5,272.5 533.4,264.5 554.2,256.6 575.1,248.6 596.0,240.6 616.9,232.7 637.8,224.7 658.6,216.8 679.5,208.8 700.4,200.8 721.2,192.9 742.1,184.9 763.0,176.9 783.9,169.0 804.7,161.0 825.6,153.0 846.5,145.1 867.4,137.1 888.2,129.2 909.1,121.2 930.0,113.2" fill="none" stroke="#b44c4c" stroke-width="2.5"/>
+<line x1="690" y1="535" x2="728" y2="535" stroke="#b44c4c" stroke-width="2.5"/>
+<circle cx="709" cy="535" r="4" fill="#b44c4c"/>
+<text x="737" y="540" font-family="Arial" font-size="13" fill="#263746">Thanh khoản cao (p75)</text>
+<text transform="translate(25 272.5) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản dự báo (lần)</text>
+<text x="512.5" y="528" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tổng tài sản</text>
+<text x="500" y="585" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
+</svg></div></section>
+<section class="card gallery"><h3>Biểu đồ 5. Tương tác với biến giả thanh khoản 0–1</h3><div class="scroll"><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+<title id="title">Tương tác giữa phải trả người bán và dummy thanh khoản</title>
+<desc id="desc">Hai đường dự báo vòng quay tổng tài sản cho nhóm có và không có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</desc>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="500" y="34" text-anchor="middle" font-family="Arial" font-size="22" fill="#245b86">Tương tác với biến giả thanh khoản 0–1</text>
+<rect x="95" y="75" width="835" height="385" fill="#ffffff" stroke="#66727e" stroke-width="1"/>
+<line x1="95" y1="460.0" x2="930" y2="460.0" stroke="#d9e0e7"/>
+<text x="83" y="465.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">0.53</text>
+<line x1="95" y1="383.0" x2="930" y2="383.0" stroke="#d9e0e7"/>
+<text x="83" y="388.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">0.77</text>
+<line x1="95" y1="306.0" x2="930" y2="306.0" stroke="#d9e0e7"/>
+<text x="83" y="311.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.01</text>
+<line x1="95" y1="229.0" x2="930" y2="229.0" stroke="#d9e0e7"/>
+<text x="83" y="234.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.24</text>
+<line x1="95" y1="152.0" x2="930" y2="152.0" stroke="#d9e0e7"/>
+<text x="83" y="157.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.48</text>
+<line x1="95" y1="75.0" x2="930" y2="75.0" stroke="#d9e0e7"/>
+<text x="83" y="80.0" text-anchor="end" font-family="Arial" font-size="13" fill="#263746">1.72</text>
+<text x="95.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">0.6%</text>
+<text x="262.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">5.7%</text>
+<text x="429.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">10.9%</text>
+<text x="596.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">16.1%</text>
+<text x="763.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">21.3%</text>
+<text x="930.0" y="488" text-anchor="middle" font-family="Arial" font-size="13" fill="#263746">26.5%</text>
+<polyline points="95.0,422.7 115.9,420.0 136.8,417.2 157.6,414.4 178.5,411.6 199.4,408.9 220.2,406.1 241.1,403.3 262.0,400.5 282.9,397.8 303.8,395.0 324.6,392.2 345.5,389.4 366.4,386.7 387.2,383.9 408.1,381.1 429.0,378.3 449.9,375.6 470.8,372.8 491.6,370.0 512.5,367.2 533.4,364.5 554.2,361.7 575.1,358.9 596.0,356.1 616.9,353.4 637.8,350.6 658.6,347.8 679.5,345.0 700.4,342.3 721.2,339.5 742.1,336.7 763.0,334.0 783.9,331.2 804.7,328.4 825.6,325.6 846.5,322.9 867.4,320.1 888.2,317.3 909.1,314.5 930.0,311.8" fill="none" stroke="#8a5a9e" stroke-width="2.5"/>
+<polyline points="95.0,383.8 115.9,377.0 136.8,370.2 157.6,363.4 178.5,356.6 199.4,349.8 220.2,343.1 241.1,336.3 262.0,329.5 282.9,322.7 303.8,315.9 324.6,309.1 345.5,302.3 366.4,295.5 387.2,288.7 408.1,282.0 429.0,275.2 449.9,268.4 470.8,261.6 491.6,254.8 512.5,248.0 533.4,241.2 554.2,234.4 575.1,227.7 596.0,220.9 616.9,214.1 637.8,207.3 658.6,200.5 679.5,193.7 700.4,186.9 721.2,180.1 742.1,173.4 763.0,166.6 783.9,159.8 804.7,153.0 825.6,146.2 846.5,139.4 867.4,132.6 888.2,125.8 909.1,119.0 930.0,112.3" fill="none" stroke="#245b86" stroke-width="2.5"/>
+<text transform="translate(25 267.5) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản dự báo (lần)</text>
+<text x="512.5" y="518" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tổng tài sản</text>
+<line x1="155" y1="535" x2="195" y2="535" stroke="#8a5a9e" stroke-width="2.5"/><text x="205" y="540" font-family="Arial" font-size="13" fill="#263746">D=0: tài sản ngắn hạn &lt; nợ ngắn hạn</text>
+<line x1="550" y1="535" x2="590" y2="535" stroke="#245b86" stroke-width="2.5"/><text x="600" y="540" font-family="Arial" font-size="13" fill="#263746">D=1: tài sản ngắn hạn ≥ nợ ngắn hạn</text>
+<text x="500" y="580" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
+</svg></div></section>
+<section class="card gallery"><h3>Bảng 20. Tóm tắt các mô hình</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Obs</th>
+      <th>Số công ty</th>
+      <th>R2</th>
+      <th>R2 hiệu chỉnh</th>
+      <th>RSS</th>
+    </tr>
+    <tr>
+      <th>Mô hình</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Mô hình 0: OLS đơn giản Y ~ X</th>
+      <td>7,014</td>
+      <td>1,454</td>
+      <td>0.0694</td>
+      <td>0.0693</td>
+      <td>9,656.2389</td>
+    </tr>
+    <tr>
+      <th>Mô hình 1: không có tương tác</th>
+      <td>7,014</td>
+      <td>1,454</td>
+      <td>0.0911</td>
+      <td>0.0902</td>
+      <td>9,431.2245</td>
+    </tr>
+    <tr>
+      <th>Mô hình 2: có tương tác</th>
+      <td>7,014</td>
+      <td>1,454</td>
+      <td>0.1161</td>
+      <td>0.1151</td>
+      <td>9,172.2398</td>
+    </tr>
+    <tr>
+      <th>Mô hình 3: tương tác với dummy thanh khoản</th>
+      <td>7,014</td>
+      <td>1,454</td>
+      <td>0.1050</td>
+      <td>0.1040</td>
+      <td>9,287.4834</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 21. So sánh pooled OLS và hiệu ứng cố định công ty</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>M1 Pooled</th>
+      <th>M1 FE</th>
+      <th>M2 Pooled</th>
+      <th>M2 FE</th>
+      <th>M3 Pooled</th>
+      <th>M3 FE</th>
+    </tr>
+    <tr>
+      <th>Biến</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>2.1777*** (0.2912)</td>
+      <td>0.6805** (0.2723)</td>
+      <td>5.0694*** (0.4985)</td>
+      <td>1.1550*** (0.3626)</td>
+      <td>1.3182*** (0.5081)</td>
+      <td>0.6799 (0.4666)</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>-0.0284*** (0.0041)</td>
+      <td>-0.0071 (0.0045)</td>
+      <td>0.1350*** (0.0260)</td>
+      <td>0.0242 (0.0216)</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>0.3139*** (0.0644)</td>
+      <td>0.1217*** (0.0325)</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.0978*** (0.0144)</td>
+      <td>-0.2776*** (0.0694)</td>
+      <td>-0.0918*** (0.0140)</td>
+      <td>-0.2751*** (0.0707)</td>
+      <td>-0.0937*** (0.0133)</td>
+      <td>-0.2745*** (0.0667)</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td></td>
+      <td></td>
+      <td>1.6573*** (0.2519)</td>
+      <td>0.2998 (0.2097)</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>1.9066*** (0.5745)</td>
+      <td>0.0977 (0.4044)</td>
+    </tr>
+    <tr>
+      <th>Obs</th>
+      <td>7,014</td>
+      <td>6,996</td>
+      <td>7,014</td>
+      <td>6,996</td>
+      <td>7,014</td>
+      <td>6,996</td>
+    </tr>
+    <tr>
+      <th>R²</th>
+      <td>0.0911</td>
+      <td>0.0435</td>
+      <td>0.1161</td>
+      <td>0.0452</td>
+      <td>0.1050</td>
+      <td>0.0465</td>
+    </tr>
+  </tbody>
+</table></div></section></div>
+<script>function showTab(t){document.getElementById('tab-full').hidden=t!=='full';document.getElementById('tab-tables').hidden=t!=='tables';document.getElementById('btn-full').setAttribute('aria-selected',String(t==='full'));document.getElementById('btn-tables').setAttribute('aria-selected',String(t==='tables'));try{history.replaceState(null,'',t==='tables'?'#bang-bieu':location.pathname);}catch(e){}window.scrollTo(0,0);}if(location.hash==='#bang-bieu')showTab('tables');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>
