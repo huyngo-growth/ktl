@@ -605,6 +605,10 @@ def main() -> None:
     valid = valid.replace([np.inf, -np.inf], np.nan).dropna(subset=metric_cols)
     add_step("Các biến mô hình hữu hạn và đầy đủ", valid)
     sample_flow = pd.DataFrame(sample_steps).set_index("Bước")
+    # Ngành ICB cấp 2 của từng mã, lấy từ danh sách mã của Vietcap (cùng nguồn với dữ liệu BCTC).
+    icb_path = DATA / "nganh_icb_vietcap.csv"
+    icb_map = (pd.read_csv(icb_path, dtype=str).set_index("ticker")["nganh_icb2"].to_dict()
+               if icb_path.exists() else {})
     if valid.empty:
         raise ValueError("Không còn dòng hợp lệ sau khi áp dụng tiêu chí chọn mẫu.")
 
@@ -1017,9 +1021,16 @@ def main() -> None:
                "Trong bài này A3, A4 bị vi phạm nên OLS không còn hiệu quả nhất, nhưng suy luận vẫn dùng được nhờ sai số chuẩn gom cụm. A5 là điểm yếu chính: chưa thể khẳng định tính không chệch và vững, nên các hệ số chỉ được diễn giải là mối liên hệ, không phải tác động nhân quả. "
                f"Vì vậy bài kiểm tra độ bền bằng ba cách (pooled OLS, FE công ty, biến trễ 1 năm). Theo nguyên tắc không có phương pháp nào tốt nhất, tốt nhất là các phương pháp cùng dẫn đến một kết quả: kết quả nhất quán là {consistent}; "
                + ("vai trò điều tiết của thanh khoản thì " + ("không vững vì mất ý nghĩa khi thêm hiệu ứng cố định công ty, nên chưa đủ bằng chứng để kết luận." if not int_sig[1] else "vững qua các cách ước lượng.")))
+    industry_icb = (wins.assign(nganh=wins["ticker"].map(lambda t: icb_map.get(t, "Không có trong danh sách hiện hành")))
+                    .groupby("nganh").agg(**{"Số quan sát": ("ticker", "size"), "Số mã": ("ticker", "nunique")})
+                    .sort_values("Số quan sát", ascending=False))
+    industry_icb["Tỷ lệ quan sát"] = industry_icb["Số quan sát"] / len(wins)
+    industry_icb.index.name = "Ngành (ICB cấp 2)"
+    industry_icb.to_csv(OUT / "00_phan_bo_nganh_icb.csv", encoding="utf-8-sig")
     gallery_items = [
         ("Bảng", "Nhóm ngành theo mẫu biểu BCTC trước khi loại", table_html(industry_distribution, digits=0)),
         ("Bảng", "Luồng chọn mẫu", table_html(sample_flow, digits=0)),
+        ("Bảng", "Phân bổ mẫu phân tích theo ngành ICB cấp 2", table_html(industry_icb)),
     ]
     gallery_items += [
         ("Bảng", "Chú thích tên biến", table_html(model_dictionary, text=True)),
@@ -1071,17 +1082,18 @@ def main() -> None:
     status[(status == "Giữ lại") & ~merged.index.isin(wins.index)] = "Loại: biến không hữu hạn"
     assert int((status == "Giữ lại").sum()) == len(wins)
     bil = lambda x: None if pd.isna(x) else round(float(x) / 1e9, 3)
+    icb_of = lambda t: icb_map.get(t, "Không có trong danh sách hiện hành")
     num = lambda x, d=4: None if pd.isna(x) else round(float(x), d)
-    raw_cols_vn = ["Mã", "Năm", "Nhóm theo mẫu BCTC", "Trạng thái", "Doanh thu thuần", "Tổng tài sản",
+    raw_cols_vn = ["Mã", "Năm", "Ngành (ICB cấp 2)", "Trạng thái", "Doanh thu thuần", "Tổng tài sản",
                    "TS ngắn hạn", "Nợ ngắn hạn", "Phải trả người bán"]
     mo = merged.assign(st_=status).sort_values(["ticker", "year"])
-    raw_rows = [[r.ticker, str(int(r.year)), r.industry_group, r.st_, bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57)]
+    raw_rows = [[r.ticker, str(int(r.year)), icb_of(r.ticker), r.st_, bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57)]
                 for r in mo.itertuples()]
-    clean_cols_vn = ["Mã", "Năm", "Doanh thu thuần", "Tổng tài sản", "TS ngắn hạn", "Nợ ngắn hạn", "Phải trả người bán",
+    clean_cols_vn = ["Mã", "Năm", "Ngành (ICB cấp 2)", "Doanh thu thuần", "Tổng tài sản", "TS ngắn hạn", "Nợ ngắn hạn", "Phải trả người bán",
                      "ATO", "TPR", "LIQ", "SIZ", "ATO_w", "TPR_w", "LIQ_w", "SIZ_w", "DLI"]
     vo = valid.loc[wins.index]
     cl = wins.assign(x_ato=vo["asset_turnover"], x_tpr=vo["payables_ratio"], x_liq=vo["liquidity"], x_siz=vo["size_ln"]).sort_values(["ticker", "year"])
-    clean_rows = [[r.ticker, str(int(r.year)), bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57),
+    clean_rows = [[r.ticker, str(int(r.year)), icb_of(r.ticker), bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57),
                    num(r.x_ato), num(r.x_tpr), num(r.x_liq), num(r.x_siz), num(r.asset_turnover), num(r.payables_ratio),
                    num(r.liquidity), num(r.size_ln), int(r.high_liquidity_dummy)] for r in cl.itertuples()]
     data_dir = OUT / "data"; data_dir.mkdir(exist_ok=True)
@@ -1130,16 +1142,17 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
 <p>Về kinh tế, trả chậm có thể hỗ trợ vốn lưu động và duy trì hoạt động, nhưng phụ thuộc quá nhiều cũng có thể phản ánh thiếu tiền hoặc tạo áp lực thanh toán. Doanh nghiệp thanh khoản tốt có khả năng quản lý nghĩa vụ với nhà cung cấp khác doanh nghiệp thiếu thanh khoản; đó là cơ sở của biến tương tác. Mục tiêu của bài thực hành là đo <b>mối liên hệ có điều kiện</b> bằng OLS, không khẳng định khoản phải trả là nguyên nhân gây thay đổi hiệu quả.</p></section>
 <section class="card"><h2>2. Mẫu và cách xử lý</h2><p>Đã ghép báo cáo kết quả kinh doanh với bảng cân đối theo mã và năm. Sau tiêu chí hợp lệ còn <b>{len(wins):,} quan sát công ty–năm</b> thuộc <b>{wins['ticker'].nunique():,} mã</b>; số quan sát theo năm: {', '.join(f'{int(y)}: {int(n):,}' for y,n in wins.groupby('year').size().items())}. Mẫu không cân bằng.</p>
-<p><b>Vì sao chọn các công ty này?</b> Phạm vi tải là toàn bộ mã có trong dữ liệu thị trường HOSE, HNX và UPCoM, không phải nhóm vốn hóa cao nhất. Doanh nghiệp niêm yết được chọn vì báo cáo tài chính năm công khai giúp lấy cùng các khoản mục giữa nhiều công ty và nhiều kỳ. Một dòng là một công ty trong một năm; cách tổ chức này tạo dữ liệu bảng để so sánh khác biệt giữa công ty và thay đổi theo thời gian.</p>
+<p><b>Vì sao chọn các công ty này?</b> Phạm vi tải là toàn bộ mã có trong dữ liệu thị trường HOSE, HNX và UPCoM. Doanh nghiệp niêm yết được chọn vì báo cáo tài chính năm công khai giúp lấy cùng các khoản mục giữa nhiều công ty và nhiều kỳ. Một dòng là một công ty trong một năm; cách tổ chức này tạo dữ liệu bảng để so sánh khác biệt giữa công ty và thay đổi theo thời gian.</p>
 <p><b>Vì sao chọn 5 năm 2021–2025?</b> Năm năm đủ dài để mỗi doanh nghiệp có nhiều quan sát và để mô hình kiểm soát các cú sốc chung theo năm, nhờ đó kết quả không phụ thuộc vào riêng một kỳ. Đồng thời đây là giai đoạn gần nhất, giúp dữ liệu còn phù hợp với bối cảnh hiện tại và hạn chế mất mẫu hoặc thay đổi quá lớn về cấu trúc doanh nghiệp/chế độ báo cáo khi kéo kỳ nghiên cứu quá xa. Khoảng thời gian này cân bằng giữa <i>tính cập nhật</i>, <i>độ lớn mẫu</i> và <i>khả năng xử lý bài tập</i>; không có nghĩa 5 năm luôn là lựa chọn tối ưu cho mọi nghiên cứu.</p>
 <p><b>Vì sao loại công ty tài chính?</b> Ngân hàng, chứng khoán và bảo hiểm có mẫu báo cáo, nguồn tạo doanh thu, cấu trúc tài sản–nợ và quy định thanh khoản khác doanh nghiệp sản xuất, thương mại, dịch vụ. Ví dụ tiền gửi khách hàng của ngân hàng không tương đương nợ nhà cung cấp; “tài sản ngắn hạn/nợ ngắn hạn” và vòng quay tài sản vì thế không có cùng nội hàm. Nếu gộp chung, hệ số có thể phản ánh khác biệt mô hình kinh doanh giữa hai nhóm thay vì quan hệ giữa tín dụng thương mại và hiệu quả. Chương trình nhận diện ba nhóm này từ các mẫu cột KQKD riêng <code>isb</code>, <code>iss</code>, <code>isi</code> của nguồn và loại trước khi tạo tỷ số.</p>
 <h3>Nhóm ngành theo mẫu biểu BCTC trước khi loại</h3><div class="scroll">{table_html(industry_distribution, digits=0)}</div>
 <p><b>Vì sao các tiêu chí lọc gắn với mô hình?</b> Cần doanh thu thuần dương để tính vòng quay tài sản (Y); tổng tài sản dương làm mẫu số cho Y và tỷ lệ phải trả (X); nợ ngắn hạn dương làm mẫu số cho thanh khoản (Z); tài sản ngắn hạn và phải trả người bán không âm để tỷ lệ có ý nghĩa. Chỉ giữ dòng có đủ các khoản mục cho cùng mã-năm để mọi biến trong OLS được tính trên cùng quan sát. Không bắt buộc một mã phải có đủ cả 5 năm, nhằm tránh loại bỏ toàn bộ công ty chỉ vì thiếu một kỳ.</p>
 <p>Về lý thuyết, khoản phải trả người bán là tín dụng từ nhà cung cấp; thanh khoản hiện hành phản ánh khả năng đáp ứng nghĩa vụ ngắn hạn nên có cơ sở để điều tiết mối liên hệ đó; vòng quay tổng tài sản đại diện cho doanh thu tạo ra từ tài sản. Quy mô là biến kiểm soát vì doanh nghiệp lớn/nhỏ có thể khác nhau về hoạt động và nguồn lực.</p>
 <h3>Luồng chọn mẫu có thể kiểm toán</h3><div class="scroll">{table_html(sample_flow, digits=0)}</div>
+<h3>Phân bổ mẫu phân tích theo ngành ICB cấp 2</h3><p class="legend">Ngành theo chuẩn ICB cấp 2 do Vietcap phân loại, cùng nguồn với dữ liệu báo cáo tài chính.</p><div class="scroll">{table_html(industry_icb)}</div>
 <p>Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
 <p>Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có <b>{changed:,} ô giá trị</b> bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.</p>
-<p class="note"><b>Giới hạn phạm vi:</b> đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam, không phải nhóm vốn hóa cao nhất và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo <b>mẫu biểu BCTC</b> để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…</p></section>
+<p class="note"><b>Giới hạn phạm vi:</b> đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo <b>mẫu biểu BCTC</b> để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…</p></section>
 <section class="card"><h2>3. Cấu trúc bài theo yêu cầu</h2><div class="scroll">{table_html(requirement_check, text=True)}</div></section>
 <section class="card"><h2>4. Bảng chú thích tên biến rút gọn</h2><p>Tất cả các bảng kết quả phía dưới dùng thống nhất các mã trong bảng này.</p><div class="scroll">{table_html(model_dictionary, text=True)}</div>
 <h3>Khoản mục lấy từ báo cáo nào?</h3><div class="scroll">{table_html(statement_dictionary, text=True)}</div>
