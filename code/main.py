@@ -1289,8 +1289,11 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
                    '<meta name="viewport" content="width=device-width,initial-scale=1"><title>Bảng và biểu đồ – Trade payables</title>'
                    + page_style +
                    '<style>@media print{.card{box-shadow:none;break-inside:avoid;margin:0 0 10px}body{background:#fff}main{margin:0;max-width:none;padding:0}h3{break-after:avoid}.inline-chart{max-height:150mm;width:auto;max-width:100%;margin:6px auto}}</style>'
-                   '</head><body><main><header class="card"><h1>Bảng và biểu đồ</h1>'
+                   '</head><body><main><header class="card"><h1>Mô hình, bảng và biểu đồ</h1>'
                    '<p>Trade payables, thanh khoản và hiệu quả hoạt động • FY2021–FY2025</p></header>'
+                   + '<h2 style="margin:18px 0 6px">Phần 1. Các mô hình trong bài</h2>'
+                   + models_tab_html.replace('<div id="tab-models" hidden>', '<div>', 1)
+                   + '<h2 style="margin:24px 0 6px;break-before:page">Phần 2. Bảng và biểu đồ</h2>'
                    + gallery_html + '</main></body></html>')
     (OUT / "bang_va_bieu_do.html").write_text(gallery_doc, encoding="utf-8")
     print(f"Hoàn tất: {len(wins):,} quan sát, {wins['ticker'].nunique():,} mã, {YEARS[0]}–{YEARS[-1]}.")
