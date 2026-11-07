@@ -1108,6 +1108,63 @@ def main() -> None:
         .replace("__STATUS_TABLE__", table_html(status_counts, text=True))
         .replace("__RAW_JSON__", jdump(raw_cols_vn, raw_rows, 3))
         .replace("__CLEAN_JSON__", jdump(clean_cols_vn, clean_rows, -1)))
+
+    # ---- Tab mô hình: tất cả các mô hình ước lượng trong bài ----
+    def F(x): return f'<div class="formula">{x}</div>'
+    E = "ε<sub>i,t</sub>"
+    base = "α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub>"
+    ctrl = "α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub>"
+    fe_rhs = "α<sub>1</sub>·TPRc<sub>i,t</sub> + "
+    model_specs = [
+        ("Mô hình 0 — OLS đơn giản", "ATO<sub>i,t</sub> = " + base + " + " + E,
+         "Mối liên hệ thô giữa tỷ lệ phải trả người bán và hiệu quả hoạt động, chưa có biến kiểm soát.",
+         "Pooled OLS, sai số chuẩn gom cụm theo mã", info0["Obs"], "12"),
+        ("Mô hình 1 — Mô hình cơ sở", "ATO<sub>i,t</sub> = " + base + " + " + ctrl + " + δ<sub>t</sub> + " + E,
+         "Tác động riêng biệt của TPR khi giữ thanh khoản, quy mô và năm không đổi.",
+         "Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã", info1["Obs"], "13"),
+        ("Mô hình 2 — Tương tác liên tục", "ATO<sub>i,t</sub> = " + base + " + " + ctrl + " + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + " + E,
+         "Kiểm tra độ dốc TPR–ATO có thay đổi theo mức thanh khoản không. Tác động biên của TPR = α<sub>1</sub> + α<sub>4</sub>·LIQc.",
+         "Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã", info2["Obs"], "14, 16"),
+        ("Mô hình 3 — Tương tác với biến giả", "ATO<sub>i,t</sub> = " + base + " + α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + " + E,
+         "So sánh hai nhóm: DLI = 1 có hệ số chặn mới α<sub>0</sub> + α<sub>2</sub> và độ dốc mới α<sub>1</sub> + α<sub>4</sub>.",
+         "Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã", info3["Obs"], "15, 17"),
+        ("Mô hình 1 FE — Hiệu ứng cố định công ty", "ATO<sub>i,t</sub> = " + fe_rhs + ctrl + " + δ<sub>t</sub> + f<sub>i</sub> + " + E,
+         "Kiểm tra độ bền: chỉ dùng biến động trong cùng một công ty qua các năm, loại bỏ đặc điểm không đổi theo thời gian như ngành.",
+         "OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã", fe_info1["Obs"], "19"),
+        ("Mô hình 2 FE", "ATO<sub>i,t</sub> = " + fe_rhs + ctrl + " + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + " + E,
+         "Mô hình 2 có thêm hiệu ứng cố định công ty.", "OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã", fe_info2["Obs"], "19"),
+        ("Mô hình 3 FE", "ATO<sub>i,t</sub> = " + fe_rhs + "α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + " + E,
+         "Mô hình 3 có thêm hiệu ứng cố định công ty.", "OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã", fe_info3["Obs"], "19"),
+        ("Mô hình 2 trễ 1 năm", "ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t−1</sub> + α<sub>2</sub>·LIQc<sub>i,t−1</sub> + α<sub>3</sub>·SIZ<sub>i,t−1</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t−1</sub> + δ<sub>t</sub> + " + E,
+         "Kiểm tra độ bền với nội sinh do quan hệ ngược: TPR năm trước không thể bị ATO năm nay tác động.",
+         "Pooled OLS có hiệu ứng cố định năm (năm gốc 2022), sai số chuẩn gom cụm theo mã", lag_info2["Obs"], "19, 20"),
+        ("Kiểm tra A1 — Mô hình 1 thêm bình phương TPR", "ATO<sub>i,t</sub> = " + base + " + " + ctrl + " + α<sub>4</sub>·TPRc<sup>2</sup><sub>i,t</sub> + δ<sub>t</sub> + " + E,
+         "Kiểm tra giả định tuyến tính: α<sub>4</sub> có ý nghĩa thống kê nghĩa là quan hệ TPR–ATO cong.",
+         "Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã", info1["Obs"], "20"),
+        ("Kiểm tra A4 — Hồi quy phụ Breusch–Pagan", "ε̂<sup>2</sup><sub>i,t</sub> = γ<sub>0</sub> + γ<sub>1</sub>·TPRc<sub>i,t</sub> + γ<sub>2</sub>·LIQc<sub>i,t</sub> + γ<sub>3</sub>·SIZ<sub>i,t</sub> + γ<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + v<sub>i,t</sub>",
+         "Hồi quy phần dư bình phương của mô hình 2 lên các biến giải thích. LM = n·R² ~ χ²(k); H<sub>0</sub>: phương sai sai số không đổi.",
+         "OLS", info2["Obs"], "20"),
+    ]
+    model_cards = "".join(
+        f'<section class="card"><h3>{t}</h3>{F(eq)}<p>{d}</p>'
+        f'<p class="legend">Ước lượng: {how}. Số quan sát: {int(n):,}. Kết quả ở mục {sec} của báo cáo đầy đủ.</p></section>'
+        for t, eq, d, how, n, sec in model_specs)
+    legend_rows = [
+        ("ATO<sub>i,t</sub>", "Vòng quay tổng tài sản của công ty i năm t = doanh thu thuần / tổng tài sản (biến phụ thuộc)"),
+        ("TPRc<sub>i,t</sub>", "Tỷ lệ phải trả người bán / tổng tài sản, đã trừ trung bình mẫu (biến độc lập chính)"),
+        ("LIQc<sub>i,t</sub>", "Thanh khoản hiện hành = tài sản ngắn hạn / nợ ngắn hạn, đã trừ trung bình mẫu (biến điều tiết)"),
+        ("SIZ<sub>i,t</sub>", "ln(tổng tài sản, tỷ đồng) (biến kiểm soát)"),
+        ("DLI<sub>i,t</sub>", "Biến giả = 1 nếu LIQ ≥ 1, ngược lại = 0"),
+        ("δ<sub>t</sub>", "Hiệu ứng cố định năm: biến giả từng năm so với năm gốc"),
+        ("f<sub>i</sub>", "Hiệu ứng cố định công ty: hệ số chặn riêng cho từng công ty"),
+        ("ε<sub>i,t</sub>", "Sai số: thông tin có thể giải thích ATO nhưng chưa đưa vào mô hình"),
+        ("t − 1", "Giá trị của năm trước"),
+    ]
+    models_tab_html = ('<div id="tab-models" hidden>'
+        '<section class="card"><h3>Ký hiệu dùng trong các mô hình</h3><table class="data text"><tbody>'
+        + "".join(f"<tr><th>{a}</th><td>{b}</td></tr>" for a, b in legend_rows)
+        + '</tbody></table><p class="legend">Mọi biến liên tục đã được winsor hóa p1–p99. i: công ty, t: năm.</p></section>'
+        + model_cards + '</div>')
     # ---- Tab code: toàn bộ mã nguồn main.py ----
     source_code = Path(__file__).read_text(encoding="utf-8")
     code_tab_html = (
@@ -1136,7 +1193,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
 </header>
-<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
+<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
 <div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
@@ -1219,9 +1276,10 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 <section class="card"><h2>Nguồn và tính tái lập</h2><p>Nguồn dữ liệu báo cáo tài chính: <a href="https://stock.quanganh.org/vi/downloads">trang tải dữ liệu cổ phiếu Việt Nam của Quang Anh</a>; nguồn được trang này ghi cho chỉ số cổ phiếu là Vietcap và bổ sung SSI đối với một số chuỗi chỉ số. Bộ dữ liệu kèm theo trong thư mục <code>data_source</code>.</p><p>Bài tham khảo: <a href="https://nckh.tapchicongthuong.vn/j/nckh/articles/3252-the-effects-of-trade-payables-on-the-performance-of-firms-listed-on-the-vietnam-stock-exchange?lang=en-US">The effects of trade payables on the performance of firms listed on the Vietnam Stock Exchange</a>. Tóm tắt bài báo đề cập panel 2011–2022, thanh khoản điều tiết quan hệ và sử dụng OLS, FE, RE, 2SLS. Bài này dùng 2021–2025 để thực hành, vì vậy khác kỳ nghiên cứu gốc.</p></section>
 </div>
 <div id="tab-tables" hidden>{gallery_html}</div>
+{models_tab_html}
 {data_tab_html}
 {code_tab_html}
-<script>function showTab(t){{for(const k of ['full','tables','data','code']){{document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}}const h={{tables:'#bang-bieu',data:'#du-lieu',code:'#code'}};try{{history.replaceState(null,'',h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');</script>
+<script>function showTab(t){{for(const k of ['full','models','tables','data','code']){{document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}}const h={{tables:'#bang-bieu',data:'#du-lieu',code:'#code',models:'#mo-hinh'}};try{{history.replaceState(null,'',h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');if(location.hash==='#mo-hinh')showTab('models');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>'''
     (OUT / "bao_cao_ket_qua.html").write_text(report, encoding="utf-8")
     # File riêng chỉ gồm các bảng và biểu đồ (giống tab "Chỉ bảng và biểu đồ"), dùng để in hoặc xuất PDF.
