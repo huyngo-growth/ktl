@@ -3695,7 +3695,7 @@ b('‹ Trước',st.page-1,st.page===0);const sp=document.createElement('span');
 q.addEventListener('input',()=>{st.q=q.value;st.page=0;render();});if(f)f.addEventListener('change',()=>{st.f=f.value;st.page=0;render();});render();}
 mk('raw');mk('clean');})();
 </script></div>
-<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,219 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
+<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,230 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
 &quot;&quot;&quot;Bài thực hành: mô tả, tương quan, VIF, winsorization và OLS có tương tác.
 
 Chạy từ thư mục dự án bằng: py main.py
@@ -4908,6 +4908,17 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 &lt;script&gt;function showTab(t){{for(const k of [&#x27;full&#x27;,&#x27;tables&#x27;,&#x27;data&#x27;,&#x27;code&#x27;]){{document.getElementById(&#x27;tab-&#x27;+k).hidden=k!==t;document.getElementById(&#x27;btn-&#x27;+k).setAttribute(&#x27;aria-selected&#x27;,String(k===t));}}const h={{tables:&#x27;#bang-bieu&#x27;,data:&#x27;#du-lieu&#x27;,code:&#x27;#code&#x27;}};try{{history.replaceState(null,&#x27;&#x27;,h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash===&#x27;#bang-bieu&#x27;)showTab(&#x27;tables&#x27;);if(location.hash===&#x27;#du-lieu&#x27;)showTab(&#x27;data&#x27;);if(location.hash===&#x27;#code&#x27;)showTab(&#x27;code&#x27;);&lt;/script&gt;
 &lt;footer&gt;&lt;small&gt;Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm&lt;/small&gt;&lt;/footer&gt;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;&#x27;&#x27;&#x27;
     (OUT / &quot;bao_cao_ket_qua.html&quot;).write_text(report, encoding=&quot;utf-8&quot;)
+    # File riêng chỉ gồm các bảng và biểu đồ (giống tab &quot;Chỉ bảng và biểu đồ&quot;), dùng để in hoặc xuất PDF.
+    import re as _re
+    page_style = _re.search(r&quot;&lt;style&gt;.*?&lt;/style&gt;&quot;, report, _re.S).group(0)
+    gallery_doc = (&#x27;&lt;!doctype html&gt;&lt;html lang=&quot;vi&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&#x27;
+                   &#x27;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Bảng và biểu đồ – Trade payables&lt;/title&gt;&#x27;
+                   + page_style +
+                   &#x27;&lt;style&gt;@media print{.card{box-shadow:none;break-inside:avoid;margin:0 0 10px}body{background:#fff}main{margin:0;max-width:none;padding:0}h3{break-after:avoid}.inline-chart{max-height:150mm;width:auto;max-width:100%;margin:6px auto}}&lt;/style&gt;&#x27;
+                   &#x27;&lt;/head&gt;&lt;body&gt;&lt;main&gt;&lt;header class=&quot;card&quot;&gt;&lt;h1&gt;Bảng và biểu đồ&lt;/h1&gt;&#x27;
+                   &#x27;&lt;p&gt;Trade payables, thanh khoản và hiệu quả hoạt động • FY2021–FY2025&lt;/p&gt;&lt;/header&gt;&#x27;
+                   + gallery_html + &#x27;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;&#x27;)
+    (OUT / &quot;bang_va_bieu_do.html&quot;).write_text(gallery_doc, encoding=&quot;utf-8&quot;)
     print(f&quot;Hoàn tất: {len(wins):,} quan sát, {wins[&#x27;ticker&#x27;].nunique():,} mã, {YEARS[0]}–{YEARS[-1]}.&quot;)
     print(f&quot;Đã ghi báo cáo: {OUT / &#x27;bao_cao_ket_qua.html&#x27;}&quot;)
 
