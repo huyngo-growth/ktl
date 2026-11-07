@@ -1128,7 +1128,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 .read{{background:#eef6f0;border-left:4px solid #3c8d5a;padding:12px 16px;margin:14px 0 4px}} .gallery h3{{margin:0 0 8px;color:#123d64}} [hidden]{{display:none!important}}
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
-<p>Báo cáo tự động từ dữ liệu công ty–năm. Đây là bài thực hành OLS trên dữ liệu bảng gộp, có kiểm tra độ bền bằng hiệu ứng cố định công ty; không phải kết luận nhân quả.</p></header>
+</header>
 <nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
 <div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
