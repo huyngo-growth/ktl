@@ -12,7 +12,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
 </header>
-<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
+<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button><button type="button" role="tab" id="btn-stata" aria-selected="false" onclick="showTab('stata')">Hướng dẫn Stata</button></nav>
 <div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
@@ -3936,7 +3936,7 @@ b('‹ Trước',st.page-1,st.page===0);const sp=document.createElement('span');
 q.addEventListener('input',()=>{st.q=q.value;st.page=0;render();});if(f)f.addEventListener('change',()=>{st.f=f.value;st.page=0;render();});render();}
 mk('raw');mk('clean');})();
 </script></div>
-<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,304 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
+<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,343 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
 &quot;&quot;&quot;Bài thực hành: mô tả, tương quan, VIF, winsorization và OLS có tương tác.
 
 Chạy từ thư mục dự án bằng: py main.py
@@ -5103,6 +5103,44 @@ def main() -&gt; None:
         + &quot;&quot;.join(f&quot;&lt;tr&gt;&lt;th&gt;{a}&lt;/th&gt;&lt;td&gt;{b}&lt;/td&gt;&lt;/tr&gt;&quot; for a, b in legend_rows)
         + &#x27;&lt;/tbody&gt;&lt;/table&gt;&lt;p class=&quot;legend&quot;&gt;Mọi biến liên tục đã được winsor hóa p1–p99. i: công ty, t: năm.&lt;/p&gt;&lt;/section&gt;&#x27;
         + model_cards + &#x27;&lt;/div&gt;&#x27;)
+
+    # ---- Tab hướng dẫn Stata: dữ liệu cho Stata + do-file chia theo bước ----
+    import shutil as _shutil
+    tmpl = {&quot;Phi tài chính (mẫu biểu chung)&quot;: &quot;nonfin&quot;, &quot;Ngân hàng&quot;: &quot;bank&quot;, &quot;Chứng khoán&quot;: &quot;securities&quot;, &quot;Bảo hiểm&quot;: &quot;insurance&quot;}
+    stata_df = pd.DataFrame({
+        &quot;ticker&quot;: mo[&quot;ticker&quot;].values, &quot;year&quot;: mo[&quot;year&quot;].astype(int).values,
+        &quot;icb2&quot;: mo[&quot;ticker&quot;].map(icb_of).values, &quot;template&quot;: mo[&quot;industry_group&quot;].map(tmpl).values,
+        &quot;revenue&quot;: (mo[&quot;isa3&quot;] / 1e9).round(6).values, &quot;total_assets&quot;: (mo[&quot;bsa53&quot;] / 1e9).round(6).values,
+        &quot;current_assets&quot;: (mo[&quot;bsa1&quot;] / 1e9).round(6).values, &quot;current_liab&quot;: (mo[&quot;bsa55&quot;] / 1e9).round(6).values,
+        &quot;trade_payables&quot;: (mo[&quot;bsa57&quot;] / 1e9).round(6).values})
+    stata_df.to_csv(data_dir / &quot;stata_data.csv&quot;, index=False, encoding=&quot;utf-8&quot;)
+    do_path = ROOT / &quot;stata&quot; / &quot;bai_tap_trade_payables.do&quot;
+    stata_cards = &quot;&quot;
+    if do_path.exists():
+        _shutil.copyfile(do_path, data_dir / &quot;bai_tap_trade_payables.do&quot;)
+        blocks, cur = [], None
+        for line in do_path.read_text(encoding=&quot;utf-8&quot;).splitlines():
+            if line.startswith(&quot;*====&quot;):
+                cur = [line.replace(&quot;*====&quot;, &quot;&quot;).strip(), []]; blocks.append(cur)
+            elif cur is not None:
+                cur[1].append(line)
+        stata_cards = &quot;&quot;.join(
+            f&#x27;&lt;section class=&quot;card&quot;&gt;&lt;h3&gt;Bước {xml_escape(t)}&lt;/h3&gt;&lt;pre class=&quot;code stata-code&quot;&gt;&lt;code class=&quot;language-stata&quot;&gt;{xml_escape(chr(10).join(b).strip())}&lt;/code&gt;&lt;/pre&gt;&lt;/section&gt;&#x27;
+            for t, b in blocks)
+    stata_tab_html = (
+        &#x27;&lt;div id=&quot;tab-stata&quot; hidden&gt;&lt;section class=&quot;card&quot;&gt;&lt;h3&gt;Chạy lại toàn bộ bảng và biểu đồ bằng Stata&lt;/h3&gt;&#x27;
+        &#x27;&lt;ol&gt;&lt;li&gt;Tải hai file bên dưới về cùng một thư mục: &lt;b&gt;bai_tap_trade_payables.do&lt;/b&gt; (code Stata) và &lt;b&gt;stata_data.csv&lt;/b&gt; (dữ liệu gốc &#x27;
+        f&#x27;{len(stata_df):,} công ty–năm, đơn vị tỷ đồng, có sẵn ngành ICB cấp 2).&lt;/li&gt;&#x27;
+        &#x27;&lt;li&gt;Mở Stata (bản 14 trở lên), chọn File → Open và mở file .do.&lt;/li&gt;&#x27;
+        &#x27;&lt;li&gt;Sửa đường dẫn trong lệnh &lt;code&gt;cd&lt;/code&gt; ở bước 1 thành thư mục chứa hai file.&lt;/li&gt;&#x27;
+        &#x27;&lt;li&gt;Chạy bước 0 một lần để cài các gói bổ sung (winsor2, estout, reghdfe, heatplot). Sau đó bấm Do (Ctrl+D) để chạy toàn bộ, hoặc bôi đen từng bước rồi bấm Ctrl+D để chạy riêng.&lt;/li&gt;&#x27;
+        &#x27;&lt;li&gt;Bảng hiện trong cửa sổ Results; biểu đồ được lưu thành file PNG, bảng hồi quy được lưu thành file RTF mở bằng Word, tất cả trong cùng thư mục.&lt;/li&gt;&lt;/ol&gt;&#x27;
+        &#x27;&lt;p class=&quot;legend&quot;&gt;Kết quả Stata khớp với báo cáo ở hệ số và sai số chuẩn. Có thể lệch rất nhỏ ở ngưỡng winsor (Stata tính phân vị theo định nghĩa khác Python) và ở p-value (Stata dùng phân phối t, báo cáo dùng xấp xỉ chuẩn).&lt;/p&gt;&#x27;
+        &#x27;&lt;div class=&quot;dt-controls&quot;&gt;&lt;a class=&quot;dl&quot; style=&quot;margin-left:0&quot; href=&quot;data/bai_tap_trade_payables.do&quot; download&gt;Tải file .do&lt;/a&gt;&#x27;
+        &#x27;&lt;a class=&quot;dl&quot; style=&quot;margin-left:0&quot; href=&quot;data/stata_data.csv&quot; download&gt;Tải stata_data.csv&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;&#x27;
+        + stata_cards +
+        &#x27;&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/stata.min.js&quot;&gt;&lt;/script&gt;&#x27;
+        &#x27;&lt;script&gt;if(window.hljs){document.querySelectorAll(&quot;pre.stata-code code&quot;).forEach(function(c){hljs.highlightElement(c);});}&lt;/script&gt;&lt;/div&gt;&#x27;)
     # ---- Tab code: toàn bộ mã nguồn main.py ----
     source_code = Path(__file__).read_text(encoding=&quot;utf-8&quot;)
     code_tab_html = (
@@ -5131,7 +5169,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 &lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;main&gt;
 &lt;header&gt;&lt;span class=&quot;tag&quot;&gt;Dữ liệu thị trường Việt Nam • FY2021–FY2025&lt;/span&gt;&lt;h1&gt;Trade payables, thanh khoản và hiệu quả hoạt động&lt;/h1&gt;
 &lt;/header&gt;
-&lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot;&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-full&quot; aria-selected=&quot;true&quot; onclick=&quot;showTab(&#x27;full&#x27;)&quot;&gt;Báo cáo đầy đủ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-models&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;models&#x27;)&quot;&gt;Mô hình&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-tables&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;tables&#x27;)&quot;&gt;Chỉ bảng và biểu đồ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-data&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;data&#x27;)&quot;&gt;Dữ liệu trước và sau lọc&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-code&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;code&#x27;)&quot;&gt;Code Python&lt;/button&gt;&lt;/nav&gt;
+&lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot;&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-full&quot; aria-selected=&quot;true&quot; onclick=&quot;showTab(&#x27;full&#x27;)&quot;&gt;Báo cáo đầy đủ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-models&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;models&#x27;)&quot;&gt;Mô hình&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-tables&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;tables&#x27;)&quot;&gt;Chỉ bảng và biểu đồ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-data&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;data&#x27;)&quot;&gt;Dữ liệu trước và sau lọc&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-code&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;code&#x27;)&quot;&gt;Code Python&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-stata&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;stata&#x27;)&quot;&gt;Hướng dẫn Stata&lt;/button&gt;&lt;/nav&gt;
 &lt;div id=&quot;tab-full&quot;&gt;
 &lt;section class=&quot;card&quot;&gt;&lt;h2&gt;1. Tóm tắt đề tài nghiên cứu&lt;/h2&gt;
 &lt;p&gt;Đề tài xem xét việc doanh nghiệp sử dụng &lt;b&gt;khoản phải trả người bán&lt;/b&gt; — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với &lt;b&gt;hiệu quả hoạt động&lt;/b&gt;, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu &lt;b&gt;thanh khoản&lt;/b&gt; có làm mối liên hệ này thay đổi hay không.&lt;/p&gt;
@@ -5217,7 +5255,8 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 {models_tab_html}
 {data_tab_html}
 {code_tab_html}
-&lt;script&gt;function showTab(t){{for(const k of [&#x27;full&#x27;,&#x27;models&#x27;,&#x27;tables&#x27;,&#x27;data&#x27;,&#x27;code&#x27;]){{document.getElementById(&#x27;tab-&#x27;+k).hidden=k!==t;document.getElementById(&#x27;btn-&#x27;+k).setAttribute(&#x27;aria-selected&#x27;,String(k===t));}}const h={{tables:&#x27;#bang-bieu&#x27;,data:&#x27;#du-lieu&#x27;,code:&#x27;#code&#x27;,models:&#x27;#mo-hinh&#x27;}};try{{history.replaceState(null,&#x27;&#x27;,h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash===&#x27;#bang-bieu&#x27;)showTab(&#x27;tables&#x27;);if(location.hash===&#x27;#du-lieu&#x27;)showTab(&#x27;data&#x27;);if(location.hash===&#x27;#code&#x27;)showTab(&#x27;code&#x27;);if(location.hash===&#x27;#mo-hinh&#x27;)showTab(&#x27;models&#x27;);&lt;/script&gt;
+{stata_tab_html}
+&lt;script&gt;function showTab(t){{for(const k of [&#x27;full&#x27;,&#x27;models&#x27;,&#x27;tables&#x27;,&#x27;data&#x27;,&#x27;code&#x27;,&#x27;stata&#x27;]){{document.getElementById(&#x27;tab-&#x27;+k).hidden=k!==t;document.getElementById(&#x27;btn-&#x27;+k).setAttribute(&#x27;aria-selected&#x27;,String(k===t));}}const h={{tables:&#x27;#bang-bieu&#x27;,data:&#x27;#du-lieu&#x27;,code:&#x27;#code&#x27;,models:&#x27;#mo-hinh&#x27;,stata:&#x27;#stata&#x27;}};try{{history.replaceState(null,&#x27;&#x27;,h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash===&#x27;#bang-bieu&#x27;)showTab(&#x27;tables&#x27;);if(location.hash===&#x27;#du-lieu&#x27;)showTab(&#x27;data&#x27;);if(location.hash===&#x27;#code&#x27;)showTab(&#x27;code&#x27;);if(location.hash===&#x27;#mo-hinh&#x27;)showTab(&#x27;models&#x27;);if(location.hash===&#x27;#stata&#x27;)showTab(&#x27;stata&#x27;);&lt;/script&gt;
 &lt;footer&gt;&lt;small&gt;Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm&lt;/small&gt;&lt;/footer&gt;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;&#x27;&#x27;&#x27;
     (OUT / &quot;bao_cao_ket_qua.html&quot;).write_text(report, encoding=&quot;utf-8&quot;)
     # File riêng chỉ gồm các bảng và biểu đồ (giống tab &quot;Chỉ bảng và biểu đồ&quot;), dùng để in hoặc xuất PDF.
@@ -5241,5 +5280,166 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 if __name__ == &quot;__main__&quot;:
     main()
 </code></pre></section><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script>(function(){const c=document.querySelector("pre.code code");if(window.hljs){hljs.highlightElement(c);}const b=document.getElementById("copy-code");b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(c.innerText);b.textContent="Đã sao chép";}catch(e){const r=document.createRange();r.selectNodeContents(c);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);b.textContent="Đã chọn code, bấm Ctrl+C";}setTimeout(()=>{b.textContent="Sao chép code";},2500);});})();</script></div>
-<script>function showTab(t){for(const k of ['full','models','tables','data','code']){document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}const h={tables:'#bang-bieu',data:'#du-lieu',code:'#code',models:'#mo-hinh'};try{history.replaceState(null,'',h[t]||location.pathname);}catch(e){}window.scrollTo(0,0);}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');if(location.hash==='#mo-hinh')showTab('models');</script>
+<div id="tab-stata" hidden><section class="card"><h3>Chạy lại toàn bộ bảng và biểu đồ bằng Stata</h3><ol><li>Tải hai file bên dưới về cùng một thư mục: <b>bai_tap_trade_payables.do</b> (code Stata) và <b>stata_data.csv</b> (dữ liệu gốc 7,525 công ty–năm, đơn vị tỷ đồng, có sẵn ngành ICB cấp 2).</li><li>Mở Stata (bản 14 trở lên), chọn File → Open và mở file .do.</li><li>Sửa đường dẫn trong lệnh <code>cd</code> ở bước 1 thành thư mục chứa hai file.</li><li>Chạy bước 0 một lần để cài các gói bổ sung (winsor2, estout, reghdfe, heatplot). Sau đó bấm Do (Ctrl+D) để chạy toàn bộ, hoặc bôi đen từng bước rồi bấm Ctrl+D để chạy riêng.</li><li>Bảng hiện trong cửa sổ Results; biểu đồ được lưu thành file PNG, bảng hồi quy được lưu thành file RTF mở bằng Word, tất cả trong cùng thư mục.</li></ol><p class="legend">Kết quả Stata khớp với báo cáo ở hệ số và sai số chuẩn. Có thể lệch rất nhỏ ở ngưỡng winsor (Stata tính phân vị theo định nghĩa khác Python) và ở p-value (Stata dùng phân phối t, báo cáo dùng xấp xỉ chuẩn).</p><div class="dt-controls"><a class="dl" style="margin-left:0" href="data/bai_tap_trade_payables.do" download>Tải file .do</a><a class="dl" style="margin-left:0" href="data/stata_data.csv" download>Tải stata_data.csv</a></div></section><section class="card"><h3>Bước 0. Chuẩn bị: cài các lệnh bổ sung (chỉ cần chạy một lần)</h3><pre class="code stata-code"><code class="language-stata">* Cần Stata 14 trở lên để đọc được tiếng Việt (UTF-8).
+* Các lệnh dưới đây tải gói từ SSC; máy cần kết nối Internet.
+ssc install winsor2, replace
+ssc install estout, replace
+ssc install ftools, replace
+ssc install reghdfe, replace
+ssc install heatplot, replace
+ssc install palettes, replace
+ssc install colrspace, replace</code></pre></section><section class="card"><h3>Bước 1. Đọc dữ liệu gốc</h3><pre class="code stata-code"><code class="language-stata">* Đặt stata_data.csv cùng thư mục với file .do này, rồi sửa đường dẫn dưới đây cho đúng máy của bạn.
+cd &quot;C:\Users\Admin\Desktop\TradePayables_BaiTap&quot;
+import delimited &quot;stata_data.csv&quot;, clear encoding(&quot;utf-8&quot;) varnames(1)
+* Mỗi dòng là một công ty–năm FY2021–FY2025. Khoản mục tính bằng tỷ đồng.
+* template: mẫu biểu BCTC (nonfin = phi tài chính, bank, securities, insurance); icb2: ngành ICB cấp 2.
+describe
+count</code></pre></section><section class="card"><h3>Bước 2. Lọc mẫu (Bảng: Luồng chọn mẫu; Bảng: Nhóm theo mẫu biểu BCTC)</h3><pre class="code stata-code"><code class="language-stata">tab template
+keep if template == &quot;nonfin&quot;
+count
+drop if missing(revenue, total_assets, current_assets, current_liab, trade_payables)
+count
+drop if total_assets &lt;= 0
+count
+drop if revenue &lt;= 0
+count
+drop if current_liab &lt;= 0
+count
+drop if current_assets &lt; 0 | trade_payables &lt; 0
+count
+* Kết quả cuối: 7.015 công ty–năm của 1.454 mã.
+tab icb2, sort</code></pre></section><section class="card"><h3>Bước 3. Tạo biến và khai báo dữ liệu bảng</h3><pre class="code stata-code"><code class="language-stata">gen ATO = revenue / total_assets
+gen TPR = trade_payables / total_assets
+gen LIQ = current_assets / current_liab
+gen SIZ = ln(total_assets)
+gen DLI = (LIQ &gt;= 1)
+label var ATO &quot;Vòng quay tổng tài sản&quot;
+label var TPR &quot;Phải trả người bán / tổng tài sản&quot;
+label var LIQ &quot;Thanh khoản hiện hành&quot;
+label var SIZ &quot;ln(tổng tài sản, tỷ đồng)&quot;
+label var DLI &quot;Dummy: 1 nếu LIQ &gt;= 1&quot;
+encode ticker, gen(firm)
+xtset firm year
+xtdescribe
+tab DLI</code></pre></section><section class="card"><h3>Bước 4. Thống kê mô tả trước winsor hóa</h3><pre class="code stata-code"><code class="language-stata">tabstat ATO TPR LIQ SIZ, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)</code></pre></section><section class="card"><h3>Bước 5. Winsor2 p1–p99 (Bảng: Ngưỡng winsor)</h3><pre class="code stata-code"><code class="language-stata">foreach v in ATO TPR LIQ SIZ {
+    _pctile `v&#x27;, p(1 99)
+    local p1 = r(r1)
+    local p99 = r(r2)
+    quietly count if `v&#x27; &lt; `p1&#x27;
+    local nlo = r(N)
+    quietly count if `v&#x27; &gt; `p99&#x27; &amp; !missing(`v&#x27;)
+    display &quot;`v&#x27;&quot; _col(6) &quot;p1 = &quot; %9.4f `p1&#x27; &quot;   p99 = &quot; %9.4f `p99&#x27; &quot;   dưới p1: `nlo&#x27;   trên p99: &quot; r(N)
+}
+winsor2 ATO TPR LIQ SIZ, cuts(1 99) replace
+* Stata tính phân vị theo định nghĩa hơi khác Python nên ngưỡng có thể lệch ở chữ số thập phân cuối.</code></pre></section><section class="card"><h3>Bước 6. Thống kê mô tả sau winsor hóa và biểu đồ mô tả</h3><pre class="code stata-code"><code class="language-stata">tabstat ATO TPR LIQ SIZ, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)
+graph hbox ATO, name(g1, replace) title(&quot;Vòng quay tổng tài sản&quot;, size(medsmall))
+graph hbox TPR, name(g2, replace) title(&quot;Phải trả người bán / tài sản&quot;, size(medsmall))
+graph hbox LIQ, name(g3, replace) title(&quot;Thanh khoản hiện hành&quot;, size(medsmall))
+graph hbox SIZ, name(g4, replace) title(&quot;Quy mô: ln(tổng tài sản)&quot;, size(medsmall))
+graph combine g1 g2 g3 g4, cols(1) title(&quot;Thống kê mô tả sau Winsor2 (p1–p99)&quot;) name(mo_ta, replace)
+graph export &quot;bieu_do_thong_ke_mo_ta.png&quot;, replace width(1600)</code></pre></section><section class="card"><h3>Bước 7. Skewness, Kurtosis, CV và kiểm định Jarque–Bera</h3><pre class="code stata-code"><code class="language-stata">* summarize, detail trả về skewness = m3/m2^1.5 và kurtosis = m4/m2^2 (chuẩn = 3).
+foreach v in ATO TPR LIQ SIZ {
+    quietly summarize `v&#x27;, detail
+    local S  = r(skewness)
+    local K  = r(kurtosis)
+    local CV = r(sd) / abs(r(mean)) * 100
+    local JB = r(N) / 6 * (`S&#x27;^2 + (`K&#x27; - 3)^2 / 4)
+    display &quot;`v&#x27;&quot; _col(6) &quot;Skew = &quot; %6.3f `S&#x27; &quot;  Kurt = &quot; %7.3f `K&#x27; &quot;  CV = &quot; %8.3f `CV&#x27; &quot;  JB = &quot; %12.3f `JB&#x27; &quot;  p = &quot; %9.3g chi2tail(2, `JB&#x27;)
+}</code></pre></section><section class="card"><h3>Bước 8. Trung bình theo năm (biểu đồ hai trục)</h3><pre class="code stata-code"><code class="language-stata">preserve
+collapse (mean) TPR ATO, by(year)
+replace TPR = TPR * 100
+list, clean
+twoway (connected TPR year, yaxis(1)) (connected ATO year, yaxis(2)), ///
+    ytitle(&quot;Phải trả người bán / tổng tài sản (%)&quot;, axis(1)) ytitle(&quot;Vòng quay tổng tài sản (lần)&quot;, axis(2)) ///
+    xtitle(&quot;Năm tài chính&quot;) xlabel(2021(1)2025) ///
+    legend(order(1 &quot;Phải trả / tổng tài sản&quot; 2 &quot;Hiệu quả hoạt động&quot;)) ///
+    title(&quot;Phải trả người bán và hiệu quả hoạt động theo năm&quot;) name(theo_nam, replace)
+graph export &quot;bieu_do_theo_nam.png&quot;, replace width(1600)
+restore</code></pre></section><section class="card"><h3>Bước 9. Biến trừ trung bình, biến tương tác và ma trận tương quan Pearson</h3><pre class="code stata-code"><code class="language-stata">foreach v in TPR LIQ {
+    quietly summarize `v&#x27;, meanonly
+    gen `v&#x27;c = `v&#x27; - r(mean)
+}
+gen TLI = TPRc * LIQc
+gen TLD = TPRc * DLI
+pwcorr ATO TPR LIQ SIZ DLI TLI TLD, star(.05)
+quietly correlate ATO TPR LIQ SIZ DLI TLI TLD
+matrix C = r(C)
+heatplot C, values(format(%5.3f)) color(hcl diverging, intensity(.6)) legend(off) aspectratio(1) ///
+    title(&quot;Ma trận hệ số tương quan Pearson&quot;) name(tuong_quan, replace)
+graph export &quot;bieu_do_tuong_quan.png&quot;, replace width(1600)</code></pre></section><section class="card"><h3>Bước 10. VIF cho ba mô hình</h3><pre class="code stata-code"><code class="language-stata">quietly regress ATO TPRc LIQc SIZ
+estat vif
+quietly regress ATO TPRc LIQc SIZ TLI
+estat vif
+quietly regress ATO TPRc DLI SIZ TLD
+estat vif</code></pre></section><section class="card"><h3>Bước 11. Các mô hình OLS gộp (sai số chuẩn gom cụm theo mã)</h3><pre class="code stata-code"><code class="language-stata">* Viết tương tác dạng ## để lệnh margins hiểu: c.TPRc#c.LIQc chính là TLI, 1.DLI#c.TPRc chính là TLD.
+* Stata tính p-value theo phân phối t với (số công ty − 1) bậc tự do nên có thể lệch rất nhỏ so với Python.
+eststo clear
+eststo M0: regress ATO TPRc, vce(cluster firm)
+eststo M1: regress ATO TPRc LIQc SIZ i.year, vce(cluster firm)
+eststo M2: regress ATO c.TPRc##c.LIQc SIZ i.year, vce(cluster firm)
+predict RE2, residuals
+eststo M3: regress ATO c.TPRc##i.DLI SIZ i.year, vce(cluster firm)
+predict RE3, residuals
+esttab M0 M1 M2 M3, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) r2 ar2 nogaps
+esttab M0 M1 M2 M3 using &quot;ket_qua_OLS.rtf&quot;, replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) r2 ar2
+* Jarque–Bera cho phần dư mô hình 2 và 3
+foreach v in RE2 RE3 {
+    quietly summarize `v&#x27;, detail
+    local JB = r(N) / 6 * (r(skewness)^2 + (r(kurtosis) - 3)^2 / 4)
+    display &quot;`v&#x27;&quot; _col(6) &quot;Skew = &quot; %6.3f r(skewness) &quot;  Kurt = &quot; %7.3f r(kurtosis) &quot;  JB = &quot; %12.3f `JB&#x27; &quot;  p = &quot; %9.3g chi2tail(2, `JB&#x27;)
+}</code></pre></section><section class="card"><h3>Bước 12. Biểu đồ tương tác (marginsplot)</h3><pre class="code stata-code"><code class="language-stata">* Dự báo ATO theo TPR (đã trừ trung bình) từ p10 đến p90, giữ SIZ ở trung bình và năm gốc 2021.
+quietly summarize TPR, meanonly
+local mT = r(mean)
+_pctile TPR, p(10 90)
+local lo = r(r1) - `mT&#x27;
+local hi = r(r2) - `mT&#x27;
+local st = (`hi&#x27; - `lo&#x27;) / 20
+quietly summarize LIQ, meanonly
+local mL = r(mean)
+_pctile LIQ, p(25 50 75)
+local q1 = r(r1) - `mL&#x27;
+local q2 = r(r2) - `mL&#x27;
+local q3 = r(r3) - `mL&#x27;
+quietly summarize SIZ, meanonly
+local mS = r(mean)
+estimates restore M2
+margins, at(TPRc = (`lo&#x27;(`st&#x27;)`hi&#x27;) LIQc = (`q1&#x27; `q2&#x27; `q3&#x27;) SIZ = `mS&#x27; year = 2021)
+marginsplot, noci recast(line) title(&quot;Tác động tương tác: phải trả người bán × thanh khoản&quot;) ///
+    xtitle(&quot;Phải trả người bán / tổng tài sản (đã trừ trung bình)&quot;) ytitle(&quot;Vòng quay tổng tài sản dự báo&quot;) ///
+    legend(order(1 &quot;Thanh khoản thấp (p25)&quot; 2 &quot;Thanh khoản trung vị (p50)&quot; 3 &quot;Thanh khoản cao (p75)&quot;)) name(tuong_tac, replace)
+graph export &quot;bieu_do_tuong_tac.png&quot;, replace width(1600)
+estimates restore M3
+margins DLI, at(TPRc = (`lo&#x27;(`st&#x27;)`hi&#x27;) SIZ = `mS&#x27; year = 2021)
+marginsplot, noci recast(line) title(&quot;Tương tác với biến giả thanh khoản 0–1&quot;) ///
+    xtitle(&quot;Phải trả người bán / tổng tài sản (đã trừ trung bình)&quot;) ytitle(&quot;Vòng quay tổng tài sản dự báo&quot;) ///
+    legend(order(1 &quot;DLI = 0: TSNH &lt; nợ ngắn hạn&quot; 2 &quot;DLI = 1: TSNH ≥ nợ ngắn hạn&quot;)) name(tuong_tac_dummy, replace)
+graph export &quot;bieu_do_tuong_tac_dummy.png&quot;, replace width(1600)</code></pre></section><section class="card"><h3>Bước 13. Kiểm tra độ bền: hiệu ứng cố định công ty và năm (FE)</h3><pre class="code stata-code"><code class="language-stata">* reghdfe tự loại công ty chỉ có 1 năm (singleton) nên còn 6.997 quan sát, giống Python.
+eststo FE1: reghdfe ATO TPRc LIQc SIZ, absorb(firm year) vce(cluster firm)
+eststo FE2: reghdfe ATO c.TPRc##c.LIQc SIZ, absorb(firm year) vce(cluster firm)
+eststo FE3: reghdfe ATO c.TPRc##i.DLI SIZ, absorb(firm year) vce(cluster firm)
+* Cách không cần reghdfe (giữ cả singleton, hệ số giống nhau):
+* xtreg ATO TPRc LIQc SIZ i.year, fe vce(cluster firm)</code></pre></section><section class="card"><h3>Bước 14. Kiểm tra độ bền: biến giải thích trễ 1 năm</h3><pre class="code stata-code"><code class="language-stata">* L. lấy giá trị năm t − 1 của cùng công ty; nếu năm trước bị thiếu thì để trống.
+gen L_TPR = L.TPR
+gen L_LIQ = L.LIQ
+gen L_SIZ = L.SIZ
+foreach v in TPR LIQ {
+    quietly summarize L_`v&#x27; if !missing(L_TPR, L_LIQ, L_SIZ), meanonly
+    gen L_`v&#x27;c = L_`v&#x27; - r(mean) if !missing(L_TPR, L_LIQ, L_SIZ)
+}
+eststo LAG2: regress ATO c.L_TPRc##c.L_LIQc L_SIZ i.year, vce(cluster firm)
+* Bảng so sánh pooled, FE và biến trễ
+esttab M1 FE1 M2 FE2 M3 FE3 LAG2, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2 nogaps ///
+    mtitles(&quot;M1 Pooled&quot; &quot;M1 FE&quot; &quot;M2 Pooled&quot; &quot;M2 FE&quot; &quot;M3 Pooled&quot; &quot;M3 FE&quot; &quot;M2 trễ 1 năm&quot;)
+esttab M1 FE1 M2 FE2 M3 FE3 LAG2 using &quot;so_sanh_pooled_FE.rtf&quot;, replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2</code></pre></section><section class="card"><h3>Bước 15. Kiểm tra các giả định A1–A5</h3><pre class="code stata-code"><code class="language-stata">* A1 – tuyến tính: thêm TPRc bình phương vào mô hình 1
+gen TPRc2 = TPRc^2
+regress ATO TPRc LIQc SIZ TPRc2 i.year, vce(cluster firm)
+* A2 – đa cộng tuyến: xem VIF ở bước 10 và ma trận tương quan ở bước 9 (|Corr| &gt;= 0,8 hoặc VIF &gt;= 10)
+* A4 – phương sai sai số: Breusch–Pagan dạng n·R² cho mô hình 2 (H0: phương sai không đổi)
+quietly regress ATO TPRc LIQc SIZ TLI i.year
+estat hettest, rhs iid
+* Kiểm định F (H0: R² = 0): hồi quy thường, không gom cụm, để có thống kê F cổ điển
+regress ATO TPRc LIQc SIZ TLI i.year
+* A3, A5: so sánh hệ số TPR giữa M2, FE2 và LAG2 ở bước 14</code></pre></section><section class="card"><h3>Bước 16. Lưu dữ liệu sau lọc</h3><pre class="code stata-code"><code class="language-stata">export delimited ticker year icb2 ATO TPR LIQ SIZ DLI using &quot;du_lieu_sau_loc_stata.csv&quot;, replace
+save &quot;du_lieu_sau_loc.dta&quot;, replace</code></pre></section><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/stata.min.js"></script><script>if(window.hljs){document.querySelectorAll("pre.stata-code code").forEach(function(c){hljs.highlightElement(c);});}</script></div>
+<script>function showTab(t){for(const k of ['full','models','tables','data','code','stata']){document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}const h={tables:'#bang-bieu',data:'#du-lieu',code:'#code',models:'#mo-hinh',stata:'#stata'};try{history.replaceState(null,'',h[t]||location.pathname);}catch(e){}window.scrollTo(0,0);}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');if(location.hash==='#mo-hinh')showTab('models');if(location.hash==='#stata')showTab('stata');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>
