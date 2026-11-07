@@ -588,7 +588,6 @@ def main() -> None:
     bad_balance = valid[gap(valid["bsa1"] + valid["bsa23"], valid["bsa53"]) > .005]
     equity_gap_rows = int((gap(valid["bsa54"] + valid["bsa78"], valid["bsa53"]) > .005).sum())
     valid = valid.drop(bad_balance.index)
-    add_step("Bảng cân đối khớp (lệch ≤ 0,5%)", valid)
     dropped_bad_balance = len(bad_balance)
     dropped_rows = bad_balance.assign(**{"Lý do loại": "Bảng cân đối không khớp"})[
         ["ticker", "year", "Lý do loại", "bsa53", "bsa1", "bsa23", "bsa54", "bsa78", "bsa55", "bsa57", "isa3"]]
@@ -791,7 +790,7 @@ def main() -> None:
         {"Mã biến": "YDM", "Khoản mục gốc": "Năm tài chính", "Mã nguồn": "year", "Báo cáo doanh nghiệp": "Thông tin kỳ báo cáo", "Cách đưa vào biến": "Dummy 2022–2025; gốc 2021"},
     ]).set_index("Mã biến")
     requirement_check = pd.DataFrame([
-        {"STT": "1", "Yêu cầu": "Chuẩn hóa lại dữ liệu", "Nội dung": "Kiểm tra đẳng thức kế toán, lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99", "Mục báo cáo": "2, 5–7"},
+        {"STT": "1", "Yêu cầu": "Chuẩn hóa lại dữ liệu", "Nội dung": "Lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99", "Mục báo cáo": "2, 5–7"},
         {"STT": "2", "Yêu cầu": "Hoàn thiện mô hình và cách đo biến", "Nội dung": "Bảng Y, X, Z, biến kiểm soát, dummy, tương tác và công thức", "Mục báo cáo": "4"},
         {"STT": "3", "Yêu cầu": "Biến giả 0–1", "Nội dung": "DLI = 1 nếu LIQ ≥ 1; DLI = 0 nếu LIQ < 1", "Mục báo cáo": "4, 15"},
         {"STT": "4", "Yêu cầu": "OLS thông thường", "Nội dung": "Mô hình 0: Y ~ X", "Mục báo cáo": "12"},
@@ -870,7 +869,6 @@ def main() -> None:
     industry_distribution.to_csv(OUT / "00_phan_bo_nhom_nganh_truoc_loai.csv",
                                  encoding="utf-8-sig")
     sample_flow.to_csv(OUT / "00_luong_chon_mau.csv", encoding="utf-8-sig")
-    data_checks.to_csv(OUT / "00_kiem_tra_du_lieu_goc.csv", encoding="utf-8-sig")
     dropped_rows.to_csv(OUT / "00_dong_bi_loai_khi_kiem_tra.csv", index=False, encoding="utf-8-sig")
     model_dictionary.to_csv(OUT / "00_tu_dien_bien.csv", encoding="utf-8-sig")
     statement_dictionary.to_csv(OUT / "00_nguon_khoan_muc_va_cach_tinh_bien.csv",
@@ -1023,7 +1021,6 @@ def main() -> None:
     gallery_items = [
         ("Bảng", "Nhóm ngành theo mẫu biểu BCTC trước khi loại", table_html(industry_distribution, digits=0)),
         ("Bảng", "Luồng chọn mẫu", table_html(sample_flow, digits=0)),
-        ("Bảng", "Kiểm tra tính đúng đắn của dữ liệu gốc", table_html(data_checks, text=True)),
     ]
     gallery_items += [
         ("Bảng", "Chú thích tên biến", table_html(model_dictionary, text=True)),
@@ -1066,7 +1063,6 @@ def main() -> None:
         (merged["industry_group"] != NONFIN, "Loại: ngân hàng, chứng khoán, bảo hiểm"),
         (merged[raw_cols].isna().any(axis=1), "Loại: thiếu khoản mục"),
         (~(merged["bsa53"] > 0), "Loại: tổng tài sản ≤ 0"),
-        (gap(merged["bsa1"] + merged["bsa23"], merged["bsa53"]) > .005, "Loại: bảng cân đối không khớp"),
         (~(merged["isa3"] > 0), "Loại: doanh thu thuần ≤ 0"),
         (~(merged["bsa55"] > 0), "Loại: nợ ngắn hạn ≤ 0"),
         ((merged["bsa1"] < 0) | (merged["bsa57"] < 0), "Loại: TSNH hoặc phải trả âm"),
@@ -1142,8 +1138,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 <p><b>Vì sao các tiêu chí lọc gắn với mô hình?</b> Cần doanh thu thuần dương để tính vòng quay tài sản (Y); tổng tài sản dương làm mẫu số cho Y và tỷ lệ phải trả (X); nợ ngắn hạn dương làm mẫu số cho thanh khoản (Z); tài sản ngắn hạn và phải trả người bán không âm để tỷ lệ có ý nghĩa. Chỉ giữ dòng có đủ các khoản mục cho cùng mã-năm để mọi biến trong OLS được tính trên cùng quan sát. Không bắt buộc một mã phải có đủ cả 5 năm, nhằm tránh loại bỏ toàn bộ công ty chỉ vì thiếu một kỳ.</p>
 <p>Về lý thuyết, khoản phải trả người bán là tín dụng từ nhà cung cấp; thanh khoản hiện hành phản ánh khả năng đáp ứng nghĩa vụ ngắn hạn nên có cơ sở để điều tiết mối liên hệ đó; vòng quay tổng tài sản đại diện cho doanh thu tạo ra từ tài sản. Quy mô là biến kiểm soát vì doanh nghiệp lớn/nhỏ có thể khác nhau về hoạt động và nguồn lực.</p>
 <h3>Luồng chọn mẫu có thể kiểm toán</h3><div class="scroll">{table_html(sample_flow, digits=0)}</div>
-<h3>Kiểm tra tính đúng đắn của dữ liệu gốc</h3><div class="scroll">{table_html(data_checks, text=True)}</div>
-<p><b>Kiểm tra chất lượng dữ liệu:</b> mỗi mã–năm có một báo cáo năm; doanh thu thuần khớp doanh thu trừ giảm trừ, tổng tài sản khớp tài sản ngắn hạn cộng dài hạn, nợ ngắn hạn cộng nợ dài hạn khớp nợ phải trả. Có {equity_gap_rows:,} công ty–năm mà tổng tài sản lệch tổng nợ cộng vốn chủ sở hữu trên 0,5%: lỗi nằm ở khoản vốn chủ sở hữu của nguồn, khoản này không dùng trong mô hình, còn phía tài sản và nợ vẫn khớp đẳng thức kế toán nên các dòng này được giữ. Giá trị cực đoan, ví dụ công ty có tổng tài sản rất nhỏ nên vòng quay tài sản rất lớn, được xử lý bằng Winsor2 thay vì đặt thêm một ngưỡng loại tùy ý. Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
+<p>Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
 <p>Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có <b>{changed:,} ô giá trị</b> bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.</p>
 <p class="note"><b>Giới hạn phạm vi:</b> đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam, không phải nhóm vốn hóa cao nhất và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo <b>mẫu biểu BCTC</b> để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…</p></section>
 <section class="card"><h2>3. Cấu trúc bài theo yêu cầu</h2><div class="scroll">{table_html(requirement_check, text=True)}</div></section>
