@@ -1165,6 +1165,44 @@ def main() -> None:
         + "".join(f"<tr><th>{a}</th><td>{b}</td></tr>" for a, b in legend_rows)
         + '</tbody></table><p class="legend">Mọi biến liên tục đã được winsor hóa p1–p99. i: công ty, t: năm.</p></section>'
         + model_cards + '</div>')
+
+    # ---- Tab hướng dẫn Stata: dữ liệu cho Stata + do-file chia theo bước ----
+    import shutil as _shutil
+    tmpl = {"Phi tài chính (mẫu biểu chung)": "nonfin", "Ngân hàng": "bank", "Chứng khoán": "securities", "Bảo hiểm": "insurance"}
+    stata_df = pd.DataFrame({
+        "ticker": mo["ticker"].values, "year": mo["year"].astype(int).values,
+        "icb2": mo["ticker"].map(icb_of).values, "template": mo["industry_group"].map(tmpl).values,
+        "revenue": (mo["isa3"] / 1e9).round(6).values, "total_assets": (mo["bsa53"] / 1e9).round(6).values,
+        "current_assets": (mo["bsa1"] / 1e9).round(6).values, "current_liab": (mo["bsa55"] / 1e9).round(6).values,
+        "trade_payables": (mo["bsa57"] / 1e9).round(6).values})
+    stata_df.to_csv(data_dir / "stata_data.csv", index=False, encoding="utf-8")
+    do_path = ROOT / "stata" / "bai_tap_trade_payables.do"
+    stata_cards = ""
+    if do_path.exists():
+        _shutil.copyfile(do_path, data_dir / "bai_tap_trade_payables.do")
+        blocks, cur = [], None
+        for line in do_path.read_text(encoding="utf-8").splitlines():
+            if line.startswith("*===="):
+                cur = [line.replace("*====", "").strip(), []]; blocks.append(cur)
+            elif cur is not None:
+                cur[1].append(line)
+        stata_cards = "".join(
+            f'<section class="card"><h3>Bước {xml_escape(t)}</h3><pre class="code stata-code"><code class="language-stata">{xml_escape(chr(10).join(b).strip())}</code></pre></section>'
+            for t, b in blocks)
+    stata_tab_html = (
+        '<div id="tab-stata" hidden><section class="card"><h3>Chạy lại toàn bộ bảng và biểu đồ bằng Stata</h3>'
+        '<ol><li>Tải hai file bên dưới về cùng một thư mục: <b>bai_tap_trade_payables.do</b> (code Stata) và <b>stata_data.csv</b> (dữ liệu gốc '
+        f'{len(stata_df):,} công ty–năm, đơn vị tỷ đồng, có sẵn ngành ICB cấp 2).</li>'
+        '<li>Mở Stata (bản 14 trở lên), chọn File → Open và mở file .do.</li>'
+        '<li>Sửa đường dẫn trong lệnh <code>cd</code> ở bước 1 thành thư mục chứa hai file.</li>'
+        '<li>Chạy bước 0 một lần để cài các gói bổ sung (winsor2, estout, reghdfe, heatplot). Sau đó bấm Do (Ctrl+D) để chạy toàn bộ, hoặc bôi đen từng bước rồi bấm Ctrl+D để chạy riêng.</li>'
+        '<li>Bảng hiện trong cửa sổ Results; biểu đồ được lưu thành file PNG, bảng hồi quy được lưu thành file RTF mở bằng Word, tất cả trong cùng thư mục.</li></ol>'
+        '<p class="legend">Kết quả Stata khớp với báo cáo ở hệ số và sai số chuẩn. Có thể lệch rất nhỏ ở ngưỡng winsor (Stata tính phân vị theo định nghĩa khác Python) và ở p-value (Stata dùng phân phối t, báo cáo dùng xấp xỉ chuẩn).</p>'
+        '<div class="dt-controls"><a class="dl" style="margin-left:0" href="data/bai_tap_trade_payables.do" download>Tải file .do</a>'
+        '<a class="dl" style="margin-left:0" href="data/stata_data.csv" download>Tải stata_data.csv</a></div></section>'
+        + stata_cards +
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/stata.min.js"></script>'
+        '<script>if(window.hljs){document.querySelectorAll("pre.stata-code code").forEach(function(c){hljs.highlightElement(c);});}</script></div>')
     # ---- Tab code: toàn bộ mã nguồn main.py ----
     source_code = Path(__file__).read_text(encoding="utf-8")
     code_tab_html = (
@@ -1193,7 +1231,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
 </header>
-<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
+<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button><button type="button" role="tab" id="btn-stata" aria-selected="false" onclick="showTab('stata')">Hướng dẫn Stata</button></nav>
 <div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
@@ -1279,7 +1317,8 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 {models_tab_html}
 {data_tab_html}
 {code_tab_html}
-<script>function showTab(t){{for(const k of ['full','models','tables','data','code']){{document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}}const h={{tables:'#bang-bieu',data:'#du-lieu',code:'#code',models:'#mo-hinh'}};try{{history.replaceState(null,'',h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');if(location.hash==='#mo-hinh')showTab('models');</script>
+{stata_tab_html}
+<script>function showTab(t){{for(const k of ['full','models','tables','data','code','stata']){{document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}}const h={{tables:'#bang-bieu',data:'#du-lieu',code:'#code',models:'#mo-hinh',stata:'#stata'}};try{{history.replaceState(null,'',h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');if(location.hash==='#mo-hinh')showTab('models');if(location.hash==='#stata')showTab('stata');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>'''
     (OUT / "bao_cao_ket_qua.html").write_text(report, encoding="utf-8")
     # File riêng chỉ gồm các bảng và biểu đồ (giống tab "Chỉ bảng và biểu đồ"), dùng để in hoặc xuất PDF.
