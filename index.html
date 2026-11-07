@@ -3695,7 +3695,7 @@ b('‹ Trước',st.page-1,st.page===0);const sp=document.createElement('span');
 q.addEventListener('input',()=>{st.q=q.value;st.page=0;render();});if(f)f.addEventListener('change',()=>{st.f=f.value;st.page=0;render();});render();}
 mk('raw');mk('clean');})();
 </script></div>
-<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,220 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
+<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,219 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
 &quot;&quot;&quot;Bài thực hành: mô tả, tương quan, VIF, winsorization và OLS có tương tác.
 
 Chạy từ thư mục dự án bằng: py main.py
@@ -4284,7 +4284,6 @@ def main() -&gt; None:
     # Dòng lệch nợ + VCSH được giữ: nguồn sai ở khoản VCSH, khoản này không dùng trong mô hình.
     bad_balance = valid[gap(valid[&quot;bsa1&quot;] + valid[&quot;bsa23&quot;], valid[&quot;bsa53&quot;]) &gt; .005]
     equity_gap_rows = int((gap(valid[&quot;bsa54&quot;] + valid[&quot;bsa78&quot;], valid[&quot;bsa53&quot;]) &gt; .005).sum())
-    valid = valid.drop(bad_balance.index)
     dropped_bad_balance = len(bad_balance)
     dropped_rows = bad_balance.assign(**{&quot;Lý do loại&quot;: &quot;Bảng cân đối không khớp&quot;})[
         [&quot;ticker&quot;, &quot;year&quot;, &quot;Lý do loại&quot;, &quot;bsa53&quot;, &quot;bsa1&quot;, &quot;bsa23&quot;, &quot;bsa54&quot;, &quot;bsa78&quot;, &quot;bsa55&quot;, &quot;bsa57&quot;, &quot;isa3&quot;]]
