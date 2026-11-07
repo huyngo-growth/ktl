@@ -1211,6 +1211,17 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 <script>function showTab(t){{for(const k of ['full','tables','data','code']){{document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}}const h={{tables:'#bang-bieu',data:'#du-lieu',code:'#code'}};try{{history.replaceState(null,'',h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>'''
     (OUT / "bao_cao_ket_qua.html").write_text(report, encoding="utf-8")
+    # File riêng chỉ gồm các bảng và biểu đồ (giống tab "Chỉ bảng và biểu đồ"), dùng để in hoặc xuất PDF.
+    import re as _re
+    page_style = _re.search(r"<style>.*?</style>", report, _re.S).group(0)
+    gallery_doc = ('<!doctype html><html lang="vi"><head><meta charset="utf-8">'
+                   '<meta name="viewport" content="width=device-width,initial-scale=1"><title>Bảng và biểu đồ – Trade payables</title>'
+                   + page_style +
+                   '<style>@media print{.card{box-shadow:none;break-inside:avoid;margin:0 0 10px}body{background:#fff}main{margin:0;max-width:none;padding:0}h3{break-after:avoid}.inline-chart{max-height:150mm;width:auto;max-width:100%;margin:6px auto}}</style>'
+                   '</head><body><main><header class="card"><h1>Bảng và biểu đồ</h1>'
+                   '<p>Trade payables, thanh khoản và hiệu quả hoạt động • FY2021–FY2025</p></header>'
+                   + gallery_html + '</main></body></html>')
+    (OUT / "bang_va_bieu_do.html").write_text(gallery_doc, encoding="utf-8")
     print(f"Hoàn tất: {len(wins):,} quan sát, {wins['ticker'].nunique():,} mã, {YEARS[0]}–{YEARS[-1]}.")
     print(f"Đã ghi báo cáo: {OUT / 'bao_cao_ket_qua.html'}")
 
