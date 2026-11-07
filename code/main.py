@@ -587,7 +587,6 @@ def main() -> None:
     # Dòng lệch nợ + VCSH được giữ: nguồn sai ở khoản VCSH, khoản này không dùng trong mô hình.
     bad_balance = valid[gap(valid["bsa1"] + valid["bsa23"], valid["bsa53"]) > .005]
     equity_gap_rows = int((gap(valid["bsa54"] + valid["bsa78"], valid["bsa53"]) > .005).sum())
-    valid = valid.drop(bad_balance.index)
     dropped_bad_balance = len(bad_balance)
     dropped_rows = bad_balance.assign(**{"Lý do loại": "Bảng cân đối không khớp"})[
         ["ticker", "year", "Lý do loại", "bsa53", "bsa1", "bsa23", "bsa54", "bsa78", "bsa55", "bsa57", "isa3"]]
