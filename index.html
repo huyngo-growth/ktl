@@ -6,13 +6,13 @@ main{max-width:1180px;margin:28px auto;padding:0 20px 48px} header,.card{backgro
 h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-block;background:#e9f3ff;color:#145a91;border-radius:999px;padding:4px 11px;font-size:14px}
 .note{background:#fff8e6;border-left:4px solid #e6a700;padding:12px 16px} .data{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0 18px}
 .data th,.data td{border-bottom:1px solid #e6ebf1;padding:8px 10px;text-align:right;white-space:normal;vertical-align:top} .data th:first-child,.data td:first-child{text-align:left;white-space:normal}
-.scroll{overflow-x:auto} code{background:#eef2f7;padding:2px 5px;border-radius:4px} a{color:#075ea8} .formula{background:#f6f8fb;border:1px solid #e0e7f0;border-radius:10px;padding:14px 18px;margin:12px 0;font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:19px;line-height:1.9;text-align:center;overflow-x:auto} .formula sub,.formula sup{font-size:.68em} .legend{font-size:14px;color:#4a5a6a} .data.text td{text-align:left} .defs li{margin:6px 0} .data td.txt{text-align:left} .dt td,.dt th{white-space:nowrap} .dt-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0} .dt-controls input,.dt-controls select{font:inherit;padding:6px 10px;border:1px solid #c9d6e3;border-radius:8px} .dl{margin-left:auto;padding:6px 14px;border:1px solid #123d64;border-radius:999px;text-decoration:none} .pager{display:flex;gap:8px;align-items:center;margin-top:8px} .pager button{font:inherit;padding:5px 12px;border:1px solid #c9d6e3;background:#fff;border-radius:8px;cursor:pointer} .pager button:disabled{opacity:.4;cursor:default} .inline-chart{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}
+.scroll{overflow-x:auto} code{background:#eef2f7;padding:2px 5px;border-radius:4px} a{color:#075ea8} .formula{background:#f6f8fb;border:1px solid #e0e7f0;border-radius:10px;padding:14px 18px;margin:12px 0;font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:19px;line-height:1.9;text-align:center;overflow-x:auto} .formula sub,.formula sup{font-size:.68em} .legend{font-size:14px;color:#4a5a6a} .data.text td{text-align:left} .defs li{margin:6px 0} .data td.txt{text-align:left} .dt td,.dt th{white-space:nowrap} .dt-controls{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0} .dt-controls input,.dt-controls select{font:inherit;padding:6px 10px;border:1px solid #c9d6e3;border-radius:8px} .dl{margin-left:auto;padding:6px 14px;border:1px solid #123d64;border-radius:999px;text-decoration:none} .pager{display:flex;gap:8px;align-items:center;margin-top:8px} .pager button{font:inherit;padding:5px 12px;border:1px solid #c9d6e3;background:#fff;border-radius:8px;cursor:pointer} .pager button:disabled{opacity:.4;cursor:default} pre.code{max-height:75vh;overflow:auto;background:#f6f8fa;border:1px solid #e0e7f0;border-radius:10px;padding:14px;font-size:13px;line-height:1.5;margin:0} pre.code code{font-family:Consolas,"Courier New",monospace;background:none;padding:0} .btn{font:inherit;padding:6px 14px;border:1px solid #c9d6e3;background:#fff;border-radius:999px;cursor:pointer} .inline-chart{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}
 .tabs{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap} .tabs button{font:inherit;font-size:15px;padding:8px 18px;border:1px solid #c9d6e3;background:#fff;color:#123d64;border-radius:999px;cursor:pointer} .tabs button[aria-selected="true"]{background:#123d64;color:#fff;border-color:#123d64} .tabs button:focus-visible{outline:2px solid #e6a700;outline-offset:2px}
 .read{background:#eef6f0;border-left:4px solid #3c8d5a;padding:12px 16px;margin:14px 0 4px} .gallery h3{margin:0 0 8px;color:#123d64} [hidden]{display:none!important}
 </style></head><body><main>
 <header><span class="tag">Dữ liệu thị trường Việt Nam • FY2021–FY2025</span><h1>Trade payables, thanh khoản và hiệu quả hoạt động</h1>
 <p>Báo cáo tự động từ dữ liệu công ty–năm. Đây là bài thực hành OLS trên dữ liệu bảng gộp, có kiểm tra độ bền bằng hiệu ứng cố định công ty; không phải kết luận nhân quả.</p></header>
-<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button></nav>
+<nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-code" aria-selected="false" onclick="showTab('code')">Code Python</button></nav>
 <div id="tab-full">
 <section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
@@ -3797,5 +3797,1231 @@ b('‹ Trước',st.page-1,st.page===0);const sp=document.createElement('span');
 q.addEventListener('input',()=>{st.q=q.value;st.page=0;render();});if(f)f.addEventListener('change',()=>{st.f=f.value;st.page=0;render();});render();}
 mk('raw');mk('clean');})();
 </script></div>
-<script>function showTab(t){for(const k of ['full','tables','data']){document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}const h={tables:'#bang-bieu',data:'#du-lieu'};try{history.replaceState(null,'',h[t]||location.pathname);}catch(e){}window.scrollTo(0,0);}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');</script>
+<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,225 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
+&quot;&quot;&quot;Bài thực hành: mô tả, tương quan, VIF, winsorization và OLS có tương tác.
+
+Chạy từ thư mục dự án bằng: py main.py
+Chỉ dùng pandas và numpy; sai số chuẩn gom cụm theo doanh nghiệp được tính
+bằng công thức sandwich, p-value dùng xấp xỉ chuẩn lớn mẫu.
+&quot;&quot;&quot;
+
+from __future__ import annotations
+
+import math
+import sys
+from html import escape as xml_escape
+from pathlib import Path
+
+import numpy as np
+import pandas as pd
+
+
+ROOT = Path(__file__).resolve().parent
+DATA = ROOT / &quot;data_source&quot;
+OUT = ROOT / &quot;output&quot;
+CHARTS = OUT / &quot;charts&quot;
+YEARS = list(range(2021, 2026))
+LOWER_P, UPPER_P = 0.01, 0.99
+
+VAR_LABELS = {
+    &quot;asset_turnover&quot;: &quot;Hiệu quả hoạt động (doanh thu thuần / tổng tài sản)&quot;,
+    &quot;payables_ratio&quot;: &quot;Phải trả người bán / tổng tài sản&quot;,
+    &quot;liquidity&quot;: &quot;Thanh khoản hiện hành (tài sản ngắn hạn / nợ ngắn hạn)&quot;,
+    &quot;size_ln&quot;: &quot;Quy mô (ln tổng tài sản, tỷ đồng)&quot;,
+}
+
+# Ký hiệu ba chữ dùng riêng cho bảng/heatmap tương quan để tên biến gọn.
+SHORT_LABELS = {
+    &quot;asset_turnover&quot;: &quot;ATO&quot;,          # Asset turnover
+    &quot;payables_ratio&quot;: &quot;TPR&quot;,          # Trade payables ratio
+    &quot;liquidity&quot;: &quot;LIQ&quot;,               # Liquidity/current ratio
+    &quot;size_ln&quot;: &quot;SIZ&quot;,                 # Firm size
+    &quot;high_liquidity_dummy&quot;: &quot;DLI&quot;,    # Dummy liquidity
+    &quot;interaction&quot;: &quot;TLI&quot;,             # TPR x LIQ
+    &quot;interaction_dummy&quot;: &quot;TLD&quot;,       # TPR x DLI
+}
+
+# Mã ngắn dùng thống nhất trong toàn bộ bảng kết quả.
+RESULT_LABELS = {
+    **SHORT_LABELS,
+    &quot;payables_c&quot;: &quot;TPR&quot;,
+    &quot;liquidity_c&quot;: &quot;LIQ&quot;,
+    &quot;Hằng số&quot;: &quot;CON&quot;,
+    &quot;Năm_2022&quot;: &quot;Y22&quot;,
+    &quot;Năm_2023&quot;: &quot;Y23&quot;,
+    &quot;Năm_2024&quot;: &quot;Y24&quot;,
+    &quot;Năm_2025&quot;: &quot;Y25&quot;,
+}
+
+
+def classify_statement_group(frame: pd.DataFrame) -&gt; pd.Series:
+    &quot;&quot;&quot;Phân nhóm theo mẫu biểu BCTC Vietcap, không đoán ngành từ tên/mã.
+
+    Các cột isb/isi/iss lần lượt là mẫu KQKD riêng cho ngân hàng, bảo hiểm
+    và công ty chứng khoán trong README nguồn. Nguồn điền 0 vào cột không áp
+    dụng, vì vậy chỉ xem là thuộc nhóm khi có ít nhất một giá trị khác 0.
+    &quot;&quot;&quot;
+    result = pd.Series(&quot;Phi tài chính (mẫu biểu chung)&quot;, index=frame.index, dtype=&quot;object&quot;)
+    prefix_groups = [
+        (&quot;Bảo hiểm&quot;, &quot;isi&quot;),
+        (&quot;Chứng khoán&quot;, &quot;iss&quot;),
+        (&quot;Ngân hàng&quot;, &quot;isb&quot;),
+    ]
+    for group_name, prefix in prefix_groups:
+        cols = [c for c in frame.columns if c.startswith(prefix)]
+        if not cols:
+            continue
+        numeric = frame[cols].apply(pd.to_numeric, errors=&quot;coerce&quot;).fillna(0.0)
+        has_special_statement = numeric.abs().gt(1e-12).any(axis=1)
+        result.loc[has_special_statement] = group_name
+    return result
+
+
+def fmt(value: float, digits: int = 4) -&gt; str:
+    if pd.isna(value):
+        return &quot;—&quot;
+    return f&quot;{value:,.{digits}f}&quot;
+
+
+def table_html(frame: pd.DataFrame, digits: int = 4, text: bool = False) -&gt; str:
+    shown = frame.copy()
+    count_cols = {&quot;Obs&quot;, &quot;Số quan sát&quot;, &quot;Số mã&quot;, &quot;Số công ty&quot;, &quot;Dưới p1&quot;, &quot;Trên p99&quot;,
+                  &quot;Tổng giá trị bị chặn&quot;}
+    for col in shown.columns:
+        if pd.api.types.is_numeric_dtype(shown[col]):
+            col_digits = 0 if (col in count_cols or pd.api.types.is_integer_dtype(shown[col])) else digits
+            shown[col] = shown[col].map(lambda x, d=col_digits: fmt(x, d))
+    return shown.to_html(index=True, border=0, classes=&quot;data text&quot; if text else &quot;data&quot;, escape=True)
+
+
+def descriptive(frame: pd.DataFrame, columns: list[str]) -&gt; pd.DataFrame:
+    rows = {}
+    for col in columns:
+        x = pd.to_numeric(frame[col], errors=&quot;coerce&quot;).dropna()
+        rows[col] = {
+            &quot;Obs&quot;: int(x.count()), &quot;Mean&quot;: x.mean(), &quot;SD&quot;: x.std(ddof=1),
+            &quot;Min&quot;: x.min(), &quot;p25&quot;: x.quantile(.25), &quot;p50&quot;: x.quantile(.50),
+            &quot;p75&quot;: x.quantile(.75), &quot;Max&quot;: x.max(), &quot;Skewness&quot;: x.skew(),
+        }
+    result = pd.DataFrame.from_dict(rows, orient=&quot;index&quot;)
+    result.index = [SHORT_LABELS.get(x, x) for x in result.index]
+    return result
+
+
+def vif_table(frame: pd.DataFrame, columns: list[str]) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;VIF_j = 1/(1-R_j^2), R_j^2 từ hồi quy X_j lên các X còn lại.&quot;&quot;&quot;
+    values = frame[columns].astype(float).to_numpy()
+    rows = []
+    for j, name in enumerate(columns):
+        y = values[:, j]
+        others = np.delete(values, j, axis=1)
+        design = np.column_stack([np.ones(len(y)), others])
+        fitted = design @ np.linalg.lstsq(design, y, rcond=None)[0]
+        tss = float(np.sum((y - y.mean()) ** 2))
+        r2 = 1.0 if tss &lt;= 1e-24 else 1 - float(np.sum((y - fitted) ** 2)) / tss
+        vif = np.inf if r2 &gt;= 1 - 1e-12 else 1 / (1 - r2)
+        rows.append({&quot;Biến giải thích&quot;: name, &quot;R2 phụ&quot;: r2, &quot;VIF&quot;: vif})
+    return pd.DataFrame(rows).set_index(&quot;Biến giải thích&quot;)
+
+
+def ols_clustered(frame: pd.DataFrame, regressors: list[str], model_name: str,
+                  include_year_effects: bool = True, within: bool = False):
+    &quot;&quot;&quot;OLS, sai số chuẩn cluster theo ticker; p-value xấp xỉ chuẩn lớn mẫu.
+
+    within=True: hiệu ứng cố định công ty (FE) bằng phép biến đổi within, tức
+    trừ trung bình của từng công ty khỏi Y và mọi biến X (kể cả dummy năm).
+    Công ty chỉ có 1 năm không đóng góp biến động within nên được bỏ ra.
+    &quot;&quot;&quot;
+    if within:
+        frame = frame[frame.groupby(&quot;ticker&quot;)[&quot;ticker&quot;].transform(&quot;size&quot;) &gt; 1]
+    blocks = [frame[regressors].astype(float).reset_index(drop=True)]
+    if include_year_effects:
+        years = pd.get_dummies(frame[&quot;year&quot;].astype(int), prefix=&quot;Năm&quot;, drop_first=True, dtype=float)
+        blocks.append(years.reset_index(drop=True))
+    xdf = pd.concat(blocks, axis=1)
+    y_series = frame[&quot;asset_turnover&quot;].astype(float).reset_index(drop=True)
+    if within:
+        firm = frame[&quot;ticker&quot;].reset_index(drop=True)
+        xdf = xdf - xdf.groupby(firm).transform(&quot;mean&quot;)
+        y_series = y_series - y_series.groupby(firm).transform(&quot;mean&quot;)
+    else:
+        xdf.insert(0, &quot;Hằng số&quot;, 1.0)
+    x = xdf.to_numpy(dtype=float)
+    y = y_series.to_numpy(dtype=float)
+    beta = np.linalg.lstsq(x, y, rcond=None)[0]
+    residual = y - x @ beta
+    bread = np.linalg.pinv(x.T @ x)
+
+    # Ma trận phương sai sandwich với cụm là công ty: cho phép sai số
+    # trong cùng mã cổ phiếu tương quan qua các năm.
+    meat = np.zeros((x.shape[1], x.shape[1]), dtype=float)
+    groups = frame[&quot;ticker&quot;].to_numpy()
+    for ticker in pd.unique(groups):
+        idx = groups == ticker
+        score = x[idx].T @ residual[idx]
+        meat += np.outer(score, score)
+    n, k = x.shape
+    cluster_count = pd.Series(groups).nunique()
+    if cluster_count &gt; 1 and n &gt; k:
+        correction = (cluster_count / (cluster_count - 1)) * ((n - 1) / (n - k))
+    else:
+        correction = 1.0
+    covariance = correction * bread @ meat @ bread
+    se = np.sqrt(np.maximum(np.diag(covariance), 0))
+    t_stats = np.divide(beta, se, out=np.full_like(beta, np.nan), where=se &gt; 0)
+    # Với hơn 1.000 cụm, xấp xỉ chuẩn là phù hợp cho báo cáo bài tập.
+    p_values = np.array([math.erfc(abs(float(t)) / math.sqrt(2)) if np.isfinite(t) else np.nan
+                         for t in t_stats])
+    ci_low, ci_high = beta - 1.96 * se, beta + 1.96 * se
+    result = pd.DataFrame({
+        &quot;Hệ số OLS&quot;: beta, &quot;SE gom cụm&quot;: se, &quot;t/z&quot;: t_stats,
+        &quot;p-value xấp xỉ&quot;: p_values, &quot;CI 95% thấp&quot;: ci_low, &quot;CI 95% cao&quot;: ci_high,
+    }, index=xdf.columns)
+    fitted = x @ beta
+    tss = float(np.sum((y - y.mean()) ** 2))
+    rss = float(np.sum(residual ** 2))
+    r2 = 1 - rss / tss if tss else np.nan
+    adj_r2 = 1 - (1 - r2) * (n - 1) / (n - k) if n &gt; k else np.nan
+    info = {&quot;Mô hình&quot;: model_name, &quot;Obs&quot;: n, &quot;Số công ty&quot;: cluster_count,
+            &quot;R2&quot;: r2, &quot;R2 hiệu chỉnh&quot;: adj_r2, &quot;RSS&quot;: rss}
+    return result, info, residual
+
+
+def normality_diagnostics(series_map: dict[str, pd.Series | np.ndarray]) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Skewness, Pearson kurtosis, CV và Jarque–Bera (H0: phân phối chuẩn).&quot;&quot;&quot;
+    rows = []
+    for name, values in series_map.items():
+        x = pd.Series(values, dtype=float).replace([np.inf, -np.inf], np.nan).dropna().to_numpy()
+        n = len(x)
+        mean = float(np.mean(x))
+        sample_sd = float(np.std(x, ddof=1)) if n &gt; 1 else np.nan
+        centered = x - mean
+        m2 = float(np.mean(centered ** 2))
+        if n &lt; 3 or m2 &lt;= 0:
+            skewness, kurtosis, jb, p_value = np.nan, np.nan, np.nan, np.nan
+        else:
+            m3 = float(np.mean(centered ** 3))
+            m4 = float(np.mean(centered ** 4))
+            skewness = m3 / (m2 ** 1.5)
+            kurtosis = m4 / (m2 ** 2)  # Pearson kurtosis: chuẩn = 3
+            jb = n / 6 * (skewness ** 2 + ((kurtosis - 3) ** 2) / 4)
+            # Với chi-square 2 bậc tự do, survival function = exp(-JB/2).
+            p_value = math.exp(-jb / 2) if jb &lt; 1500 else 0.0
+        cv = sample_sd / abs(mean) * 100 if abs(mean) &gt; 1e-12 and np.isfinite(sample_sd) else np.nan
+        conclusion = (&quot;Không bác bỏ H0 chuẩn&quot; if np.isfinite(p_value) and p_value &gt;= .05
+                      else &quot;Bác bỏ H0 chuẩn&quot;)
+        rows.append({&quot;Biến số&quot;: name, &quot;Obs&quot;: n, &quot;Skewness&quot;: skewness,
+                     &quot;Kurtosis (chuẩn=3)&quot;: kurtosis, &quot;CV (%)&quot;: cv,
+                     &quot;JB statistic&quot;: jb, &quot;JB p-value&quot;: p_value,
+                     &quot;Kết luận ở mức 5%&quot;: conclusion})
+    return pd.DataFrame(rows).set_index(&quot;Biến số&quot;)
+
+
+def _scale(value: float, low: float, high: float, start: float, end: float) -&gt; float:
+    if high &lt;= low:
+        return (start + end) / 2
+    return start + (value - low) * (end - start) / (high - low)
+
+
+def _padded(values, include_zero: bool = False) -&gt; tuple[float, float]:
+    values = np.asarray(values, dtype=float)
+    low, high = float(np.nanmin(values)), float(np.nanmax(values))
+    if include_zero:
+        low = min(low, 0.0)
+        high = max(high, 0.0)
+    pad = (high - low) * 0.12
+    if pad == 0:
+        pad = max(abs(high) * 0.12, 0.1)
+    return low - pad, high + pad
+
+
+def chart_year_means(year_means: pd.DataFrame, destination: Path) -&gt; None:
+    &quot;&quot;&quot;Biểu đồ hai trục kiểu Stata: phải trả và hiệu quả trung bình theo năm.&quot;&quot;&quot;
+    width, height = 1000, 580
+    left, right, top, bottom = 95, 905, 75, 470
+    years = year_means.index.astype(int).tolist()
+    payable = (year_means[&quot;payables_ratio&quot;] * 100).to_numpy()
+    turnover = year_means[&quot;asset_turnover&quot;].to_numpy()
+    y1_low, y1_high = _padded(payable)
+    y2_low, y2_high = _padded(turnover)
+    x_positions = np.linspace(left, right, len(years))
+    blue, red, grid, ink = &quot;#245b86&quot;, &quot;#b44c4c&quot;, &quot;#d9e0e7&quot;, &quot;#263746&quot;
+    parts = [f&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 {width} {height}&quot; role=&quot;img&quot; aria-labelledby=&quot;title desc&quot;&gt;&#x27;,
+             &#x27;&lt;title id=&quot;title&quot;&gt;Tỷ lệ phải trả và hiệu quả hoạt động trung bình theo năm&lt;/title&gt;&#x27;,
+             &#x27;&lt;desc id=&quot;desc&quot;&gt;Biểu đồ hai trục từ năm 2021 đến 2025, đường xanh là phải trả người bán trên tổng tài sản, đường đỏ là vòng quay tổng tài sản.&lt;/desc&gt;&#x27;,
+             &#x27;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;/&gt;&#x27;,
+             f&#x27;&lt;text x=&quot;{width/2}&quot; y=&quot;34&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;22&quot; fill=&quot;{blue}&quot;&gt;Phải trả người bán và hiệu quả hoạt động theo năm&lt;/text&gt;&#x27;,
+             f&#x27;&lt;rect x=&quot;{left}&quot; y=&quot;{top}&quot; width=&quot;{right-left}&quot; height=&quot;{bottom-top}&quot; fill=&quot;#ffffff&quot; stroke=&quot;#66727e&quot; stroke-width=&quot;1&quot;/&gt;&#x27;]
+    for idx in range(6):
+        frac = idx / 5
+        y = bottom - frac * (bottom - top)
+        v1 = y1_low + frac * (y1_high - y1_low)
+        v2 = y2_low + frac * (y2_high - y2_low)
+        parts += [f&#x27;&lt;line x1=&quot;{left}&quot; y1=&quot;{y:.1f}&quot; x2=&quot;{right}&quot; y2=&quot;{y:.1f}&quot; stroke=&quot;{grid}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{left-12}&quot; y=&quot;{y+5:.1f}&quot; text-anchor=&quot;end&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{v1:.2f}%&lt;/text&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{right+12}&quot; y=&quot;{y+5:.1f}&quot; text-anchor=&quot;start&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{v2:.3f}&lt;/text&gt;&#x27;]
+    points1, points2 = [], []
+    for x, year, p, t in zip(x_positions, years, payable, turnover):
+        y1 = _scale(p, y1_low, y1_high, bottom, top)
+        y2 = _scale(t, y2_low, y2_high, bottom, top)
+        points1.append(f&quot;{x:.1f},{y1:.1f}&quot;)
+        points2.append(f&quot;{x:.1f},{y2:.1f}&quot;)
+        parts += [f&#x27;&lt;text x=&quot;{x:.1f}&quot; y=&quot;{bottom+28}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;14&quot; fill=&quot;{ink}&quot;&gt;{year}&lt;/text&gt;&#x27;,
+                  f&#x27;&lt;circle cx=&quot;{x:.1f}&quot; cy=&quot;{y1:.1f}&quot; r=&quot;5&quot; fill=&quot;{blue}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;polygon points=&quot;{x:.1f},{y2-7:.1f} {x+7:.1f},{y2:.1f} {x:.1f},{y2+7:.1f} {x-7:.1f},{y2:.1f}&quot; fill=&quot;{red}&quot;/&gt;&#x27;]
+    parts += [f&#x27;&lt;polyline points=&quot;{&quot; &quot;.join(points1)}&quot; fill=&quot;none&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;2.2&quot;/&gt;&#x27;,
+              f&#x27;&lt;polyline points=&quot;{&quot; &quot;.join(points2)}&quot; fill=&quot;none&quot; stroke=&quot;{red}&quot; stroke-width=&quot;2.2&quot;/&gt;&#x27;,
+              f&#x27;&lt;text transform=&quot;translate(24 {((top+bottom)/2):.1f}) rotate(-90)&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Phải trả người bán / tổng tài sản (%)&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text transform=&quot;translate(980 {((top+bottom)/2):.1f}) rotate(90)&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Vòng quay tổng tài sản (lần)&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text x=&quot;{(left+right)/2}&quot; y=&quot;{bottom+56}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Năm tài chính&lt;/text&gt;&#x27;,
+              f&#x27;&lt;line x1=&quot;285&quot; y1=&quot;548&quot; x2=&quot;330&quot; y2=&quot;548&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;2.2&quot;/&gt;&lt;circle cx=&quot;307&quot; cy=&quot;548&quot; r=&quot;5&quot; fill=&quot;{blue}&quot;/&gt;&lt;text x=&quot;340&quot; y=&quot;553&quot; font-family=&quot;Arial&quot; font-size=&quot;14&quot; fill=&quot;{ink}&quot;&gt;Phải trả / tổng tài sản&lt;/text&gt;&#x27;,
+              f&#x27;&lt;line x1=&quot;575&quot; y1=&quot;548&quot; x2=&quot;620&quot; y2=&quot;548&quot; stroke=&quot;{red}&quot; stroke-width=&quot;2.2&quot;/&gt;&lt;polygon points=&quot;597,541 604,548 597,555 590,548&quot; fill=&quot;{red}&quot;/&gt;&lt;text x=&quot;630&quot; y=&quot;553&quot; font-family=&quot;Arial&quot; font-size=&quot;14&quot; fill=&quot;{ink}&quot;&gt;Hiệu quả hoạt động&lt;/text&gt;&#x27;,
+              &#x27;&lt;/svg&gt;&#x27;]
+    destination.write_text(&quot;\n&quot;.join(parts), encoding=&quot;utf-8&quot;)
+
+
+def chart_descriptive(desc: pd.DataFrame, destination: Path) -&gt; None:
+    &quot;&quot;&quot;Bốn dải thống kê riêng thang đo: min–max, p25–p75, mean và median.&quot;&quot;&quot;
+    width, height = 1000, 670
+    plot_left, plot_right = 325, 925
+    short_names = [&quot;Vòng quay tổng tài sản&quot;, &quot;Phải trả người bán / tài sản&quot;,
+                   &quot;Thanh khoản hiện hành&quot;, &quot;Quy mô: ln(tổng tài sản)&quot;]
+    blue, red, ink, pale = &quot;#245b86&quot;, &quot;#b44c4c&quot;, &quot;#263746&quot;, &quot;#d9e0e7&quot;
+    parts = [f&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 {width} {height}&quot; role=&quot;img&quot; aria-labelledby=&quot;title desc&quot;&gt;&#x27;,
+             &#x27;&lt;title id=&quot;title&quot;&gt;Thống kê mô tả sau Winsor2&lt;/title&gt;&#x27;,
+             &#x27;&lt;desc id=&quot;desc&quot;&gt;Mỗi biến có thang đo riêng. Đường mảnh là min đến max, đường đậm là p25 đến p75, chấm tròn là trung vị và hình thoi là trung bình.&lt;/desc&gt;&#x27;,
+             &#x27;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;/&gt;&#x27;,
+             f&#x27;&lt;text x=&quot;{width/2}&quot; y=&quot;36&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;22&quot; fill=&quot;{blue}&quot;&gt;Thống kê mô tả sau Winsor2 (p1–p99)&lt;/text&gt;&#x27;]
+    for i, (idx, row) in enumerate(desc.iterrows()):
+        y = 120 + i * 130
+        low, high = float(row[&quot;Min&quot;]), float(row[&quot;Max&quot;])
+        p25, median, mean, p75 = map(float, [row[&quot;p25&quot;], row[&quot;p50&quot;], row[&quot;Mean&quot;], row[&quot;p75&quot;]])
+        x_min, x_max = plot_left, plot_right
+        xp25 = _scale(p25, low, high, x_min, x_max)
+        xp50 = _scale(median, low, high, x_min, x_max)
+        xmean = _scale(mean, low, high, x_min, x_max)
+        xp75 = _scale(p75, low, high, x_min, x_max)
+        parts += [f&#x27;&lt;text x=&quot;30&quot; y=&quot;{y+5}&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(short_names[i])}&lt;/text&gt;&#x27;,
+                  f&#x27;&lt;line x1=&quot;{x_min}&quot; y1=&quot;{y}&quot; x2=&quot;{x_max}&quot; y2=&quot;{y}&quot; stroke=&quot;{pale}&quot; stroke-width=&quot;4&quot;/&gt;&#x27;,
+                  f&#x27;&lt;line x1=&quot;{xp25:.1f}&quot; y1=&quot;{y}&quot; x2=&quot;{xp75:.1f}&quot; y2=&quot;{y}&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;12&quot;/&gt;&#x27;,
+                  f&#x27;&lt;circle cx=&quot;{xp50:.1f}&quot; cy=&quot;{y}&quot; r=&quot;7&quot; fill=&quot;#ffffff&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;3&quot;/&gt;&#x27;,
+                  f&#x27;&lt;polygon points=&quot;{xmean:.1f},{y-9} {xmean+9:.1f},{y} {xmean:.1f},{y+9} {xmean-9:.1f},{y}&quot; fill=&quot;{red}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{(x_min+x_max)/2}&quot; y=&quot;{y+32}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;{ink}&quot;&gt;Min {low:.3f} · p25 {p25:.3f} · p50 {median:.3f} · Mean {mean:.3f} · p75 {p75:.3f} · Max {high:.3f}&lt;/text&gt;&#x27;]
+    parts += [f&#x27;&lt;line x1=&quot;235&quot; y1=&quot;625&quot; x2=&quot;280&quot; y2=&quot;625&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;12&quot;/&gt;&lt;text x=&quot;290&quot; y=&quot;630&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;Khoảng p25–p75&lt;/text&gt;&#x27;,
+              f&#x27;&lt;circle cx=&quot;455&quot; cy=&quot;625&quot; r=&quot;7&quot; fill=&quot;#ffffff&quot; stroke=&quot;{blue}&quot; stroke-width=&quot;3&quot;/&gt;&lt;text x=&quot;470&quot; y=&quot;630&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;Trung vị&lt;/text&gt;&#x27;,
+              f&#x27;&lt;polygon points=&quot;620,616 629,625 620,634 611,625&quot; fill=&quot;{red}&quot;/&gt;&lt;text x=&quot;638&quot; y=&quot;630&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;Trung bình&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text x=&quot;{width/2}&quot; y=&quot;657&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;#5f6c78&quot;&gt;Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.&lt;/text&gt;&#x27;, &#x27;&lt;/svg&gt;&#x27;]
+    destination.write_text(&quot;\n&quot;.join(parts), encoding=&quot;utf-8&quot;)
+
+
+def chart_interaction(frame: pd.DataFrame, ols_result: pd.DataFrame, destination: Path) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Margins-style plot: dự báo Y theo X ở ba mức thanh khoản.&quot;&quot;&quot;
+    width, height = 1000, 610
+    left, right, top, bottom = 95, 930, 75, 470
+    x_values = np.linspace(frame[&quot;payables_ratio&quot;].quantile(.10),
+                           frame[&quot;payables_ratio&quot;].quantile(.90), 41)
+    liquidity_levels = frame[&quot;liquidity&quot;].quantile([.25, .50, .75])
+    b = ols_result[&quot;Hệ số OLS&quot;]
+    mean_ap = frame[&quot;payables_ratio&quot;].mean()
+    mean_liq = frame[&quot;liquidity&quot;].mean()
+    mean_size = frame[&quot;size_ln&quot;].mean()
+    rows = []
+    labels = {0.25: &quot;Thanh khoản thấp (p25)&quot;, 0.5: &quot;Thanh khoản trung vị (p50)&quot;,
+              0.75: &quot;Thanh khoản cao (p75)&quot;}
+    for q, liq in liquidity_levels.items():
+        for x in x_values:
+            ap_c, liq_c = x - mean_ap, liq - mean_liq
+            pred = (b[&quot;Hằng số&quot;] + b[&quot;payables_c&quot;] * ap_c + b[&quot;liquidity_c&quot;] * liq_c +
+                    b[&quot;size_ln&quot;] * mean_size + b[&quot;interaction&quot;] * ap_c * liq_c)
+            rows.append({&quot;payables_ratio&quot;: x, &quot;liquidity_quantile&quot;: q,
+                         &quot;liquidity&quot;: liq, &quot;predicted_asset_turnover&quot;: pred,
+                         &quot;label&quot;: labels[float(q)]})
+    pred_df = pd.DataFrame(rows)
+    y_low, y_high = _padded(pred_df[&quot;predicted_asset_turnover&quot;])
+    x_low, x_high = float(x_values.min()), float(x_values.max())
+    colors = {0.25: &quot;#8a5a9e&quot;, 0.5: &quot;#245b86&quot;, 0.75: &quot;#b44c4c&quot;}
+    ink, grid = &quot;#263746&quot;, &quot;#d9e0e7&quot;
+    parts = [f&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 {width} {height}&quot; role=&quot;img&quot; aria-labelledby=&quot;title desc&quot;&gt;&#x27;,
+             &#x27;&lt;title id=&quot;title&quot;&gt;Biểu đồ tương tác giữa phải trả người bán và thanh khoản&lt;/title&gt;&#x27;,
+             &#x27;&lt;desc id=&quot;desc&quot;&gt;Dự báo vòng quay tài sản theo tỷ lệ phải trả người bán ở ba mức thanh khoản, giữ quy mô ở trung bình và năm gốc 2021.&lt;/desc&gt;&#x27;,
+             &#x27;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;/&gt;&#x27;,
+             &#x27;&lt;text x=&quot;500&quot; y=&quot;34&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;22&quot; fill=&quot;#245b86&quot;&gt;Tác động tương tác: phải trả người bán × thanh khoản&lt;/text&gt;&#x27;,
+             f&#x27;&lt;rect x=&quot;{left}&quot; y=&quot;{top}&quot; width=&quot;{right-left}&quot; height=&quot;{bottom-top}&quot; fill=&quot;#ffffff&quot; stroke=&quot;#66727e&quot; stroke-width=&quot;1&quot;/&gt;&#x27;]
+    for idx in range(6):
+        frac = idx / 5
+        y = bottom - frac * (bottom - top)
+        value = y_low + frac * (y_high - y_low)
+        parts += [f&#x27;&lt;line x1=&quot;{left}&quot; y1=&quot;{y:.1f}&quot; x2=&quot;{right}&quot; y2=&quot;{y:.1f}&quot; stroke=&quot;{grid}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{left-12}&quot; y=&quot;{y+5:.1f}&quot; text-anchor=&quot;end&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{value:.2f}&lt;/text&gt;&#x27;]
+    for idx in range(6):
+        frac = idx / 5
+        x = left + frac * (right - left)
+        value = (x_low + frac * (x_high - x_low)) * 100
+        parts += [f&#x27;&lt;text x=&quot;{x:.1f}&quot; y=&quot;{bottom+28}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{value:.1f}%&lt;/text&gt;&#x27;]
+    legend_x = [175, 430, 690]
+    for pos, (q, group) in zip(legend_x, pred_df.groupby(&quot;liquidity_quantile&quot;, sort=True)):
+        color = colors[float(q)]
+        points = []
+        for _, row in group.iterrows():
+            x = _scale(row[&quot;payables_ratio&quot;], x_low, x_high, left, right)
+            y = _scale(row[&quot;predicted_asset_turnover&quot;], y_low, y_high, bottom, top)
+            points.append(f&quot;{x:.1f},{y:.1f}&quot;)
+        parts += [f&#x27;&lt;polyline points=&quot;{&quot; &quot;.join(points)}&quot; fill=&quot;none&quot; stroke=&quot;{color}&quot; stroke-width=&quot;2.5&quot;/&gt;&#x27;,
+                  f&#x27;&lt;line x1=&quot;{pos}&quot; y1=&quot;535&quot; x2=&quot;{pos+38}&quot; y2=&quot;535&quot; stroke=&quot;{color}&quot; stroke-width=&quot;2.5&quot;/&gt;&#x27;,
+                  f&#x27;&lt;circle cx=&quot;{pos+19}&quot; cy=&quot;535&quot; r=&quot;4&quot; fill=&quot;{color}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{pos+47}&quot; y=&quot;540&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(group.iloc[0][&quot;label&quot;])}&lt;/text&gt;&#x27;]
+    parts += [f&#x27;&lt;text transform=&quot;translate(25 {(top+bottom)/2}) rotate(-90)&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Vòng quay tổng tài sản dự báo (lần)&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text x=&quot;{(left+right)/2}&quot; y=&quot;{bottom+58}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Phải trả người bán / tổng tài sản&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text x=&quot;500&quot; y=&quot;585&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;#5f6c78&quot;&gt;Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.&lt;/text&gt;&#x27;, &#x27;&lt;/svg&gt;&#x27;]
+    destination.write_text(&quot;\n&quot;.join(parts), encoding=&quot;utf-8&quot;)
+    return pred_df
+
+
+def chart_dummy_interaction(frame: pd.DataFrame, ols_result: pd.DataFrame,
+                            destination: Path) -&gt; pd.DataFrame:
+    &quot;&quot;&quot;Margins-style plot cho dummy thanh khoản 0/1.&quot;&quot;&quot;
+    width, height = 1000, 600
+    left, right, top, bottom = 95, 930, 75, 460
+    x_values = np.linspace(frame[&quot;payables_ratio&quot;].quantile(.10),
+                           frame[&quot;payables_ratio&quot;].quantile(.90), 41)
+    b = ols_result[&quot;Hệ số OLS&quot;]
+    mean_ap = frame[&quot;payables_ratio&quot;].mean()
+    mean_size = frame[&quot;size_ln&quot;].mean()
+    rows = []
+    labels = {0: &quot;D=0: tài sản ngắn hạn &lt; nợ ngắn hạn&quot;,
+              1: &quot;D=1: tài sản ngắn hạn ≥ nợ ngắn hạn&quot;}
+    for dummy in [0, 1]:
+        for x in x_values:
+            ap_c = x - mean_ap
+            pred = (b[&quot;Hằng số&quot;] + b[&quot;payables_c&quot;] * ap_c +
+                    b[&quot;high_liquidity_dummy&quot;] * dummy + b[&quot;size_ln&quot;] * mean_size +
+                    b[&quot;interaction_dummy&quot;] * ap_c * dummy)
+            rows.append({&quot;payables_ratio&quot;: x, &quot;high_liquidity_dummy&quot;: dummy,
+                         &quot;predicted_asset_turnover&quot;: pred, &quot;label&quot;: labels[dummy]})
+    pred_df = pd.DataFrame(rows)
+    y_low, y_high = _padded(pred_df[&quot;predicted_asset_turnover&quot;])
+    x_low, x_high = float(x_values.min()), float(x_values.max())
+    colors = {0: &quot;#8a5a9e&quot;, 1: &quot;#245b86&quot;}
+    ink, grid = &quot;#263746&quot;, &quot;#d9e0e7&quot;
+    parts = [f&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 {width} {height}&quot; role=&quot;img&quot; aria-labelledby=&quot;title desc&quot;&gt;&#x27;,
+             &#x27;&lt;title id=&quot;title&quot;&gt;Tương tác giữa phải trả người bán và dummy thanh khoản&lt;/title&gt;&#x27;,
+             &#x27;&lt;desc id=&quot;desc&quot;&gt;Hai đường dự báo vòng quay tổng tài sản cho nhóm có và không có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.&lt;/desc&gt;&#x27;,
+             &#x27;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;/&gt;&#x27;,
+             &#x27;&lt;text x=&quot;500&quot; y=&quot;34&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;22&quot; fill=&quot;#245b86&quot;&gt;Tương tác với biến giả thanh khoản 0–1&lt;/text&gt;&#x27;,
+             f&#x27;&lt;rect x=&quot;{left}&quot; y=&quot;{top}&quot; width=&quot;{right-left}&quot; height=&quot;{bottom-top}&quot; fill=&quot;#ffffff&quot; stroke=&quot;#66727e&quot; stroke-width=&quot;1&quot;/&gt;&#x27;]
+    for idx in range(6):
+        frac = idx / 5
+        y = bottom - frac * (bottom - top)
+        value = y_low + frac * (y_high - y_low)
+        parts += [f&#x27;&lt;line x1=&quot;{left}&quot; y1=&quot;{y:.1f}&quot; x2=&quot;{right}&quot; y2=&quot;{y:.1f}&quot; stroke=&quot;{grid}&quot;/&gt;&#x27;,
+                  f&#x27;&lt;text x=&quot;{left-12}&quot; y=&quot;{y+5:.1f}&quot; text-anchor=&quot;end&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{value:.2f}&lt;/text&gt;&#x27;]
+    for idx in range(6):
+        frac = idx / 5
+        x = left + frac * (right - left)
+        value = (x_low + frac * (x_high - x_low)) * 100
+        parts.append(f&#x27;&lt;text x=&quot;{x:.1f}&quot; y=&quot;{bottom+28}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{value:.1f}%&lt;/text&gt;&#x27;)
+    for dummy, group in pred_df.groupby(&quot;high_liquidity_dummy&quot;, sort=True):
+        color = colors[int(dummy)]
+        points = []
+        for _, row in group.iterrows():
+            x = _scale(row[&quot;payables_ratio&quot;], x_low, x_high, left, right)
+            y = _scale(row[&quot;predicted_asset_turnover&quot;], y_low, y_high, bottom, top)
+            points.append(f&quot;{x:.1f},{y:.1f}&quot;)
+        parts.append(f&#x27;&lt;polyline points=&quot;{&quot; &quot;.join(points)}&quot; fill=&quot;none&quot; stroke=&quot;{color}&quot; stroke-width=&quot;2.5&quot;/&gt;&#x27;)
+    parts += [f&#x27;&lt;text transform=&quot;translate(25 {(top+bottom)/2}) rotate(-90)&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Vòng quay tổng tài sản dự báo (lần)&lt;/text&gt;&#x27;,
+              f&#x27;&lt;text x=&quot;{(left+right)/2}&quot; y=&quot;{bottom+58}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;15&quot; fill=&quot;{ink}&quot;&gt;Phải trả người bán / tổng tài sản&lt;/text&gt;&#x27;,
+              f&#x27;&lt;line x1=&quot;155&quot; y1=&quot;535&quot; x2=&quot;195&quot; y2=&quot;535&quot; stroke=&quot;{colors[0]}&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;205&quot; y=&quot;540&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(labels[0])}&lt;/text&gt;&#x27;,
+              f&#x27;&lt;line x1=&quot;550&quot; y1=&quot;535&quot; x2=&quot;590&quot; y2=&quot;535&quot; stroke=&quot;{colors[1]}&quot; stroke-width=&quot;2.5&quot;/&gt;&lt;text x=&quot;600&quot; y=&quot;540&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(labels[1])}&lt;/text&gt;&#x27;,
+              &#x27;&lt;text x=&quot;500&quot; y=&quot;580&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;#5f6c78&quot;&gt;Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.&lt;/text&gt;&#x27;, &#x27;&lt;/svg&gt;&#x27;]
+    destination.write_text(&quot;\n&quot;.join(parts), encoding=&quot;utf-8&quot;)
+    return pred_df
+
+
+def chart_correlation_heatmap(corr: pd.DataFrame, destination: Path) -&gt; None:
+    &quot;&quot;&quot;Heatmap Pearson với thang màu xanh âm – trắng 0 – đỏ dương.&quot;&quot;&quot;
+    labels = corr.columns.tolist()
+    n = len(labels)
+    width, height = 920, 820
+    cell = 78
+    x0, y0 = 230, 155
+    blue, white, red = (63, 91, 176), (247, 247, 247), (190, 30, 45)
+    ink = &quot;#202b3c&quot;
+
+    def color(value: float) -&gt; str:
+        value = max(-1.0, min(1.0, float(value)))
+        if value &lt; 0:
+            t = value + 1
+            rgb = tuple(round(blue[i] + t * (white[i] - blue[i])) for i in range(3))
+        else:
+            t = value
+            rgb = tuple(round(white[i] + t * (red[i] - white[i])) for i in range(3))
+        return &quot;#%02x%02x%02x&quot; % rgb
+
+    parts = [f&#x27;&lt;svg xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 {width} {height}&quot; role=&quot;img&quot; aria-labelledby=&quot;title desc&quot;&gt;&#x27;,
+             &#x27;&lt;title id=&quot;title&quot;&gt;Ma trận hệ số tương quan Pearson&lt;/title&gt;&#x27;,
+             &#x27;&lt;desc id=&quot;desc&quot;&gt;Heatmap tương quan giữa biến phụ thuộc, biến giải thích, biến điều tiết, quy mô, dummy và hai biến tương tác.&lt;/desc&gt;&#x27;,
+             &#x27;&lt;rect width=&quot;100%&quot; height=&quot;100%&quot; fill=&quot;#ffffff&quot;/&gt;&#x27;,
+             f&#x27;&lt;text x=&quot;{width/2}&quot; y=&quot;42&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;23&quot; font-weight=&quot;bold&quot; fill=&quot;{ink}&quot;&gt;Ma trận hệ số tương quan Pearson&lt;/text&gt;&#x27;]
+    for j, label in enumerate(labels):
+        x = x0 + j * cell + cell / 2
+        parts.append(f&#x27;&lt;text transform=&quot;translate({x:.1f} {y0-12}) rotate(-45)&quot; text-anchor=&quot;start&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(label)}&lt;/text&gt;&#x27;)
+    for i, row_label in enumerate(labels):
+        y = y0 + i * cell
+        parts.append(f&#x27;&lt;text x=&quot;{x0-12}&quot; y=&quot;{y+cell/2+5:.1f}&quot; text-anchor=&quot;end&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{ink}&quot;&gt;{xml_escape(row_label)}&lt;/text&gt;&#x27;)
+        for j, col_label in enumerate(labels):
+            value = float(corr.loc[row_label, col_label])
+            x = x0 + j * cell
+            fill = color(value)
+            text_color = &quot;#ffffff&quot; if abs(value) &gt;= .55 else ink
+            parts += [f&#x27;&lt;rect x=&quot;{x}&quot; y=&quot;{y}&quot; width=&quot;{cell}&quot; height=&quot;{cell}&quot; fill=&quot;{fill}&quot; stroke=&quot;#ffffff&quot; stroke-width=&quot;1.5&quot;/&gt;&#x27;,
+                      f&#x27;&lt;text x=&quot;{x+cell/2}&quot; y=&quot;{y+cell/2+5}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;13&quot; fill=&quot;{text_color}&quot;&gt;{value:.3f}&lt;/text&gt;&#x27;]
+    bar_x, bar_y, bar_h = x0 + n * cell + 32, y0, n * cell
+    segments = 100
+    for k in range(segments):
+        v = 1 - 2 * k / (segments - 1)
+        y = bar_y + k * bar_h / segments
+        parts.append(f&#x27;&lt;rect x=&quot;{bar_x}&quot; y=&quot;{y:.1f}&quot; width=&quot;22&quot; height=&quot;{bar_h/segments+1:.1f}&quot; fill=&quot;{color(v)}&quot;/&gt;&#x27;)
+    for v, text_value in [(1, &quot;1.00&quot;), (.5, &quot;0.50&quot;), (0, &quot;0.00&quot;), (-.5, &quot;−0.50&quot;), (-1, &quot;−1.00&quot;)]:
+        y = bar_y + (1 - v) / 2 * bar_h
+        parts.append(f&#x27;&lt;text x=&quot;{bar_x+30}&quot; y=&quot;{y+5:.1f}&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;{ink}&quot;&gt;{text_value}&lt;/text&gt;&#x27;)
+    parts += [f&#x27;&lt;text x=&quot;{width/2}&quot; y=&quot;{height-24}&quot; text-anchor=&quot;middle&quot; font-family=&quot;Arial&quot; font-size=&quot;12&quot; fill=&quot;#5f6c78&quot;&gt;Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1&lt;/text&gt;&#x27;, &#x27;&lt;/svg&gt;&#x27;]
+    destination.write_text(&quot;\n&quot;.join(parts), encoding=&quot;utf-8&quot;)
+
+
+DATA_TAB_TEMPLATE = &quot;&quot;&quot;&lt;div id=&quot;tab-data&quot; hidden&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h3&gt;Dữ liệu trước khi lọc (__N_RAW__ công ty–năm)&lt;/h3&gt;
+&lt;p class=&quot;legend&quot;&gt;Toàn bộ công ty–năm ghép được từ báo cáo kết quả kinh doanh và bảng cân đối kế toán, FY2021–FY2025. Đơn vị: tỷ đồng. Cột Trạng thái cho biết dòng được giữ lại hay bị loại ở bước lọc nào (xét theo thứ tự các bước ở mục 2).&lt;/p&gt;
+&lt;div class=&quot;scroll&quot;&gt;__STATUS_TABLE__&lt;/div&gt;
+&lt;div class=&quot;dt-controls&quot;&gt;&lt;input type=&quot;search&quot; id=&quot;raw-q&quot; placeholder=&quot;Tìm mã cổ phiếu&quot; aria-label=&quot;Tìm mã cổ phiếu&quot;&gt;&lt;select id=&quot;raw-f&quot; aria-label=&quot;Lọc theo trạng thái&quot;&gt;&lt;option value=&quot;&quot;&gt;Tất cả&lt;/option&gt;&lt;option value=&quot;Giữ lại&quot;&gt;Giữ lại&lt;/option&gt;&lt;option value=&quot;Loại&quot;&gt;Bị loại&lt;/option&gt;&lt;/select&gt;&lt;span id=&quot;raw-count&quot;&gt;&lt;/span&gt;&lt;a class=&quot;dl&quot; href=&quot;data/data_truoc_loc.csv&quot; download&gt;Tải CSV&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&quot;scroll&quot;&gt;&lt;table class=&quot;data dt&quot; id=&quot;raw-table&quot;&gt;&lt;/table&gt;&lt;/div&gt;&lt;div class=&quot;pager&quot; id=&quot;raw-pager&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h3&gt;Dữ liệu sau khi lọc – mẫu phân tích (__N_CLEAN__ công ty–năm)&lt;/h3&gt;
+&lt;p class=&quot;legend&quot;&gt;Đơn vị khoản mục: tỷ đồng. ATO, TPR, LIQ, SIZ là giá trị trước winsor hóa; các cột có hậu tố _w là sau Winsor2 p1–p99 và là giá trị dùng trong hồi quy. DLI = 1 nếu LIQ ≥ 1.&lt;/p&gt;
+&lt;div class=&quot;dt-controls&quot;&gt;&lt;input type=&quot;search&quot; id=&quot;clean-q&quot; placeholder=&quot;Tìm mã cổ phiếu&quot; aria-label=&quot;Tìm mã cổ phiếu&quot;&gt;&lt;span id=&quot;clean-count&quot;&gt;&lt;/span&gt;&lt;a class=&quot;dl&quot; href=&quot;data/data_sau_loc.csv&quot; download&gt;Tải CSV&lt;/a&gt;&lt;/div&gt;
+&lt;div class=&quot;scroll&quot;&gt;&lt;table class=&quot;data dt&quot; id=&quot;clean-table&quot;&gt;&lt;/table&gt;&lt;/div&gt;&lt;div class=&quot;pager&quot; id=&quot;clean-pager&quot;&gt;&lt;/div&gt;&lt;/section&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;raw-json&quot;&gt;__RAW_JSON__&lt;/script&gt;
+&lt;script type=&quot;application/json&quot; id=&quot;clean-json&quot;&gt;__CLEAN_JSON__&lt;/script&gt;
+&lt;script&gt;
+(function(){
+function mk(id){const meta=JSON.parse(document.getElementById(id+&#x27;-json&#x27;).textContent);const cols=meta.cols,rows=meta.rows,fi=meta.filterCol;
+const st={q:&#x27;&#x27;,f:&#x27;&#x27;,page:0},size=50;const tb=document.getElementById(id+&#x27;-table&#x27;),pg=document.getElementById(id+&#x27;-pager&#x27;),q=document.getElementById(id+&#x27;-q&#x27;),f=document.getElementById(id+&#x27;-f&#x27;),cnt=document.getElementById(id+&#x27;-count&#x27;);
+const fmt=v=&gt;v===null?&#x27;—&#x27;:(typeof v===&#x27;number&#x27;?v.toLocaleString(&#x27;en-US&#x27;,{maximumFractionDigits:4}):v);
+function render(){const qq=st.q.trim().toUpperCase();const r=rows.filter(x=&gt;(!qq||String(x[0]).toUpperCase().startsWith(qq))&amp;&amp;(!st.f||(fi&gt;=0&amp;&amp;String(x[fi]).startsWith(st.f))));
+const pages=Math.max(1,Math.ceil(r.length/size));if(st.page&gt;=pages)st.page=pages-1;const part=r.slice(st.page*size,st.page*size+size);
+tb.innerHTML=&#x27;&lt;thead&gt;&lt;tr&gt;&#x27;+cols.map(c=&gt;&#x27;&lt;th&gt;&#x27;+c+&#x27;&lt;/th&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;&#x27;+part.map(x=&gt;&#x27;&lt;tr&gt;&#x27;+x.map(v=&gt;&#x27;&lt;td&#x27;+(typeof v===&#x27;number&#x27;?&#x27;&#x27;:&#x27; class=&quot;txt&quot;&#x27;)+&#x27;&gt;&#x27;+fmt(v)+&#x27;&lt;/td&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tr&gt;&#x27;).join(&#x27;&#x27;)+&#x27;&lt;/tbody&gt;&#x27;;
+cnt.textContent=r.length.toLocaleString(&#x27;en-US&#x27;)+&#x27; dòng&#x27;;pg.innerHTML=&#x27;&#x27;;
+const b=(l,p,d)=&gt;{const e=document.createElement(&#x27;button&#x27;);e.type=&#x27;button&#x27;;e.textContent=l;e.disabled=d;e.onclick=()=&gt;{st.page=p;render();};pg.appendChild(e);};
+b(&#x27;‹ Trước&#x27;,st.page-1,st.page===0);const sp=document.createElement(&#x27;span&#x27;);sp.textContent=&#x27; Trang &#x27;+(st.page+1)+&#x27; / &#x27;+pages+&#x27; &#x27;;pg.appendChild(sp);b(&#x27;Sau ›&#x27;,st.page+1,st.page&gt;=pages-1);}
+q.addEventListener(&#x27;input&#x27;,()=&gt;{st.q=q.value;st.page=0;render();});if(f)f.addEventListener(&#x27;change&#x27;,()=&gt;{st.f=f.value;st.page=0;render();});render();}
+mk(&#x27;raw&#x27;);mk(&#x27;clean&#x27;);})();
+&lt;/script&gt;&lt;/div&gt;&quot;&quot;&quot;
+
+
+def main() -&gt; None:
+    if hasattr(sys.stdout, &quot;reconfigure&quot;):
+        sys.stdout.reconfigure(encoding=&quot;utf-8&quot;, errors=&quot;replace&quot;)
+    OUT.mkdir(parents=True, exist_ok=True)
+    CHARTS.mkdir(parents=True, exist_ok=True)
+    bs_path = DATA / &quot;Balance Sheet.csv&quot;
+    is_path = DATA / &quot;Income Statement.csv&quot;
+    if not bs_path.exists() or not is_path.exists():
+        raise FileNotFoundError(&quot;Thiếu CSV nguồn trong thư mục data_source.&quot;)
+
+    bs = pd.read_csv(bs_path, low_memory=False)
+    inc = pd.read_csv(is_path, low_memory=False)
+    for df in (bs, inc):
+        df[&quot;year&quot;] = pd.to_numeric(df[&quot;year&quot;], errors=&quot;coerce&quot;)
+        df[&quot;public_date&quot;] = pd.to_datetime(df[&quot;public_date&quot;], errors=&quot;coerce&quot;)
+    bs = bs[(bs[&quot;period_kind&quot;] == &quot;YEAR&quot;) &amp; bs[&quot;year&quot;].isin(YEARS)].copy()
+    inc = inc[(inc[&quot;period_kind&quot;] == &quot;YEAR&quot;) &amp; inc[&quot;year&quot;].isin(YEARS)].copy()
+
+    # Mỗi mã-năm giữ bản công bố mới nhất nếu nguồn có dòng trùng.
+    bs = bs.sort_values(&quot;public_date&quot;).drop_duplicates([&quot;ticker&quot;, &quot;year&quot;], keep=&quot;last&quot;)
+    inc = inc.sort_values(&quot;public_date&quot;).drop_duplicates([&quot;ticker&quot;, &quot;year&quot;], keep=&quot;last&quot;)
+    # Nhóm ngành rộng dựa trên mẫu biểu KQKD riêng trong chính dữ liệu nguồn.
+    # Đây không phải hệ thống phân ngành ICB/GICS chi tiết; mục đích là nhận diện
+    # ba nhóm tài chính có cấu trúc BCTC không so sánh trực tiếp với mẫu chung.
+    inc[&quot;industry_group&quot;] = classify_statement_group(inc)
+    merged = bs.merge(inc, on=[&quot;ticker&quot;, &quot;year&quot;], how=&quot;inner&quot;, suffixes=(&quot;_bs&quot;, &quot;_is&quot;))
+
+    # Chuẩn hóa kiểu dữ liệu cho các dòng có tên trong README gốc của nguồn.
+    for col in [&quot;bsa1&quot;, &quot;bsa23&quot;, &quot;bsa53&quot;, &quot;bsa54&quot;, &quot;bsa55&quot;, &quot;bsa57&quot;, &quot;bsa67&quot;, &quot;bsa78&quot;,
+                &quot;isa1&quot;, &quot;isa2&quot;, &quot;isa3&quot;]:
+        merged[col] = pd.to_numeric(merged[col], errors=&quot;coerce&quot;)
+
+    # Kiểm tra tính đúng đắn của dữ liệu gốc (phi tài chính) bằng các đẳng thức kế toán.
+    nonfin = merged[merged[&quot;industry_group&quot;] == &quot;Phi tài chính (mẫu biểu chung)&quot;]
+    def gap(a: pd.Series, b: pd.Series) -&gt; pd.Series:
+        return (a - b).abs() / b.abs().where(b.abs() &gt; 0)
+    data_checks = pd.DataFrame([
+        {&quot;Kiểm tra&quot;: &quot;Trùng mã–năm sau khi ghép&quot;, &quot;Số dòng vi phạm&quot;: int(merged.duplicated([&quot;ticker&quot;, &quot;year&quot;]).sum()), &quot;Xử lý&quot;: &quot;Giữ bản công bố mới nhất&quot;},
+        {&quot;Kiểm tra&quot;: &quot;Doanh thu thuần ≠ doanh thu − giảm trừ (lệch &gt; 0,5%)&quot;, &quot;Số dòng vi phạm&quot;: int((gap(nonfin[&quot;isa1&quot;] + nonfin[&quot;isa2&quot;], nonfin[&quot;isa3&quot;]) &gt; .005).sum()), &quot;Xử lý&quot;: &quot;Không có&quot;},
+        {&quot;Kiểm tra&quot;: &quot;Tổng tài sản ≠ TS ngắn hạn + TS dài hạn (lệch &gt; 0,5%)&quot;, &quot;Số dòng vi phạm&quot;: int((gap(nonfin[&quot;bsa1&quot;] + nonfin[&quot;bsa23&quot;], nonfin[&quot;bsa53&quot;]) &gt; .005).sum()), &quot;Xử lý&quot;: &quot;Loại&quot;},
+        {&quot;Kiểm tra&quot;: &quot;Tổng tài sản ≠ nợ phải trả + vốn chủ sở hữu (lệch &gt; 0,5%)&quot;, &quot;Số dòng vi phạm&quot;: int((gap(nonfin[&quot;bsa54&quot;] + nonfin[&quot;bsa78&quot;], nonfin[&quot;bsa53&quot;]) &gt; .005).sum()), &quot;Xử lý&quot;: &quot;Giữ: sai ở khoản VCSH của nguồn, khoản này không dùng trong mô hình&quot;},
+        {&quot;Kiểm tra&quot;: &quot;Nợ phải trả ≠ nợ ngắn hạn + nợ dài hạn (lệch &gt; 0,5%)&quot;, &quot;Số dòng vi phạm&quot;: int((gap(nonfin[&quot;bsa55&quot;] + nonfin[&quot;bsa67&quot;], nonfin[&quot;bsa54&quot;]) &gt; .005).sum()), &quot;Xử lý&quot;: &quot;Không có&quot;},
+        {&quot;Kiểm tra&quot;: &quot;Phải trả người bán &gt; nợ ngắn hạn&quot;, &quot;Số dòng vi phạm&quot;: int((nonfin[&quot;bsa57&quot;] &gt; nonfin[&quot;bsa55&quot;] * 1.0001).sum()), &quot;Xử lý&quot;: &quot;Không có&quot;},
+    ]).set_index(&quot;Kiểm tra&quot;)
+
+    # Lọc tuần tự để có thể kiểm toán chính xác số dòng bị loại ở từng bước.
+    sample_steps = []
+    def add_step(step: str, frame: pd.DataFrame) -&gt; None:
+        sample_steps.append({&quot;Bước&quot;: step, &quot;Số quan sát&quot;: len(frame),
+                             &quot;Số mã&quot;: frame[&quot;ticker&quot;].nunique()})
+    add_step(&quot;Ghép được báo cáo KQKD và bảng cân đối theo mã-năm&quot;, merged)
+    industry_distribution = (merged.groupby(&quot;industry_group&quot;)
+                             .agg(**{&quot;Số quan sát&quot;: (&quot;ticker&quot;, &quot;size&quot;),
+                                     &quot;Số mã&quot;: (&quot;ticker&quot;, &quot;nunique&quot;)})
+                             .sort_values(&quot;Số quan sát&quot;, ascending=False))
+    # Loại ngành tài chính trước khi tạo tỷ số. Với các ngành này, doanh thu,
+    # tài sản ngắn hạn, nợ ngắn hạn và phải trả có nội hàm/mẫu biểu khác.
+    valid = merged[merged[&quot;industry_group&quot;] == &quot;Phi tài chính (mẫu biểu chung)&quot;].copy()
+    add_step(&quot;Loại ngân hàng, chứng khoán và bảo hiểm&quot;, valid)
+    raw_cols = [&quot;isa3&quot;, &quot;bsa53&quot;, &quot;bsa55&quot;, &quot;bsa1&quot;, &quot;bsa57&quot;]
+    valid = valid.dropna(subset=raw_cols).copy()
+    add_step(&quot;Có đủ 5 khoản mục gốc để tạo biến&quot;, valid)
+    valid = valid[valid[&quot;bsa53&quot;] &gt; 0].copy()
+    add_step(&quot;Tổng tài sản &gt; 0&quot;, valid)
+    # Bảng cân đối phải khớp: tổng tài sản = TSNH + TSDH = nợ phải trả + VCSH.
+    # Dòng không khớp là lỗi trong dữ liệu nguồn nên loại hẳn (winsor không sửa được).
+    # Chỉ loại khi phía tài sản không khớp (ảnh hưởng trực tiếp tới biến của mô hình).
+    # Dòng lệch nợ + VCSH được giữ: nguồn sai ở khoản VCSH, khoản này không dùng trong mô hình.
+    bad_balance = valid[gap(valid[&quot;bsa1&quot;] + valid[&quot;bsa23&quot;], valid[&quot;bsa53&quot;]) &gt; .005]
+    equity_gap_rows = int((gap(valid[&quot;bsa54&quot;] + valid[&quot;bsa78&quot;], valid[&quot;bsa53&quot;]) &gt; .005).sum())
+    valid = valid.drop(bad_balance.index)
+    add_step(&quot;Bảng cân đối khớp (lệch ≤ 0,5%)&quot;, valid)
+    dropped_bad_balance = len(bad_balance)
+    dropped_rows = bad_balance.assign(**{&quot;Lý do loại&quot;: &quot;Bảng cân đối không khớp&quot;})[
+        [&quot;ticker&quot;, &quot;year&quot;, &quot;Lý do loại&quot;, &quot;bsa53&quot;, &quot;bsa1&quot;, &quot;bsa23&quot;, &quot;bsa54&quot;, &quot;bsa78&quot;, &quot;bsa55&quot;, &quot;bsa57&quot;, &quot;isa3&quot;]]
+    valid = valid[valid[&quot;isa3&quot;] &gt; 0].copy()
+    add_step(&quot;Doanh thu thuần &gt; 0&quot;, valid)
+    valid = valid[valid[&quot;bsa55&quot;] &gt; 0].copy()
+    add_step(&quot;Nợ ngắn hạn &gt; 0&quot;, valid)
+    valid = valid[(valid[&quot;bsa1&quot;] &gt;= 0) &amp; (valid[&quot;bsa57&quot;] &gt;= 0)].copy()
+    add_step(&quot;Tài sản ngắn hạn và phải trả người bán không âm&quot;, valid)
+
+    valid[&quot;asset_turnover&quot;] = valid[&quot;isa3&quot;] / valid[&quot;bsa53&quot;]
+    valid[&quot;payables_ratio&quot;] = valid[&quot;bsa57&quot;] / valid[&quot;bsa53&quot;]
+    valid[&quot;liquidity&quot;] = valid[&quot;bsa1&quot;] / valid[&quot;bsa55&quot;]
+    valid[&quot;size_ln&quot;] = np.log(valid[&quot;bsa53&quot;] / 1_000_000_000)
+    metric_cols = list(VAR_LABELS)
+    valid = valid.replace([np.inf, -np.inf], np.nan).dropna(subset=metric_cols)
+    add_step(&quot;Các biến mô hình hữu hạn và đầy đủ&quot;, valid)
+    sample_flow = pd.DataFrame(sample_steps).set_index(&quot;Bước&quot;)
+    if valid.empty:
+        raise ValueError(&quot;Không còn dòng hợp lệ sau khi áp dụng tiêu chí chọn mẫu.&quot;)
+
+    # Thống kê trước khi winsor hóa, trên cùng mẫu phân tích cuối cùng.
+    desc_before = descriptive(valid, metric_cols)
+    wins = valid.copy()
+    thresholds = []
+    for col in metric_cols:
+        low = float(valid[col].quantile(LOWER_P))
+        high = float(valid[col].quantile(UPPER_P))
+        before = valid[col]
+        wins[col] = before.clip(lower=low, upper=high)
+        thresholds.append({
+            &quot;Biến&quot;: SHORT_LABELS[col], &quot;p1&quot;: low, &quot;p99&quot;: high,
+            &quot;Dưới p1&quot;: int((before &lt; low).sum()),
+            &quot;Trên p99&quot;: int((before &gt; high).sum()),
+            &quot;Tổng giá trị bị chặn&quot;: int(((before &lt; low) | (before &gt; high)).sum()),
+        })
+    thresholds_df = pd.DataFrame(thresholds).set_index(&quot;Biến&quot;)
+    desc_after = descriptive(wins, metric_cols)
+
+    # Corr trên các biến đã winsor hóa.
+    corr = wins[metric_cols].corr(method=&quot;pearson&quot;)
+    corr.index = [SHORT_LABELS.get(x, x) for x in corr.index]
+    corr.columns = [SHORT_LABELS.get(x, x) for x in corr.columns]
+
+    # Tương tác: (X - trung bình X) * (Z - trung bình Z).
+    # Lập sau winsorization; năm giữ nguyên, không winsor hóa.
+    wins[&quot;payables_c&quot;] = wins[&quot;payables_ratio&quot;] - wins[&quot;payables_ratio&quot;].mean()
+    wins[&quot;liquidity_c&quot;] = wins[&quot;liquidity&quot;] - wins[&quot;liquidity&quot;].mean()
+    wins[&quot;interaction&quot;] = wins[&quot;payables_c&quot;] * wins[&quot;liquidity_c&quot;]
+    # Dummy có ngưỡng kinh tế rõ ràng: 1 nếu tài sản ngắn hạn đủ trang trải
+    # nợ ngắn hạn (current ratio &gt;= 1), ngược lại bằng 0. Dummy không winsor hóa.
+    wins[&quot;high_liquidity_dummy&quot;] = (valid.loc[wins.index, &quot;liquidity&quot;] &gt;= 1).astype(int)
+    wins[&quot;interaction_dummy&quot;] = wins[&quot;payables_c&quot;] * wins[&quot;high_liquidity_dummy&quot;]
+    baseline_vars = [&quot;payables_c&quot;, &quot;liquidity_c&quot;, &quot;size_ln&quot;]
+    interaction_vars = baseline_vars + [&quot;interaction&quot;]
+    dummy_interaction_vars = [&quot;payables_c&quot;, &quot;high_liquidity_dummy&quot;, &quot;size_ln&quot;, &quot;interaction_dummy&quot;]
+    vif_base = vif_table(wins, baseline_vars)
+    vif_inter = vif_table(wins, interaction_vars)
+    vif_dummy = vif_table(wins, dummy_interaction_vars)
+
+    # OLS0 chỉ có Y và X; OLS1 là mô hình cơ sở; OLS2 tương tác liên tục;
+    # OLS3 dùng dummy thanh khoản để giải thích chênh lệch độ dốc giữa hai nhóm.
+    ols0, info0, residual0 = ols_clustered(wins, [&quot;payables_c&quot;],
+                                           &quot;Mô hình 0: OLS đơn giản Y ~ X&quot;,
+                                           include_year_effects=False)
+    ols1, info1, residual1 = ols_clustered(wins, baseline_vars,
+                                           &quot;Mô hình 1: không có tương tác&quot;)
+    ols2, info2, residual2 = ols_clustered(wins, interaction_vars,
+                                           &quot;Mô hình 2: có tương tác&quot;)
+    ols3, info3, residual3 = ols_clustered(wins, dummy_interaction_vars,
+                                           &quot;Mô hình 3: tương tác với dummy thanh khoản&quot;)
+    model_info = pd.DataFrame([info0, info1, info2, info3]).set_index(&quot;Mô hình&quot;)
+
+    # Kiểm định F (H0: R² = 0) cho các mô hình pooled; p-value xấp xỉ Wilson–Hilferty.
+    def chi2_sf(x: float, d: int) -&gt; float:
+        z = ((x / d) ** (1 / 3) - (1 - 2 / (9 * d))) / math.sqrt(2 / (9 * d))
+        return 0.5 * math.erfc(z / math.sqrt(2))
+    f_vals, f_ps = [], []
+    for res, inf in [(ols0, info0), (ols1, info1), (ols2, info2), (ols3, info3)]:
+        k, n_ = len(res), inf[&quot;Obs&quot;]
+        fv = (inf[&quot;R2&quot;] / (k - 1)) / ((1 - inf[&quot;R2&quot;]) / (n_ - k))
+        f_vals.append(fv); f_ps.append(chi2_sf(fv * (k - 1), k - 1))
+    model_info[&quot;F&quot;] = f_vals
+    model_info[&quot;p-value (F)&quot;] = f_ps
+
+    # A1: kiểm tra phi tuyến bằng cách thêm TPRc² vào mô hình 1.
+    quad, _, _ = ols_clustered(wins.assign(tpr_sq=wins[&quot;payables_c&quot;] ** 2), baseline_vars + [&quot;tpr_sq&quot;], &quot;M1 + TPR²&quot;)
+    # A4: Breusch–Pagan cho mô hình 2 (hồi quy phần dư bình phương lên các biến X).
+    yrs_bp = pd.get_dummies(wins[&quot;year&quot;].astype(int), prefix=&quot;Năm&quot;, drop_first=True, dtype=float)
+    x_bp = np.column_stack([np.ones(len(wins)), wins[interaction_vars].astype(float).to_numpy(), yrs_bp.to_numpy()])
+    e2 = residual2 ** 2
+    e2_fit = x_bp @ np.linalg.lstsq(x_bp, e2, rcond=None)[0]
+    bp_r2 = 1 - float(((e2 - e2_fit) ** 2).sum()) / float(((e2 - e2.mean()) ** 2).sum())
+    bp_lm, bp_df = len(e2) * bp_r2, x_bp.shape[1] - 1
+    bp_p = chi2_sf(bp_lm, bp_df)
+    # A5: biến giải thích trễ 1 năm (TPR năm trước không thể bị ATO năm nay tác động ngược).
+    lagdf = wins.sort_values([&quot;ticker&quot;, &quot;year&quot;]).copy()
+    grp = lagdf.groupby(&quot;ticker&quot;)
+    for c in [&quot;payables_ratio&quot;, &quot;liquidity&quot;, &quot;size_ln&quot;]:
+        lagdf[c + &quot;_l1&quot;] = grp[c].shift(1)
+    lagdf[&quot;prev_year&quot;] = grp[&quot;year&quot;].shift(1)
+    lagdf = lagdf[(lagdf[&quot;year&quot;] - lagdf[&quot;prev_year&quot;]) == 1].dropna(subset=[&quot;payables_ratio_l1&quot;, &quot;liquidity_l1&quot;, &quot;size_ln_l1&quot;]).copy()
+    lagdf[&quot;payables_c&quot;] = lagdf[&quot;payables_ratio_l1&quot;] - lagdf[&quot;payables_ratio_l1&quot;].mean()
+    lagdf[&quot;liquidity_c&quot;] = lagdf[&quot;liquidity_l1&quot;] - lagdf[&quot;liquidity_l1&quot;].mean()
+    lagdf[&quot;size_ln&quot;] = lagdf[&quot;size_ln_l1&quot;]
+    lagdf[&quot;interaction&quot;] = lagdf[&quot;payables_c&quot;] * lagdf[&quot;liquidity_c&quot;]
+    lag2, lag_info2, _ = ols_clustered(lagdf, interaction_vars, &quot;Mô hình 2 – biến trễ 1 năm&quot;)
+
+    # Kiểm tra độ bền: cùng ba mô hình nhưng thêm hiệu ứng cố định công ty.
+    fe1, fe_info1, _ = ols_clustered(wins, baseline_vars, &quot;Mô hình 1 – FE công ty&quot;, within=True)
+    fe2, fe_info2, _ = ols_clustered(wins, interaction_vars, &quot;Mô hình 2 – FE công ty&quot;, within=True)
+    fe3, fe_info3, _ = ols_clustered(wins, dummy_interaction_vars, &quot;Mô hình 3 – FE công ty&quot;, within=True)
+
+    def coef_cell(res: pd.DataFrame, name: str) -&gt; str:
+        if name not in res.index:
+            return &quot;&quot;
+        coef, se, pv = res.loc[name, [&quot;Hệ số OLS&quot;, &quot;SE gom cụm&quot;, &quot;p-value xấp xỉ&quot;]]
+        stars = &quot;***&quot; if pv &lt; .01 else &quot;**&quot; if pv &lt; .05 else &quot;*&quot; if pv &lt; .10 else &quot;&quot;
+        return f&quot;{coef:.4f}{stars} ({se:.4f})&quot;
+
+    compare_vars = [&quot;payables_c&quot;, &quot;liquidity_c&quot;, &quot;high_liquidity_dummy&quot;, &quot;size_ln&quot;,
+                    &quot;interaction&quot;, &quot;interaction_dummy&quot;]
+    compare_models = [(&quot;M1 Pooled&quot;, ols1, info1), (&quot;M1 FE&quot;, fe1, fe_info1),
+                      (&quot;M2 Pooled&quot;, ols2, info2), (&quot;M2 FE&quot;, fe2, fe_info2),
+                      (&quot;M3 Pooled&quot;, ols3, info3), (&quot;M3 FE&quot;, fe3, fe_info3),
+                      (&quot;M2 trễ 1 năm&quot;, lag2, lag_info2)]
+    robust_compare = pd.DataFrame(
+        {label: [coef_cell(res, v) for v in compare_vars] + [f&quot;{inf[&#x27;Obs&#x27;]:,}&quot;, f&quot;{inf[&#x27;R2&#x27;]:.4f}&quot;]
+         for label, res, inf in compare_models},
+        index=[RESULT_LABELS[v] for v in compare_vars] + [&quot;Obs&quot;, &quot;R²&quot;])
+    robust_compare.index.name = &quot;Biến&quot;
+
+    def sign_word(a: float, b: float) -&gt; str:
+        return &quot;giữ dấu&quot; if np.sign(a) == np.sign(b) else &quot;đổi dấu&quot;
+    b = lambda res, v: float(res.loc[v, &quot;Hệ số OLS&quot;])
+    pv = lambda res, v: float(res.loc[v, &quot;p-value xấp xỉ&quot;])
+    fe_reading = (
+        f&quot;Khi thêm hiệu ứng cố định công ty, hệ số TPR ở mô hình 2 đi từ {b(ols2,&#x27;payables_c&#x27;):.4f} &quot;
+        f&quot;xuống {b(fe2,&#x27;payables_c&#x27;):.4f} (p ≈ {pv(fe2,&#x27;payables_c&#x27;):.3g}); hệ số TLI đi từ &quot;
+        f&quot;{b(ols2,&#x27;interaction&#x27;):.4f} xuống {b(fe2,&#x27;interaction&#x27;):.4f} (p ≈ {pv(fe2,&#x27;interaction&#x27;):.3g}). &quot;
+        f&quot;Hệ số TLD của mô hình 3 {sign_word(b(ols3,&#x27;interaction_dummy&#x27;), b(fe3,&#x27;interaction_dummy&#x27;))}: &quot;
+        f&quot;{b(ols3,&#x27;interaction_dummy&#x27;):.4f} trong pooled OLS và {b(fe3,&#x27;interaction_dummy&#x27;):.4f} trong FE &quot;
+        f&quot;(p ≈ {pv(fe3,&#x27;interaction_dummy&#x27;):.3g}).&quot;)
+    sig_terms = [name for name, res, v in [(&quot;TLI&quot;, fe2, &quot;interaction&quot;), (&quot;TLD&quot;, fe3, &quot;interaction_dummy&quot;)]
+                 if pv(res, v) &lt; .10]
+    if sig_terms:
+        fe_reading += f&quot; Trong FE, {&#x27;, &#x27;.join(sig_terms)} vẫn có ý nghĩa thống kê ở mức 10%.&quot;
+    else:
+        fe_reading += (&quot; Trong FE, cả TLI và TLD đều không có ý nghĩa thống kê ở mức 10%: vai trò điều tiết &quot;
+                       &quot;của thanh khoản không còn rõ khi chỉ xét biến động trong cùng một công ty. Hệ số TPR &quot;
+                       &quot;vẫn dương nhưng nhỏ hơn nhiều so với pooled OLS.&quot;)
+    corr_full_labels = SHORT_LABELS
+    corr_full_cols = list(corr_full_labels)
+    corr_full = wins[corr_full_cols].corr(method=&quot;pearson&quot;).rename(
+        index=corr_full_labels, columns=corr_full_labels)
+    normality = normality_diagnostics({
+        &quot;ATO&quot;: wins[&quot;asset_turnover&quot;],
+        &quot;TPR&quot;: wins[&quot;payables_ratio&quot;],
+        &quot;LIQ&quot;: wins[&quot;liquidity&quot;],
+        &quot;SIZ&quot;: wins[&quot;size_ln&quot;],
+        &quot;RE2&quot;: residual2,
+        &quot;RE3&quot;: residual3,
+    })
+    normality_html = normality.copy()
+    normality_html[&quot;Obs&quot;] = normality_html[&quot;Obs&quot;].map(lambda x: f&quot;{int(x):,}&quot;)
+    normality_html[&quot;JB p-value&quot;] = normality_html[&quot;JB p-value&quot;].map(
+        lambda x: &quot;&lt; 1e-300&quot; if pd.notna(x) and x == 0 else (f&quot;{x:.3e}&quot; if pd.notna(x) else &quot;—&quot;))
+    vif_base_short = vif_base.rename(index=RESULT_LABELS)
+    vif_inter_short = vif_inter.rename(index=RESULT_LABELS)
+    vif_dummy_short = vif_dummy.rename(index=RESULT_LABELS)
+    ols0_short = ols0.rename(index=RESULT_LABELS)
+    ols1_short = ols1.rename(index=RESULT_LABELS)
+    ols2_short = ols2.rename(index=RESULT_LABELS)
+    ols3_short = ols3.rename(index=RESULT_LABELS)
+    model_dictionary = pd.DataFrame([
+        {&quot;Mã&quot;: &quot;ATO&quot;, &quot;Tên biến&quot;: &quot;Vòng quay tổng tài sản&quot;, &quot;Tên trong code&quot;: &quot;asset_turnover&quot;, &quot;Cách tính&quot;: &quot;Doanh thu thuần / Tổng tài sản&quot;, &quot;Vai trò&quot;: &quot;Y – hiệu quả hoạt động cần giải thích&quot;},
+        {&quot;Mã&quot;: &quot;TPR&quot;, &quot;Tên biến&quot;: &quot;Tỷ lệ phải trả người bán&quot;, &quot;Tên trong code&quot;: &quot;payables_ratio&quot;, &quot;Cách tính&quot;: &quot;Phải trả người bán / Tổng tài sản&quot;, &quot;Vai trò&quot;: &quot;X – tín dụng từ nhà cung cấp&quot;},
+        {&quot;Mã&quot;: &quot;LIQ&quot;, &quot;Tên biến&quot;: &quot;Thanh khoản hiện hành&quot;, &quot;Tên trong code&quot;: &quot;liquidity&quot;, &quot;Cách tính&quot;: &quot;Tài sản ngắn hạn / Nợ ngắn hạn&quot;, &quot;Vai trò&quot;: &quot;Z – biến điều tiết&quot;},
+        {&quot;Mã&quot;: &quot;SIZ&quot;, &quot;Tên biến&quot;: &quot;Quy mô doanh nghiệp&quot;, &quot;Tên trong code&quot;: &quot;size_ln&quot;, &quot;Cách tính&quot;: &quot;ln(Tổng tài sản tính bằng tỷ đồng)&quot;, &quot;Vai trò&quot;: &quot;Biến kiểm soát&quot;},
+        {&quot;Mã&quot;: &quot;TLI&quot;, &quot;Tên biến&quot;: &quot;Tương tác TPR × LIQ&quot;, &quot;Tên trong code&quot;: &quot;interaction&quot;, &quot;Cách tính&quot;: &quot;(TPR − trung bình mẫu của TPR) × (LIQ − trung bình mẫu của LIQ)&quot;, &quot;Vai trò&quot;: &quot;Kiểm tra độ dốc TPR–ATO có đổi theo LIQ&quot;},
+        {&quot;Mã&quot;: &quot;DLI&quot;, &quot;Tên biến&quot;: &quot;Dummy đủ thanh khoản&quot;, &quot;Tên trong code&quot;: &quot;high_liquidity_dummy&quot;, &quot;Cách tính&quot;: &quot;1 nếu LIQ ≥ 1; ngược lại 0&quot;, &quot;Vai trò&quot;: &quot;Biến giả 0–1&quot;},
+        {&quot;Mã&quot;: &quot;TLD&quot;, &quot;Tên biến&quot;: &quot;Tương tác TPR × DLI&quot;, &quot;Tên trong code&quot;: &quot;interaction_dummy&quot;, &quot;Cách tính&quot;: &quot;(TPR − trung bình mẫu của TPR) × DLI&quot;, &quot;Vai trò&quot;: &quot;So sánh độ dốc giữa DLI=1 và DLI=0&quot;},
+        {&quot;Mã&quot;: &quot;YDM&quot;, &quot;Tên biến&quot;: &quot;Biến giả năm&quot;, &quot;Tên trong code&quot;: &quot;Năm_2022…Năm_2025&quot;, &quot;Cách tính&quot;: &quot;Năm gốc 2021&quot;, &quot;Vai trò&quot;: &quot;Kiểm soát cú sốc chung từng năm&quot;},
+        {&quot;Mã&quot;: &quot;CON&quot;, &quot;Tên biến&quot;: &quot;Hằng số&quot;, &quot;Tên trong code&quot;: &quot;Hằng số&quot;, &quot;Cách tính&quot;: &quot;Hệ số chặn do OLS ước lượng&quot;, &quot;Vai trò&quot;: &quot;ATO dự báo tại TPR, LIQ trung bình, SIZ = 0 (tài sản 1 tỷ), năm 2021; chỉ dùng để tính dự báo&quot;},
+        {&quot;Mã&quot;: &quot;Y22–Y25&quot;, &quot;Tên biến&quot;: &quot;Dummy từng năm&quot;, &quot;Tên trong code&quot;: &quot;Năm_2022…Năm_2025&quot;, &quot;Cách tính&quot;: &quot;1 nếu thuộc năm tương ứng; ngược lại 0&quot;, &quot;Vai trò&quot;: &quot;Các hệ số năm trong bảng OLS; năm gốc 2021&quot;},
+        {&quot;Mã&quot;: &quot;RE2&quot;, &quot;Tên biến&quot;: &quot;Phần dư mô hình 2&quot;, &quot;Tên trong code&quot;: &quot;residual2&quot;, &quot;Cách tính&quot;: &quot;ATO thực tế − ATO dự báo từ mô hình 2&quot;, &quot;Vai trò&quot;: &quot;Kiểm tra phân phối sai số mô hình tương tác liên tục&quot;},
+        {&quot;Mã&quot;: &quot;RE3&quot;, &quot;Tên biến&quot;: &quot;Phần dư mô hình 3&quot;, &quot;Tên trong code&quot;: &quot;residual3&quot;, &quot;Cách tính&quot;: &quot;ATO thực tế − ATO dự báo từ mô hình 3&quot;, &quot;Vai trò&quot;: &quot;Kiểm tra phân phối sai số mô hình tương tác dummy&quot;},
+        {&quot;Mã&quot;: &quot;PAT&quot;, &quot;Tên biến&quot;: &quot;ATO dự báo&quot;, &quot;Tên trong code&quot;: &quot;predicted_asset_turnover&quot;, &quot;Cách tính&quot;: &quot;Giá trị dự báo từ hệ số OLS&quot;, &quot;Vai trò&quot;: &quot;Dữ liệu vẽ biểu đồ tương tác&quot;},
+        {&quot;Mã&quot;: &quot;LPQ&quot;, &quot;Tên biến&quot;: &quot;Phân vị LIQ&quot;, &quot;Tên trong code&quot;: &quot;liquidity_quantile&quot;, &quot;Cách tính&quot;: &quot;p25, p50 hoặc p75 của LIQ&quot;, &quot;Vai trò&quot;: &quot;Chọn ba mức thanh khoản cho biểu đồ&quot;},
+        {&quot;Mã&quot;: &quot;GRP&quot;, &quot;Tên biến&quot;: &quot;Nhãn nhóm&quot;, &quot;Tên trong code&quot;: &quot;label&quot;, &quot;Cách tính&quot;: &quot;Tên nhóm hiển thị trên biểu đồ&quot;, &quot;Vai trò&quot;: &quot;Phân biệt các đường dự báo&quot;},
+    ]).set_index(&quot;Mã&quot;)
+    statement_dictionary = pd.DataFrame([
+        {&quot;Mã biến&quot;: &quot;ATO&quot;, &quot;Khoản mục gốc&quot;: &quot;Doanh thu thuần; Tổng cộng tài sản&quot;, &quot;Mã nguồn&quot;: &quot;isa3; bsa53&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Báo cáo KQKD; Bảng cân đối kế toán&quot;, &quot;Cách đưa vào biến&quot;: &quot;isa3 / bsa53&quot;},
+        {&quot;Mã biến&quot;: &quot;TPR&quot;, &quot;Khoản mục gốc&quot;: &quot;Phải trả người bán; Tổng cộng tài sản&quot;, &quot;Mã nguồn&quot;: &quot;bsa57; bsa53&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Bảng cân đối kế toán&quot;, &quot;Cách đưa vào biến&quot;: &quot;bsa57 / bsa53&quot;},
+        {&quot;Mã biến&quot;: &quot;LIQ&quot;, &quot;Khoản mục gốc&quot;: &quot;Tài sản ngắn hạn; Nợ ngắn hạn&quot;, &quot;Mã nguồn&quot;: &quot;bsa1; bsa55&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Bảng cân đối kế toán&quot;, &quot;Cách đưa vào biến&quot;: &quot;bsa1 / bsa55&quot;},
+        {&quot;Mã biến&quot;: &quot;SIZ&quot;, &quot;Khoản mục gốc&quot;: &quot;Tổng cộng tài sản&quot;, &quot;Mã nguồn&quot;: &quot;bsa53&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Bảng cân đối kế toán&quot;, &quot;Cách đưa vào biến&quot;: &quot;ln(bsa53 / 1 tỷ đồng)&quot;},
+        {&quot;Mã biến&quot;: &quot;DLI&quot;, &quot;Khoản mục gốc&quot;: &quot;Tạo từ LIQ&quot;, &quot;Mã nguồn&quot;: &quot;Không có trực tiếp&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Biến do nghiên cứu xây dựng&quot;, &quot;Cách đưa vào biến&quot;: &quot;1 nếu LIQ ≥ 1; ngược lại 0&quot;},
+        {&quot;Mã biến&quot;: &quot;TLI&quot;, &quot;Khoản mục gốc&quot;: &quot;Tạo từ TPR và LIQ&quot;, &quot;Mã nguồn&quot;: &quot;Không có trực tiếp&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Biến do nghiên cứu xây dựng&quot;, &quot;Cách đưa vào biến&quot;: &quot;(TPR − TPR̄) × (LIQ − LIQ̄); TPR̄, LIQ̄ là trung bình mẫu&quot;},
+        {&quot;Mã biến&quot;: &quot;TLD&quot;, &quot;Khoản mục gốc&quot;: &quot;Tạo từ TPR và DLI&quot;, &quot;Mã nguồn&quot;: &quot;Không có trực tiếp&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Biến do nghiên cứu xây dựng&quot;, &quot;Cách đưa vào biến&quot;: &quot;(TPR − TPR̄) × DLI; TPR̄ là trung bình mẫu&quot;},
+        {&quot;Mã biến&quot;: &quot;YDM&quot;, &quot;Khoản mục gốc&quot;: &quot;Năm tài chính&quot;, &quot;Mã nguồn&quot;: &quot;year&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Thông tin kỳ báo cáo&quot;, &quot;Cách đưa vào biến&quot;: &quot;Dummy 2022–2025; gốc 2021&quot;},
+    ]).set_index(&quot;Mã biến&quot;)
+    requirement_check = pd.DataFrame([
+        {&quot;STT&quot;: &quot;1&quot;, &quot;Yêu cầu&quot;: &quot;Chuẩn hóa lại dữ liệu&quot;, &quot;Nội dung&quot;: &quot;Kiểm tra đẳng thức kế toán, lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99&quot;, &quot;Mục báo cáo&quot;: &quot;2, 5–7&quot;},
+        {&quot;STT&quot;: &quot;2&quot;, &quot;Yêu cầu&quot;: &quot;Hoàn thiện mô hình và cách đo biến&quot;, &quot;Nội dung&quot;: &quot;Bảng Y, X, Z, biến kiểm soát, dummy, tương tác và công thức&quot;, &quot;Mục báo cáo&quot;: &quot;4&quot;},
+        {&quot;STT&quot;: &quot;3&quot;, &quot;Yêu cầu&quot;: &quot;Biến giả 0–1&quot;, &quot;Nội dung&quot;: &quot;DLI = 1 nếu LIQ ≥ 1; DLI = 0 nếu LIQ &lt; 1&quot;, &quot;Mục báo cáo&quot;: &quot;4, 15&quot;},
+        {&quot;STT&quot;: &quot;4&quot;, &quot;Yêu cầu&quot;: &quot;OLS thông thường&quot;, &quot;Nội dung&quot;: &quot;Mô hình 0: Y ~ X&quot;, &quot;Mục báo cáo&quot;: &quot;12&quot;},
+        {&quot;STT&quot;: &quot;5&quot;, &quot;Yêu cầu&quot;: &quot;Mô hình cơ sở chưa tương tác&quot;, &quot;Nội dung&quot;: &quot;Mô hình 1: TPR + LIQ + SIZ + biến giả năm&quot;, &quot;Mục báo cáo&quot;: &quot;13&quot;},
+        {&quot;STT&quot;: &quot;6&quot;, &quot;Yêu cầu&quot;: &quot;Mô hình có tương tác&quot;, &quot;Nội dung&quot;: &quot;Mô hình 2: TPR × LIQ; mô hình 3: TPR × DLI&quot;, &quot;Mục báo cáo&quot;: &quot;14–17&quot;},
+        {&quot;STT&quot;: &quot;7&quot;, &quot;Yêu cầu&quot;: &quot;Cơ sở kinh tế cho tương tác&quot;, &quot;Nội dung&quot;: &quot;Thanh khoản quyết định khả năng chịu áp lực nghĩa vụ với nhà cung cấp&quot;, &quot;Mục báo cáo&quot;: &quot;1, 4&quot;},
+        {&quot;STT&quot;: &quot;8&quot;, &quot;Yêu cầu&quot;: &quot;Kiểm tra độ bền&quot;, &quot;Nội dung&quot;: &quot;Ước lượng lại với hiệu ứng cố định công ty và với biến giải thích trễ 1 năm&quot;, &quot;Mục báo cáo&quot;: &quot;19&quot;},
+        {&quot;STT&quot;: &quot;9&quot;, &quot;Yêu cầu&quot;: &quot;Đánh giá mô hình&quot;, &quot;Nội dung&quot;: &quot;Kỳ vọng dấu, kiểm tra giả định A1–A5, tính chất BLUE&quot;, &quot;Mục báo cáo&quot;: &quot;20&quot;},
+    ]).set_index(&quot;STT&quot;)
+
+    # Dữ liệu và hình minh họa. SVG được tạo trực tiếp để máy chỉ cần pandas + numpy.
+    year_means = wins.groupby(&quot;year&quot;)[[&quot;payables_ratio&quot;, &quot;asset_turnover&quot;]].mean()
+    chart_year_means(year_means, CHARTS / &quot;01_trung_binh_theo_nam.svg&quot;)
+    chart_descriptive(desc_after, CHARTS / &quot;02_thong_ke_mo_ta.svg&quot;)
+    interaction_predictions = chart_interaction(wins, ols2, CHARTS / &quot;03_bieu_do_tuong_tac_OLS.svg&quot;)
+    dummy_predictions = chart_dummy_interaction(wins, ols3,
+                                                 CHARTS / &quot;04_tuong_tac_dummy_OLS.svg&quot;)
+    chart_correlation_heatmap(corr_full, CHARTS / &quot;05_ma_tran_tuong_quan.svg&quot;)
+    # Nhúng nguyên SVG vào HTML để báo cáo là một file độc lập: chỉ cần mở
+    # bao_cao_ket_qua.html là thấy biểu đồ, không phụ thuộc đường dẫn ảnh ngoài.
+    def inline_svg(filename: str) -&gt; str:
+        svg = (CHARTS / filename).read_text(encoding=&quot;utf-8&quot;)
+        return svg.replace(&quot;&lt;svg &quot;, &#x27;&lt;svg class=&quot;inline-chart&quot; &#x27;, 1)
+
+    chart_year_inline = inline_svg(&quot;01_trung_binh_theo_nam.svg&quot;)
+    chart_desc_inline = inline_svg(&quot;02_thong_ke_mo_ta.svg&quot;)
+    chart_interaction_inline = inline_svg(&quot;03_bieu_do_tuong_tac_OLS.svg&quot;)
+    chart_dummy_inline = inline_svg(&quot;04_tuong_tac_dummy_OLS.svg&quot;)
+    chart_corr_inline = inline_svg(&quot;05_ma_tran_tuong_quan.svg&quot;)
+    dummy_distribution = (wins.groupby(&quot;high_liquidity_dummy&quot;).size()
+                          .rename(&quot;Số quan sát&quot;).to_frame())
+    dummy_distribution[&quot;Tỷ lệ mẫu&quot;] = dummy_distribution[&quot;Số quan sát&quot;] / len(wins)
+    dummy_distribution.index = [&quot;DLI=0&quot;, &quot;DLI=1&quot;]
+
+    ap_beta = float(ols2.loc[&quot;payables_c&quot;, &quot;Hệ số OLS&quot;])
+    ap_p = float(ols2.loc[&quot;payables_c&quot;, &quot;p-value xấp xỉ&quot;])
+    int_beta = float(ols2.loc[&quot;interaction&quot;, &quot;Hệ số OLS&quot;])
+    int_p = float(ols2.loc[&quot;interaction&quot;, &quot;p-value xấp xỉ&quot;])
+    dummy_int_beta = float(ols3.loc[&quot;interaction_dummy&quot;, &quot;Hệ số OLS&quot;])
+    dummy_int_p = float(ols3.loc[&quot;interaction_dummy&quot;, &quot;p-value xấp xỉ&quot;])
+    max_vif = float(vif_inter[&quot;VIF&quot;].replace([np.inf, -np.inf], np.nan).max())
+    max_vif_dummy = float(vif_dummy[&quot;VIF&quot;].replace([np.inf, -np.inf], np.nan).max())
+    if ap_beta &gt; 0 and int_beta &gt; 0:
+        interaction_reading = (&quot;Trong mẫu này, tại mức thanh khoản trung bình, tỷ lệ phải trả người bán có liên hệ &quot;
+                               &quot;dương với vòng quay tài sản. Hệ số tương tác dương cho thấy độ dốc dương mạnh hơn &quot;
+                               &quot;khi thanh khoản cao hơn. Kết quả này khác dấu tác động chính được tóm tắt trong bài &quot;
+                               &quot;nghiên cứu tham khảo; không được diễn giải là ‘thanh khoản làm dịu tác động âm’.&quot;)
+    elif ap_beta &lt; 0 and int_beta &gt; 0:
+        interaction_reading = (&quot;Tỷ lệ phải trả người bán có liên hệ âm tại mức thanh khoản trung bình; tương tác dương &quot;
+                               &quot;cho thấy mối liên hệ âm yếu đi khi thanh khoản tăng.&quot;)
+    else:
+        interaction_reading = (&quot;Dấu của hệ số chính và hệ số tương tác phải được đọc cùng nhau; biểu đồ tương tác cho &quot;
+                               &quot;thấy độ dốc dự báo ở ba mức thanh khoản.&quot;)
+    liq1, liq2 = float(ols1.loc[&quot;liquidity_c&quot;, &quot;Hệ số OLS&quot;]), float(ols2.loc[&quot;liquidity_c&quot;, &quot;Hệ số OLS&quot;])
+    if np.sign(liq1) != np.sign(liq2):
+        liq_reading = (f&quot;Hệ số LIQ đổi dấu từ {liq1:.4f} ở mô hình 1 sang {liq2:.4f} ở mô hình 2. Trong mô hình 2, &quot;
+                       &quot;hệ số này là độ dốc của LIQ tại mức TPR trung bình nên không cùng nghĩa với mô hình 1; &quot;
+                       &quot;kết hợp với VIF cao, hệ số LIQ nhạy với đặc tả và không nên diễn giải riêng.&quot;)
+    else:
+        liq_reading = (f&quot;Hệ số LIQ giữ dấu giữa mô hình 1 ({liq1:.4f}) và mô hình 2 ({liq2:.4f}).&quot;)
+    negative_equity = int((wins[&quot;bsa55&quot;] &gt; wins[&quot;bsa53&quot;]).sum())
+    tpr_p1 = float(thresholds_df.loc[&quot;TPR&quot;, &quot;p1&quot;])
+    tpr_p99 = float(thresholds_df.loc[&quot;TPR&quot;, &quot;p99&quot;])
+    vif_reading = (f&quot;VIF lớn nhất của mô hình tương tác là {max_vif:.2f}, vượt mốc tham khảo 10. &quot;
+                   &quot;Đây là dấu hiệu đa cộng tuyến giữa thanh khoản và tích số; hệ số có thể nhạy với đặc tả mô hình. &quot;
+                   &quot;Không nên xóa biến tương tác chỉ để hạ VIF, vì nó là biến cốt lõi của giả thuyết; cần báo cáo giới hạn và kiểm tra độ bền.&quot;)
+
+    # Lưu toàn bộ bảng để người học mở bằng Excel nếu muốn.
+    raw_grouped_cols = [&quot;ticker&quot;, &quot;year&quot;, &quot;industry_group&quot;, &quot;public_date_bs&quot;, &quot;public_date_is&quot;] + raw_cols
+    raw_grouped = merged[raw_grouped_cols].copy()
+    raw_grouped[&quot;eligible_nonfinancial&quot;] = (
+        raw_grouped[&quot;industry_group&quot;] == &quot;Phi tài chính (mẫu biểu chung)&quot;
+    ).astype(int)
+    raw_grouped.to_csv(OUT / &quot;00_du_lieu_goc_5_khoan_muc_co_nhom_nganh.csv&quot;,
+                       index=False, encoding=&quot;utf-8-sig&quot;)
+    industry_distribution.to_csv(OUT / &quot;00_phan_bo_nhom_nganh_truoc_loai.csv&quot;,
+                                 encoding=&quot;utf-8-sig&quot;)
+    sample_flow.to_csv(OUT / &quot;00_luong_chon_mau.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    data_checks.to_csv(OUT / &quot;00_kiem_tra_du_lieu_goc.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    dropped_rows.to_csv(OUT / &quot;00_dong_bi_loai_khi_kiem_tra.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+    model_dictionary.to_csv(OUT / &quot;00_tu_dien_bien.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    statement_dictionary.to_csv(OUT / &quot;00_nguon_khoan_muc_va_cach_tinh_bien.csv&quot;,
+                                encoding=&quot;utf-8-sig&quot;)
+    dummy_distribution.to_csv(OUT / &quot;00_phan_bo_dummy_thanh_khoan.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    desc_before.to_csv(OUT / &quot;01_thong_ke_truoc_winsor.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    thresholds_df.to_csv(OUT / &quot;02_nguong_winsor2_p1_p99.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    desc_after.to_csv(OUT / &quot;03_thong_ke_sau_winsor.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    corr.to_csv(OUT / &quot;04_tuong_quan.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    corr_full.to_csv(OUT / &quot;04b_ma_tran_tuong_quan_day_du.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    normality.to_csv(OUT / &quot;04c_skewness_kurtosis_CV_JB.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    vif_base_short.to_csv(OUT / &quot;05_VIF_mo_hinh_1.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    vif_inter_short.to_csv(OUT / &quot;06_VIF_mo_hinh_2.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    vif_dummy_short.to_csv(OUT / &quot;06b_VIF_mo_hinh_3_dummy.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    model_info.to_csv(OUT / &quot;07_tom_tat_OLS.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    ols0_short.to_csv(OUT / &quot;07b_he_so_OLS_don_gian.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    ols1_short.to_csv(OUT / &quot;08_he_so_OLS_khong_tuong_tac.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    ols2_short.to_csv(OUT / &quot;09_he_so_OLS_co_tuong_tac.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    ols3_short.to_csv(OUT / &quot;09b_he_so_OLS_tuong_tac_dummy.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    year_means.rename(columns=SHORT_LABELS).to_csv(
+        OUT / &quot;10_trung_binh_theo_nam.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    interaction_predictions.rename(columns={
+        &quot;payables_ratio&quot;: &quot;TPR&quot;, &quot;liquidity_quantile&quot;: &quot;LPQ&quot;,
+        &quot;liquidity&quot;: &quot;LIQ&quot;, &quot;predicted_asset_turnover&quot;: &quot;PAT&quot;, &quot;label&quot;: &quot;GRP&quot;,
+    }).to_csv(OUT / &quot;11_du_bao_cho_bieu_do_tuong_tac.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+    dummy_predictions.rename(columns={
+        &quot;payables_ratio&quot;: &quot;TPR&quot;, &quot;high_liquidity_dummy&quot;: &quot;DLI&quot;,
+        &quot;predicted_asset_turnover&quot;: &quot;PAT&quot;, &quot;label&quot;: &quot;GRP&quot;,
+    }).to_csv(OUT / &quot;11b_du_bao_tuong_tac_dummy.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+    robust_compare.to_csv(OUT / &quot;12_so_sanh_pooled_FE.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    lag2.rename(index=RESULT_LABELS).to_csv(OUT / &quot;12d_he_so_bien_tre_mo_hinh_2.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    fe1.rename(index=RESULT_LABELS).to_csv(OUT / &quot;12a_he_so_FE_mo_hinh_1.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    fe2.rename(index=RESULT_LABELS).to_csv(OUT / &quot;12b_he_so_FE_mo_hinh_2.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    fe3.rename(index=RESULT_LABELS).to_csv(OUT / &quot;12c_he_so_FE_mo_hinh_3.csv&quot;, encoding=&quot;utf-8-sig&quot;)
+    wins.to_csv(OUT / &quot;du_lieu_mau_sau_winsor.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+
+    changed = int(thresholds_df[&quot;Tổng giá trị bị chặn&quot;].sum())
+
+    # ---- Diễn giải từng kết quả (dùng số thật của lần chạy) ----
+    def cf_(res, v): return float(res.loc[v, &quot;Hệ số OLS&quot;])
+    def pv_(res, v): return float(res.loc[v, &quot;p-value xấp xỉ&quot;])
+    def sig(p):
+        return (&quot;có ý nghĩa thống kê ở mức 1%&quot; if p &lt; .01 else &quot;có ý nghĩa thống kê ở mức 5%&quot; if p &lt; .05
+                else &quot;có ý nghĩa thống kê ở mức 10%&quot; if p &lt; .10 else &quot;không có ý nghĩa thống kê&quot;)
+    def box(t): return f&#x27;&lt;div class=&quot;read&quot;&gt;&lt;b&gt;Ý nghĩa kết quả:&lt;/b&gt; {t}&lt;/div&gt;&#x27;
+    db, da, nm, ym = desc_before, desc_after, normality, year_means
+    R5 = box(f&quot;ATO có trung bình {db.loc[&#x27;ATO&#x27;,&#x27;Mean&#x27;]:.2f} lần nhưng trung vị chỉ {db.loc[&#x27;ATO&#x27;,&#x27;p50&#x27;]:.2f} và Max tới {db.loc[&#x27;ATO&#x27;,&#x27;Max&#x27;]:.1f}: &quot;
+             f&quot;trung bình bị kéo lên bởi một số ít công ty có vòng quay rất cao (Skewness {db.loc[&#x27;ATO&#x27;,&#x27;Skewness&#x27;]:.1f}). &quot;
+             f&quot;LIQ cũng vậy: Max {db.loc[&#x27;LIQ&#x27;,&#x27;Max&#x27;]:.0f} lần trong khi trung vị {db.loc[&#x27;LIQ&#x27;,&#x27;p50&#x27;]:.2f}. &quot;
+             f&quot;Trung vị TPR là {db.loc[&#x27;TPR&#x27;,&#x27;p50&#x27;]*100:.1f}%, tức một nửa số công ty–năm có phải trả người bán dưới {db.loc[&#x27;TPR&#x27;,&#x27;p50&#x27;]*100:.1f}% tổng tài sản. &quot;
+             &quot;Các đuôi dài này là lý do cần winsor hóa trước khi hồi quy.&quot;)
+    R6 = box(f&quot;Mỗi biến có khoảng {int(thresholds_df[&#x27;Dưới p1&#x27;].median())} giá trị bị nâng lên p1 và {int(thresholds_df[&#x27;Trên p99&#x27;].median())} giá trị bị hạ xuống p99, &quot;
+             f&quot;đúng khoảng 1% mỗi đuôi của {len(wins):,} quan sát. Ví dụ mọi công ty có ATO trên {thresholds_df.loc[&#x27;ATO&#x27;,&#x27;p99&#x27;]:.2f} lần đều được đặt bằng {thresholds_df.loc[&#x27;ATO&#x27;,&#x27;p99&#x27;]:.2f}.&quot;)
+    R7 = box(f&quot;Sau winsor hóa, độ lệch chuẩn của ATO giảm từ {db.loc[&#x27;ATO&#x27;,&#x27;SD&#x27;]:.2f} xuống {da.loc[&#x27;ATO&#x27;,&#x27;SD&#x27;]:.2f}, của LIQ từ {db.loc[&#x27;LIQ&#x27;,&#x27;SD&#x27;]:.2f} xuống {da.loc[&#x27;LIQ&#x27;,&#x27;SD&#x27;]:.2f}; &quot;
+             &quot;trung vị, p25 và p75 giữ nguyên. Winsor chỉ thu hẹp hai đuôi, không làm thay đổi phần giữa của dữ liệu.&quot;)
+    R8 = box(f&quot;Cả bốn biến và phần dư đều bác bỏ giả thuyết phân phối chuẩn (p-value gần 0). Kurtosis của ATO là {nm.loc[&#x27;ATO&#x27;,&#x27;Kurtosis (chuẩn=3)&#x27;]:.1f}, cao hơn nhiều mức 3 của phân phối chuẩn, tức đuôi dày. &quot;
+             &quot;Với mẫu lớn và sai số chuẩn gom cụm, điều này không làm hệ số OLS bị chệch; nó chỉ nhắc rằng p-value là xấp xỉ và cần đọc thận trọng.&quot;)
+    R9 = box(&quot;TPR trung bình theo năm: &quot; + &quot;, &quot;.join(f&quot;{int(y)}: {r.payables_ratio*100:.1f}%&quot; for y, r in ym.iterrows())
+             + &quot;. ATO trung bình: &quot; + &quot;, &quot;.join(f&quot;{int(y)}: {r.asset_turnover:.2f}&quot; for y, r in ym.iterrows())
+             + f&quot;. Năm có TPR cao nhất là {int(ym.payables_ratio.idxmax())}, năm có ATO cao nhất là {int(ym.asset_turnover.idxmax())}. &quot;
+             &quot;Biến động theo năm nhỏ so với khác biệt giữa các công ty; biến giả năm trong mô hình dùng để hấp thụ các biến động chung này.&quot;)
+    cr = corr_full
+    pair_max = max(abs(cr.loc[&#x27;TPR&#x27;,&#x27;LIQ&#x27;]), abs(cr.loc[&#x27;TPR&#x27;,&#x27;SIZ&#x27;]), abs(cr.loc[&#x27;LIQ&#x27;,&#x27;SIZ&#x27;]))
+    R10 = box(f&quot;ATO tương quan dương với TPR (r = {cr.loc[&#x27;ATO&#x27;,&#x27;TPR&#x27;]:.2f}), âm nhẹ với LIQ (r = {cr.loc[&#x27;ATO&#x27;,&#x27;LIQ&#x27;]:.2f}) và SIZ (r = {cr.loc[&#x27;ATO&#x27;,&#x27;SIZ&#x27;]:.2f}). &quot;
+              f&quot;Tương quan giữa các biến giải thích chính TPR, LIQ, SIZ cao nhất chỉ {pair_max:.2f}, nên mô hình cơ sở ít bị đa cộng tuyến. &quot;
+              f&quot;TLI tương quan {cr.loc[&#x27;TLI&#x27;,&#x27;LIQ&#x27;]:.2f} với LIQ và TLD tương quan {cr.loc[&#x27;TLD&#x27;,&#x27;TPR&#x27;]:.2f} với TPR là do hai biến tương tác được tạo từ chính các biến này.&quot;)
+    R11 = box(f&quot;Mô hình 1 có VIF lớn nhất {vif_base[&#x27;VIF&#x27;].max():.2f}, dưới mốc 5 nên không đáng lo. Ở mô hình 2, LIQ và TLI có VIF khoảng {max_vif:.1f}: &quot;
+              f&quot;sai số chuẩn của hai hệ số này bị phóng to khoảng √VIF ≈ {max_vif**0.5:.1f} lần so với khi không có đa cộng tuyến, nên hệ số LIQ ở mô hình 2 kém ổn định. &quot;
+              f&quot;Mô hình 3 có VIF lớn nhất {max_vif_dummy:.2f}, chấp nhận được.&quot;)
+    b0 = cf_(ols0, &#x27;payables_c&#x27;)
+    R12 = box(f&quot;Hệ số TPR = {b0:.4f} ({sig(pv_(ols0,&#x27;payables_c&#x27;))}). Vì TPR là tỷ lệ, nên đọc theo 1 điểm phần trăm: TPR cao hơn 0,01 gắn với ATO cao hơn khoảng {b0/100:.3f} lần; &quot;
+              f&quot;công ty có TPR cao hơn 10 điểm % có ATO cao hơn khoảng {b0/10:.2f} lần. R² = {info0[&#x27;R2&#x27;]:.3f}: riêng TPR giải thích khoảng {info0[&#x27;R2&#x27;]*100:.1f}% khác biệt về ATO. &quot;
+              f&quot;Hằng số {cf_(ols0,&#x27;Hằng số&#x27;):.3f} là ATO trung bình tại TPR trung bình (vì TPR đã trừ trung bình).&quot;)
+    b1 = cf_(ols1, &#x27;payables_c&#x27;); y22 = cf_(ols1, &#x27;Năm_2022&#x27;)
+    R13 = box(f&quot;Khi giữ LIQ, SIZ và năm không đổi, 1 điểm % TPR gắn với ATO cao hơn {b1/100:.3f} lần ({sig(pv_(ols1,&#x27;payables_c&#x27;))}); hệ số giảm từ {b0:.2f} ở mô hình 0 xuống {b1:.2f}, &quot;
+              f&quot;tức một phần quan hệ thô đến từ thanh khoản và quy mô. LIQ tăng 1 lần gắn với ATO thay đổi {cf_(ols1,&#x27;liquidity_c&#x27;):.3f} ({sig(pv_(ols1,&#x27;liquidity_c&#x27;))}). &quot;
+              f&quot;SIZ tăng 1 đơn vị (tổng tài sản lớn gấp khoảng 2,7 lần) gắn với ATO thay đổi {cf_(ols1,&#x27;size_ln&#x27;):.3f} ({sig(pv_(ols1,&#x27;size_ln&#x27;))}): công ty lớn hơn có vòng quay thấp hơn. &quot;
+              f&quot;Y22 = {y22:.3f} nghĩa là năm 2022 ATO cao hơn năm gốc 2021 khoảng {y22:.3f} lần sau khi kiểm soát các biến khác ({sig(pv_(ols1,&#x27;Năm_2022&#x27;))}).&quot;)
+    b21, b24 = cf_(ols2, &#x27;payables_c&#x27;), cf_(ols2, &#x27;interaction&#x27;)
+    liq_q = wins[&#x27;liquidity&#x27;].quantile([.25, .5, .75]); liq_m = wins[&#x27;liquidity&#x27;].mean()
+    me = {q: b21 + b24 * (v - liq_m) for q, v in liq_q.items()}
+    R14 = box(f&quot;Tác động biên của TPR = α1 + α4 × (LIQ − trung bình). Với α1 = {b21:.3f} và α4 = {b24:.3f}: tại LIQ p25 ({liq_q[.25]:.2f}), 1 điểm % TPR gắn với ATO cao hơn {me[.25]/100:.3f} lần; &quot;
+              f&quot;tại p50 ({liq_q[.5]:.2f}) là {me[.5]/100:.3f}; tại p75 ({liq_q[.75]:.2f}) là {me[.75]/100:.3f}. Hệ số TLI dương và {sig(pv_(ols2,&#x27;interaction&#x27;))}: &quot;
+              &quot;trong pooled OLS, công ty thanh khoản cao hơn có quan hệ TPR–ATO dốc hơn. Lưu ý LIQ trung bình mẫu khá cao do đuôi phải, nên α1 là độ dốc tại mức LIQ cao hơn trung vị.&quot;)
+    b31, b34, bd = cf_(ols3, &#x27;payables_c&#x27;), cf_(ols3, &#x27;interaction_dummy&#x27;), cf_(ols3, &#x27;high_liquidity_dummy&#x27;)
+    R15 = box(f&quot;Nhóm DLI = 0 (tài sản ngắn hạn không đủ trả nợ ngắn hạn) có độ dốc TPR là {b31:.3f} ({sig(pv_(ols3,&#x27;payables_c&#x27;))}), tức 1 điểm % TPR gắn với ATO cao hơn {b31/100:.3f} lần. &quot;
+              f&quot;Nhóm DLI = 1 có độ dốc {b31+b34:.3f} ({b31:.3f} + {b34:.3f}); chênh lệch độ dốc {b34:.3f} {sig(pv_(ols3,&#x27;interaction_dummy&#x27;))}. &quot;
+              f&quot;Hệ số DLI = {bd:.3f}: tại TPR trung bình, nhóm đủ thanh khoản có ATO cao hơn nhóm còn lại khoảng {bd:.2f} lần. &quot;
+              f&quot;Theo cách đọc biến giả trong bài giảng: nhóm DLI = 1 có hệ số chặn mới α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt; và độ dốc mới α&lt;sub&gt;1&lt;/sub&gt; + α&lt;sub&gt;4&lt;/sub&gt; = {b31+b34:.3f}, lớn hơn α&lt;sub&gt;1&lt;/sub&gt; = {b31:.3f}.&quot;)
+    R16 = box(&quot;Ba đường đều dốc lên, nghĩa là TPR cao hơn đi kèm ATO dự báo cao hơn ở cả ba mức thanh khoản. Đường p75 dốc nhất và khoảng cách giữa các đường mở rộng khi TPR tăng: &quot;
+              &quot;đây là hình ảnh trực quan của hệ số tương tác dương. Biểu đồ tính từ pooled OLS nên mang cùng giới hạn của mô hình 2 (xem mục 19).&quot;)
+    R17 = box(f&quot;Đường DLI = 1 dốc hơn đường DLI = 0 (độ dốc {b31+b34:.2f} so với {b31:.2f}) và nằm cao hơn ở phần lớn khoảng TPR. &quot;
+              &quot;Trong pooled OLS, quan hệ TPR–ATO mạnh hơn ở nhóm có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.&quot;)
+    R18 = box(f&quot;R² hiệu chỉnh tăng từ {info0[&#x27;R2 hiệu chỉnh&#x27;]:.3f} (mô hình 0) lên {info1[&#x27;R2 hiệu chỉnh&#x27;]:.3f} (mô hình 1), {info2[&#x27;R2 hiệu chỉnh&#x27;]:.3f} (mô hình 2) và {info3[&#x27;R2 hiệu chỉnh&#x27;]:.3f} (mô hình 3). &quot;
+              f&quot;Thêm tương tác có cải thiện mức giải thích, nhưng mọi mô hình chỉ giải thích khoảng {info2[&#x27;R2&#x27;]*100:.0f}% khác biệt về ATO; phần lớn còn lại đến từ yếu tố ngoài mô hình như ngành và chiến lược kinh doanh. &quot;
+              &quot;R² thấp là bình thường với dữ liệu doanh nghiệp và không làm hệ số sai, nhưng không nên dùng mô hình để dự báo ATO của từng công ty. &quot;
+              f&quot;Kiểm định F với H&lt;sub&gt;0&lt;/sub&gt;: R² = 0 bị bác bỏ ở mọi mô hình (p-value lớn nhất {max(f_ps):.2g}). Theo bài giảng, mục tiêu của bài là đo lường mệnh đề X → Y (dấu +/−, có hay không có ý nghĩa) nên chỉ cần R² &amp;gt; 0; R² rất cao chỉ cần khi mục tiêu là cảnh báo, dự báo.&quot;)
+    R19 = box(f&quot;Pooled OLS trả lời câu hỏi: công ty có TPR cao hơn công ty khác thì ATO có cao hơn không. FE trả lời: khi chính một công ty tăng TPR qua các năm thì ATO của nó có tăng không. &quot;
+              f&quot;Trong FE, 1 điểm % TPR gắn với ATO cao hơn {cf_(fe1,&#x27;payables_c&#x27;)/100:.3f} lần ở mô hình 1 ({sig(pv_(fe1,&#x27;payables_c&#x27;))}), nhỏ hơn nhiều so với pooled OLS. &quot;
+              f&quot;TLI ({sig(pv_(fe2,&#x27;interaction&#x27;))}) và TLD ({sig(pv_(fe3,&#x27;interaction_dummy&#x27;))}) trong FE cho thấy: kết luận vững là TPR có liên hệ dương với ATO, &quot;
+              &quot;còn vai trò điều tiết của thanh khoản chưa đủ bằng chứng.&quot;)
+
+    def sgn(res, v):
+        if v not in res.index: return &quot;—&quot;
+        c_, p_ = float(res.loc[v, &quot;Hệ số OLS&quot;]), float(res.loc[v, &quot;p-value xấp xỉ&quot;])
+        st = &quot;***&quot; if p_ &lt; .01 else &quot;**&quot; if p_ &lt; .05 else &quot;*&quot; if p_ &lt; .10 else &quot; (không ý nghĩa)&quot;
+        return (&quot;+&quot; if c_ &gt; 0 else &quot;−&quot;) + st
+    sign_table = pd.DataFrame([
+        {&quot;Biến&quot;: &quot;TPR&quot;, &quot;Dấu kỳ vọng&quot;: &quot;−&quot;, &quot;Cơ sở&quot;: &quot;Bài tham khảo: phụ thuộc tín dụng nhà cung cấp phản ánh thiếu tiền và áp lực thanh toán, làm giảm hiệu quả&quot;, &quot;Pooled&quot;: sgn(ols2, &quot;payables_c&quot;), &quot;FE công ty&quot;: sgn(fe2, &quot;payables_c&quot;), &quot;Trễ 1 năm&quot;: sgn(lag2, &quot;payables_c&quot;)},
+        {&quot;Biến&quot;: &quot;LIQ&quot;, &quot;Dấu kỳ vọng&quot;: &quot;+/−&quot;, &quot;Cơ sở&quot;: &quot;Thanh khoản tốt giúp hoạt động liên tục (+), nhưng giữ nhiều tài sản ngắn hạn nhàn rỗi làm vòng quay thấp (−)&quot;, &quot;Pooled&quot;: sgn(ols2, &quot;liquidity_c&quot;), &quot;FE công ty&quot;: sgn(fe2, &quot;liquidity_c&quot;), &quot;Trễ 1 năm&quot;: sgn(lag2, &quot;liquidity_c&quot;)},
+        {&quot;Biến&quot;: &quot;SIZ&quot;, &quot;Dấu kỳ vọng&quot;: &quot;+/−&quot;, &quot;Cơ sở&quot;: &quot;Lợi thế quy mô (+), nhưng công ty lớn thường nhiều tài sản dài hạn nên vòng quay thấp (−)&quot;, &quot;Pooled&quot;: sgn(ols2, &quot;size_ln&quot;), &quot;FE công ty&quot;: sgn(fe2, &quot;size_ln&quot;), &quot;Trễ 1 năm&quot;: sgn(lag2, &quot;size_ln&quot;)},
+        {&quot;Biến&quot;: &quot;TLI&quot;, &quot;Dấu kỳ vọng&quot;: &quot;+&quot;, &quot;Cơ sở&quot;: &quot;Bài tham khảo: thanh khoản cao làm yếu tác động bất lợi của khoản phải trả&quot;, &quot;Pooled&quot;: sgn(ols2, &quot;interaction&quot;), &quot;FE công ty&quot;: sgn(fe2, &quot;interaction&quot;), &quot;Trễ 1 năm&quot;: sgn(lag2, &quot;interaction&quot;)},
+        {&quot;Biến&quot;: &quot;TLD&quot;, &quot;Dấu kỳ vọng&quot;: &quot;+&quot;, &quot;Cơ sở&quot;: &quot;Như TLI, so sánh nhóm đủ thanh khoản (LIQ ≥ 1) với nhóm còn lại&quot;, &quot;Pooled&quot;: sgn(ols3, &quot;interaction_dummy&quot;), &quot;FE công ty&quot;: sgn(fe3, &quot;interaction_dummy&quot;), &quot;Trễ 1 năm&quot;: &quot;—&quot;},
+    ]).set_index(&quot;Biến&quot;)
+    tpr_pos = all(float(r.loc[&quot;payables_c&quot;, &quot;Hệ số OLS&quot;]) &gt; 0 for r in (ols2, fe2, lag2))
+    tpr_sig = [pv_(r, &quot;payables_c&quot;) &lt; .05 for r in (ols2, fe2, lag2)]
+    int_sig = [pv_(ols2, &quot;interaction&quot;) &lt; .05, pv_(fe2, &quot;interaction&quot;) &lt; .05, pv_(lag2, &quot;interaction&quot;) &lt; .05]
+    methods = [&quot;pooled OLS&quot;, &quot;FE công ty&quot;, &quot;biến trễ 1 năm&quot;]
+    sig_m = [m for m, ok in zip(methods, int_sig) if ok]
+    inter_txt = (&quot;TLI đúng dấu kỳ vọng (+) và có ý nghĩa ở &quot; + &quot;, &quot;.join(sig_m) if sig_m else &quot;TLI không có ý nghĩa ở cách ước lượng nào&quot;) \
+        + (&quot;&quot; if int_sig[1] else &quot;, nhưng mất ý nghĩa khi thêm hiệu ứng cố định công ty: vai trò điều tiết của thanh khoản chủ yếu đến từ khác biệt giữa các công ty, không phải từ thay đổi trong cùng một công ty&quot;) + &quot;.&quot;
+    R20a = box((&quot;TPR mang dấu dương ở cả ba cách ước lượng&quot; if tpr_pos else &quot;Dấu của TPR không nhất quán giữa ba cách ước lượng&quot;)
+               + &quot;, trái với kỳ vọng âm của bài tham khảo. Các giải thích có thể: (1) khác biệt ngành – doanh nghiệp thương mại, phân phối vừa mua chịu nhiều vừa có vòng quay tài sản cao tự nhiên; &quot;
+               &quot;(2) quan hệ ngược – doanh thu cao kéo theo mua hàng nhiều nên khoản phải trả tăng, tức ATO tác động lên TPR; (3) bài này đo hiệu quả bằng vòng quay tài sản, trong khi nhiều nghiên cứu dùng ROA hoặc ROE. &quot;
+               + inter_txt + &quot; Hướng mở rộng: thêm hiệu ứng cố định ngành chi tiết (ICB), dùng ROA làm biến phụ thuộc thay thế, và dùng biến công cụ (2SLS) như bài gốc để xử lý nội sinh.&quot;)
+    corr_tld = abs(float(corr_full.loc[&quot;TPR&quot;, &quot;TLD&quot;]))
+    quad_c, quad_p = float(quad.loc[&quot;tpr_sq&quot;, &quot;Hệ số OLS&quot;]), float(quad.loc[&quot;tpr_sq&quot;, &quot;p-value xấp xỉ&quot;])
+    assumption_table = pd.DataFrame([
+        {&quot;Giả định&quot;: &quot;A1&quot;, &quot;Nội dung&quot;: &quot;Tuyến tính theo tham số (hàm bậc 1 của các α)&quot;, &quot;Kiểm tra trong bài&quot;: &quot;Thêm TPRc² vào mô hình 1&quot;,
+         &quot;Kết quả&quot;: f&quot;Hệ số TPR² = {quad_c:.3f}, p ≈ {quad_p:.3g}&quot;,
+         &quot;Đánh giá / xử lý&quot;: (&quot;Có dấu hiệu phi tuyến: quan hệ TPR–ATO &quot; + (&quot;cong lên&quot; if quad_c &gt; 0 else &quot;cong xuống&quot;) + &quot;, mô hình tuyến tính là xấp xỉ&quot;) if quad_p &lt; .05 else &quot;Không thấy dấu hiệu phi tuyến rõ&quot;},
+        {&quot;Giả định&quot;: &quot;A2&quot;, &quot;Nội dung&quot;: &quot;Không đa cộng tuyến hoàn hảo: Xi ≠ hằng số, Xi ≠ f(Xj)&quot;, &quot;Kiểm tra trong bài&quot;: &quot;|Corr| ≥ 0,8 hoặc VIF ≥ 10 là nghiêm trọng&quot;,
+         &quot;Kết quả&quot;: f&quot;VIF lớn nhất: M1 {vif_base[&#x27;VIF&#x27;].max():.2f}; M2 {max_vif:.2f}; M3 {max_vif_dummy:.2f}. |Corr(TPR, TLD)| = {corr_tld:.2f}&quot;,
+         &quot;Đánh giá / xử lý&quot;: &quot;Không hoàn hảo nên OLS vẫn ước lượng được. M2 đa cộng tuyến nghiêm trọng do tích số chứa LIQ: SE của LIQ, TLI bị phóng to; vẫn giữ biến tương tác vì là biến cốt lõi&quot;},
+        {&quot;Giả định&quot;: &quot;A3&quot;, &quot;Nội dung&quot;: &quot;Cov(ui, uj) = 0: mẫu ngẫu nhiên, sai số độc lập&quot;, &quot;Kiểm tra trong bài&quot;: &quot;Cấu trúc dữ liệu bảng&quot;,
+         &quot;Kết quả&quot;: &quot;Mỗi công ty lặp lại tối đa 5 năm; mẫu là toàn bộ công ty phi tài chính đủ dữ liệu, không chọn ngẫu nhiên&quot;,
+         &quot;Đánh giá / xử lý&quot;: &quot;Vi phạm: sai số của cùng công ty tương quan qua các năm. Xử lý bằng sai số chuẩn gom cụm theo mã&quot;},
+        {&quot;Giả định&quot;: &quot;A4&quot;, &quot;Nội dung&quot;: &quot;Var(ui) = σ² không đổi&quot;, &quot;Kiểm tra trong bài&quot;: &quot;Breusch–Pagan trên mô hình 2 (H0: phương sai không đổi)&quot;,
+         &quot;Kết quả&quot;: f&quot;LM = {bp_lm:,.1f}, bậc tự do {bp_df}, p ≈ {bp_p:.3g}&quot;,
+         &quot;Đánh giá / xử lý&quot;: &quot;Bác bỏ H0: phương sai thay đổi. Sai số chuẩn gom cụm vững với vấn đề này&quot; if bp_p &lt; .05 else &quot;Không bác bỏ H0&quot;},
+        {&quot;Giả định&quot;: &quot;A5&quot;, &quot;Nội dung&quot;: &quot;Cov(Xi, ε) = 0: X ngoại sinh&quot;, &quot;Kiểm tra trong bài&quot;: &quot;So sánh pooled, FE công ty và biến trễ 1 năm&quot;,
+         &quot;Kết quả&quot;: f&quot;Hệ số TPR (M2): pooled {cf_(ols2,&#x27;payables_c&#x27;):.2f}; FE {cf_(fe2,&#x27;payables_c&#x27;):.2f}; trễ 1 năm {cf_(lag2,&#x27;payables_c&#x27;):.2f}&quot;,
+         &quot;Đánh giá / xử lý&quot;: &quot;Khó đáp ứng nhất. Hệ số thay đổi mạnh giữa các cách ước lượng cho thấy có nội sinh do bỏ sót biến; FE và biến trễ chỉ giảm bớt, chưa loại bỏ hẳn&quot;},
+    ]).set_index(&quot;Giả định&quot;)
+    consistent = &quot;TPR có liên hệ dương với ATO&quot; + (&quot; và có ý nghĩa ở cả ba cách ước lượng&quot; if all(tpr_sig) else &quot;&quot;)
+    R20b = box(&quot;Theo bài giảng, ước lượng OLS là BLUE khi thỏa các giả định: &lt;b&gt;không chệch&lt;/b&gt; E(α̂) = α cần A1, A2, A5; &lt;b&gt;hiệu quả&lt;/b&gt; (phương sai nhỏ nhất) cần A3, A4; &lt;b&gt;vững&lt;/b&gt; (α̂ hội tụ về α khi n tăng) cần A5 và là tính chất quan trọng nhất. &quot;
+               &quot;Trong bài này A3, A4 bị vi phạm nên OLS không còn hiệu quả nhất, nhưng suy luận vẫn dùng được nhờ sai số chuẩn gom cụm. A5 là điểm yếu chính: chưa thể khẳng định tính không chệch và vững, nên các hệ số chỉ được diễn giải là mối liên hệ, không phải tác động nhân quả. &quot;
+               f&quot;Vì vậy bài kiểm tra độ bền bằng ba cách (pooled OLS, FE công ty, biến trễ 1 năm). Theo nguyên tắc không có phương pháp nào tốt nhất, tốt nhất là các phương pháp cùng dẫn đến một kết quả: kết quả nhất quán là {consistent}; &quot;
+               + (&quot;vai trò điều tiết của thanh khoản thì &quot; + (&quot;không vững vì mất ý nghĩa khi thêm hiệu ứng cố định công ty, nên chưa đủ bằng chứng để kết luận.&quot; if not int_sig[1] else &quot;vững qua các cách ước lượng.&quot;)))
+    gallery_items = [
+        (&quot;Bảng&quot;, &quot;Nhóm ngành theo mẫu biểu BCTC trước khi loại&quot;, table_html(industry_distribution, digits=0)),
+        (&quot;Bảng&quot;, &quot;Luồng chọn mẫu&quot;, table_html(sample_flow, digits=0)),
+        (&quot;Bảng&quot;, &quot;Kiểm tra tính đúng đắn của dữ liệu gốc&quot;, table_html(data_checks, text=True)),
+    ]
+    gallery_items += [
+        (&quot;Bảng&quot;, &quot;Chú thích tên biến&quot;, table_html(model_dictionary, text=True)),
+        (&quot;Bảng&quot;, &quot;Nguồn khoản mục và cách tính biến&quot;, table_html(statement_dictionary, text=True)),
+        (&quot;Bảng&quot;, &quot;Phân bổ biến giả thanh khoản DLI&quot;, table_html(dummy_distribution)),
+        (&quot;Bảng&quot;, &quot;Thống kê mô tả trước winsor hóa&quot;, table_html(desc_before)),
+        (&quot;Bảng&quot;, &quot;Ngưỡng Winsor2 p1–p99&quot;, table_html(thresholds_df)),
+        (&quot;Bảng&quot;, &quot;Thống kê mô tả sau winsor hóa&quot;, table_html(desc_after)),
+        (&quot;Biểu đồ&quot;, &quot;Thống kê mô tả sau Winsor2&quot;, chart_desc_inline),
+        (&quot;Bảng&quot;, &quot;Skewness, Kurtosis, CV và Jarque–Bera&quot;, table_html(normality_html, digits=3)),
+        (&quot;Biểu đồ&quot;, &quot;Phải trả người bán và hiệu quả hoạt động theo năm&quot;, chart_year_inline),
+        (&quot;Bảng&quot;, &quot;Ma trận tương quan Pearson&quot;, table_html(corr_full)),
+        (&quot;Biểu đồ&quot;, &quot;Heatmap tương quan Pearson&quot;, chart_corr_inline),
+        (&quot;Bảng&quot;, &quot;VIF mô hình 1&quot;, table_html(vif_base_short)),
+        (&quot;Bảng&quot;, &quot;VIF mô hình 2&quot;, table_html(vif_inter_short)),
+        (&quot;Bảng&quot;, &quot;VIF mô hình 3&quot;, table_html(vif_dummy_short)),
+        (&quot;Bảng&quot;, &quot;Mô hình 0: OLS đơn giản ATO ~ TPR&quot;, table_html(ols0_short)),
+        (&quot;Bảng&quot;, &quot;Mô hình 1: cơ sở chưa có tương tác&quot;, table_html(ols1_short)),
+        (&quot;Bảng&quot;, &quot;Mô hình 2: tương tác TPR × LIQ&quot;, table_html(ols2_short)),
+        (&quot;Bảng&quot;, &quot;Mô hình 3: tương tác TPR × DLI&quot;, table_html(ols3_short)),
+        (&quot;Biểu đồ&quot;, &quot;Tương tác phải trả người bán × thanh khoản&quot;, chart_interaction_inline),
+        (&quot;Biểu đồ&quot;, &quot;Tương tác với biến giả thanh khoản 0–1&quot;, chart_dummy_inline),
+        (&quot;Bảng&quot;, &quot;Tóm tắt các mô hình&quot;, table_html(model_info)),
+        (&quot;Bảng&quot;, &quot;So sánh pooled OLS, hiệu ứng cố định công ty và biến trễ 1 năm&quot;, table_html(robust_compare)),
+        (&quot;Bảng&quot;, &quot;Kỳ vọng dấu so với kết quả&quot;, table_html(sign_table, text=True)),
+        (&quot;Bảng&quot;, &quot;Kiểm tra các giả định A1–A5&quot;, table_html(assumption_table, text=True)),
+    ]
+    counters = {&quot;Bảng&quot;: 0, &quot;Biểu đồ&quot;: 0}
+    gallery_parts = []
+    for kind, title, html in gallery_items:
+        counters[kind] += 1
+        gallery_parts.append(f&#x27;&lt;section class=&quot;card gallery&quot;&gt;&lt;h3&gt;{kind} {counters[kind]}. {title}&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{html}&lt;/div&gt;&lt;/section&gt;&#x27;)
+    gallery_html = &quot;\n&quot;.join(gallery_parts)
+
+    # ---- Tab dữ liệu: toàn bộ dữ liệu trước và sau lọc ----
+    import json as _json
+    NONFIN = &quot;Phi tài chính (mẫu biểu chung)&quot;
+    status = pd.Series(&quot;Giữ lại&quot;, index=merged.index, dtype=&quot;object&quot;)
+    rules = [
+        (merged[&quot;industry_group&quot;] != NONFIN, &quot;Loại: ngân hàng, chứng khoán, bảo hiểm&quot;),
+        (merged[raw_cols].isna().any(axis=1), &quot;Loại: thiếu khoản mục&quot;),
+        (~(merged[&quot;bsa53&quot;] &gt; 0), &quot;Loại: tổng tài sản ≤ 0&quot;),
+        (gap(merged[&quot;bsa1&quot;] + merged[&quot;bsa23&quot;], merged[&quot;bsa53&quot;]) &gt; .005, &quot;Loại: bảng cân đối không khớp&quot;),
+        (~(merged[&quot;isa3&quot;] &gt; 0), &quot;Loại: doanh thu thuần ≤ 0&quot;),
+        (~(merged[&quot;bsa55&quot;] &gt; 0), &quot;Loại: nợ ngắn hạn ≤ 0&quot;),
+        ((merged[&quot;bsa1&quot;] &lt; 0) | (merged[&quot;bsa57&quot;] &lt; 0), &quot;Loại: TSNH hoặc phải trả âm&quot;),
+    ]
+    for mask, label in reversed(rules):
+        status[mask.fillna(False)] = label
+    status[(status == &quot;Giữ lại&quot;) &amp; ~merged.index.isin(wins.index)] = &quot;Loại: biến không hữu hạn&quot;
+    assert int((status == &quot;Giữ lại&quot;).sum()) == len(wins)
+    bil = lambda x: None if pd.isna(x) else round(float(x) / 1e9, 3)
+    num = lambda x, d=4: None if pd.isna(x) else round(float(x), d)
+    raw_cols_vn = [&quot;Mã&quot;, &quot;Năm&quot;, &quot;Nhóm theo mẫu BCTC&quot;, &quot;Trạng thái&quot;, &quot;Doanh thu thuần&quot;, &quot;Tổng tài sản&quot;,
+                   &quot;TS ngắn hạn&quot;, &quot;Nợ ngắn hạn&quot;, &quot;Phải trả người bán&quot;]
+    mo = merged.assign(st_=status).sort_values([&quot;ticker&quot;, &quot;year&quot;])
+    raw_rows = [[r.ticker, str(int(r.year)), r.industry_group, r.st_, bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57)]
+                for r in mo.itertuples()]
+    clean_cols_vn = [&quot;Mã&quot;, &quot;Năm&quot;, &quot;Doanh thu thuần&quot;, &quot;Tổng tài sản&quot;, &quot;TS ngắn hạn&quot;, &quot;Nợ ngắn hạn&quot;, &quot;Phải trả người bán&quot;,
+                     &quot;ATO&quot;, &quot;TPR&quot;, &quot;LIQ&quot;, &quot;SIZ&quot;, &quot;ATO_w&quot;, &quot;TPR_w&quot;, &quot;LIQ_w&quot;, &quot;SIZ_w&quot;, &quot;DLI&quot;]
+    vo = valid.loc[wins.index]
+    cl = wins.assign(x_ato=vo[&quot;asset_turnover&quot;], x_tpr=vo[&quot;payables_ratio&quot;], x_liq=vo[&quot;liquidity&quot;], x_siz=vo[&quot;size_ln&quot;]).sort_values([&quot;ticker&quot;, &quot;year&quot;])
+    clean_rows = [[r.ticker, str(int(r.year)), bil(r.isa3), bil(r.bsa53), bil(r.bsa1), bil(r.bsa55), bil(r.bsa57),
+                   num(r.x_ato), num(r.x_tpr), num(r.x_liq), num(r.x_siz), num(r.asset_turnover), num(r.payables_ratio),
+                   num(r.liquidity), num(r.size_ln), int(r.high_liquidity_dummy)] for r in cl.itertuples()]
+    data_dir = OUT / &quot;data&quot;; data_dir.mkdir(exist_ok=True)
+    pd.DataFrame(raw_rows, columns=raw_cols_vn).to_csv(data_dir / &quot;data_truoc_loc.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+    pd.DataFrame(clean_rows, columns=clean_cols_vn).to_csv(data_dir / &quot;data_sau_loc.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
+    status_counts = status.value_counts().rename(&quot;Số dòng&quot;).to_frame()
+    status_counts.index.name = &quot;Trạng thái&quot;
+    def jdump(cols, rows, fcol):
+        return _json.dumps({&quot;cols&quot;: cols, &quot;rows&quot;: rows, &quot;filterCol&quot;: fcol}, ensure_ascii=False, separators=(&quot;,&quot;, &quot;:&quot;))
+    data_tab_html = (DATA_TAB_TEMPLATE
+        .replace(&quot;__N_RAW__&quot;, f&quot;{len(raw_rows):,}&quot;).replace(&quot;__N_CLEAN__&quot;, f&quot;{len(clean_rows):,}&quot;)
+        .replace(&quot;__STATUS_TABLE__&quot;, table_html(status_counts, text=True))
+        .replace(&quot;__RAW_JSON__&quot;, jdump(raw_cols_vn, raw_rows, 3))
+        .replace(&quot;__CLEAN_JSON__&quot;, jdump(clean_cols_vn, clean_rows, -1)))
+    # ---- Tab code: toàn bộ mã nguồn main.py ----
+    source_code = Path(__file__).read_text(encoding=&quot;utf-8&quot;)
+    code_tab_html = (
+        &#x27;&lt;div id=&quot;tab-code&quot; hidden&gt;&lt;section class=&quot;card&quot;&gt;&lt;h3&gt;Mã nguồn main.py&lt;/h3&gt;&#x27;
+        f&#x27;&lt;p class=&quot;legend&quot;&gt;Toàn bộ code Python ({len(source_code.splitlines()):,} dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. &#x27;
+        &#x27;Chạy bằng lệnh &lt;code&gt;py main.py&lt;/code&gt; trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.&lt;/p&gt;&#x27;
+        &#x27;&lt;div class=&quot;dt-controls&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn&quot; id=&quot;copy-code&quot;&gt;Sao chép code&lt;/button&gt;&lt;a class=&quot;dl&quot; href=&quot;code/main.py&quot; download&gt;Tải main.py&lt;/a&gt;&lt;/div&gt;&#x27;
+        f&#x27;&lt;pre class=&quot;code&quot;&gt;&lt;code class=&quot;language-python&quot;&gt;{xml_escape(source_code)}&lt;/code&gt;&lt;/pre&gt;&lt;/section&gt;&#x27;
+        &#x27;&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css&quot;&gt;&#x27;
+        &#x27;&lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js&quot;&gt;&lt;/script&gt;&#x27;
+        &#x27;&lt;script&gt;(function(){const c=document.querySelector(&quot;pre.code code&quot;);if(window.hljs){hljs.highlightElement(c);}&#x27;
+        &#x27;const b=document.getElementById(&quot;copy-code&quot;);b.addEventListener(&quot;click&quot;,async()=&gt;{try{await navigator.clipboard.writeText(c.innerText);b.textContent=&quot;Đã sao chép&quot;;}&#x27;
+        &#x27;catch(e){const r=document.createRange();r.selectNodeContents(c);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);b.textContent=&quot;Đã chọn code, bấm Ctrl+C&quot;;}&#x27;
+        &#x27;setTimeout(()=&gt;{b.textContent=&quot;Sao chép code&quot;;},2500);});})();&lt;/script&gt;&lt;/div&gt;&#x27;)
+    report = f&#x27;&#x27;&#x27;&lt;!doctype html&gt;&lt;html lang=&quot;vi&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1&quot;&gt;&lt;title&gt;Kết quả phân tích trade payables&lt;/title&gt;
+&lt;style&gt;
+body{{font-family:Arial,&quot;Segoe UI&quot;,sans-serif;line-height:1.58;color:#202b3c;background:#f4f7fb;margin:0}}
+main{{max-width:1180px;margin:28px auto;padding:0 20px 48px}} header,.card{{background:#fff;border:1px solid #e0e7f0;border-radius:14px;padding:22px 26px;margin:16px 0;box-shadow:0 4px 18px #243b530c}}
+h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inline-block;background:#e9f3ff;color:#145a91;border-radius:999px;padding:4px 11px;font-size:14px}}
+.note{{background:#fff8e6;border-left:4px solid #e6a700;padding:12px 16px}} .data{{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0 18px}}
+.data th,.data td{{border-bottom:1px solid #e6ebf1;padding:8px 10px;text-align:right;white-space:normal;vertical-align:top}} .data th:first-child,.data td:first-child{{text-align:left;white-space:normal}}
+.scroll{{overflow-x:auto}} code{{background:#eef2f7;padding:2px 5px;border-radius:4px}} a{{color:#075ea8}} .formula{{background:#f6f8fb;border:1px solid #e0e7f0;border-radius:10px;padding:14px 18px;margin:12px 0;font-family:&quot;Cambria Math&quot;,Cambria,&quot;Times New Roman&quot;,serif;font-size:19px;line-height:1.9;text-align:center;overflow-x:auto}} .formula sub,.formula sup{{font-size:.68em}} .legend{{font-size:14px;color:#4a5a6a}} .data.text td{{text-align:left}} .defs li{{margin:6px 0}} .data td.txt{{text-align:left}} .dt td,.dt th{{white-space:nowrap}} .dt-controls{{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}} .dt-controls input,.dt-controls select{{font:inherit;padding:6px 10px;border:1px solid #c9d6e3;border-radius:8px}} .dl{{margin-left:auto;padding:6px 14px;border:1px solid #123d64;border-radius:999px;text-decoration:none}} .pager{{display:flex;gap:8px;align-items:center;margin-top:8px}} .pager button{{font:inherit;padding:5px 12px;border:1px solid #c9d6e3;background:#fff;border-radius:8px;cursor:pointer}} .pager button:disabled{{opacity:.4;cursor:default}} pre.code{{max-height:75vh;overflow:auto;background:#f6f8fa;border:1px solid #e0e7f0;border-radius:10px;padding:14px;font-size:13px;line-height:1.5;margin:0}} pre.code code{{font-family:Consolas,&quot;Courier New&quot;,monospace;background:none;padding:0}} .btn{{font:inherit;padding:6px 14px;border:1px solid #c9d6e3;background:#fff;border-radius:999px;cursor:pointer}} .inline-chart{{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}}
+.tabs{{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}} .tabs button{{font:inherit;font-size:15px;padding:8px 18px;border:1px solid #c9d6e3;background:#fff;color:#123d64;border-radius:999px;cursor:pointer}} .tabs button[aria-selected=&quot;true&quot;]{{background:#123d64;color:#fff;border-color:#123d64}} .tabs button:focus-visible{{outline:2px solid #e6a700;outline-offset:2px}}
+.read{{background:#eef6f0;border-left:4px solid #3c8d5a;padding:12px 16px;margin:14px 0 4px}} .gallery h3{{margin:0 0 8px;color:#123d64}} [hidden]{{display:none!important}}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;main&gt;
+&lt;header&gt;&lt;span class=&quot;tag&quot;&gt;Dữ liệu thị trường Việt Nam • FY2021–FY2025&lt;/span&gt;&lt;h1&gt;Trade payables, thanh khoản và hiệu quả hoạt động&lt;/h1&gt;
+&lt;p&gt;Báo cáo tự động từ dữ liệu công ty–năm. Đây là bài thực hành OLS trên dữ liệu bảng gộp, có kiểm tra độ bền bằng hiệu ứng cố định công ty; không phải kết luận nhân quả.&lt;/p&gt;&lt;/header&gt;
+&lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot;&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-full&quot; aria-selected=&quot;true&quot; onclick=&quot;showTab(&#x27;full&#x27;)&quot;&gt;Báo cáo đầy đủ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-tables&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;tables&#x27;)&quot;&gt;Chỉ bảng và biểu đồ&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-data&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;data&#x27;)&quot;&gt;Dữ liệu trước và sau lọc&lt;/button&gt;&lt;button type=&quot;button&quot; role=&quot;tab&quot; id=&quot;btn-code&quot; aria-selected=&quot;false&quot; onclick=&quot;showTab(&#x27;code&#x27;)&quot;&gt;Code Python&lt;/button&gt;&lt;/nav&gt;
+&lt;div id=&quot;tab-full&quot;&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;1. Tóm tắt đề tài nghiên cứu&lt;/h2&gt;
+&lt;p&gt;Đề tài xem xét việc doanh nghiệp sử dụng &lt;b&gt;khoản phải trả người bán&lt;/b&gt; — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với &lt;b&gt;hiệu quả hoạt động&lt;/b&gt;, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu &lt;b&gt;thanh khoản&lt;/b&gt; có làm mối liên hệ này thay đổi hay không.&lt;/p&gt;
+&lt;p&gt;Về kinh tế, trả chậm có thể hỗ trợ vốn lưu động và duy trì hoạt động, nhưng phụ thuộc quá nhiều cũng có thể phản ánh thiếu tiền hoặc tạo áp lực thanh toán. Doanh nghiệp thanh khoản tốt có khả năng quản lý nghĩa vụ với nhà cung cấp khác doanh nghiệp thiếu thanh khoản; đó là cơ sở của biến tương tác. Mục tiêu của bài thực hành là đo &lt;b&gt;mối liên hệ có điều kiện&lt;/b&gt; bằng OLS, không khẳng định khoản phải trả là nguyên nhân gây thay đổi hiệu quả.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;2. Mẫu và cách xử lý&lt;/h2&gt;&lt;p&gt;Đã ghép báo cáo kết quả kinh doanh với bảng cân đối theo mã và năm. Sau tiêu chí hợp lệ còn &lt;b&gt;{len(wins):,} quan sát công ty–năm&lt;/b&gt; thuộc &lt;b&gt;{wins[&#x27;ticker&#x27;].nunique():,} mã&lt;/b&gt;; số quan sát theo năm: {&#x27;, &#x27;.join(f&#x27;{int(y)}: {int(n):,}&#x27; for y,n in wins.groupby(&#x27;year&#x27;).size().items())}. Mẫu không cân bằng.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Vì sao chọn các công ty này?&lt;/b&gt; Phạm vi tải là toàn bộ mã có trong dữ liệu thị trường HOSE, HNX và UPCoM, không phải nhóm vốn hóa cao nhất. Doanh nghiệp niêm yết được chọn vì báo cáo tài chính năm công khai giúp lấy cùng các khoản mục giữa nhiều công ty và nhiều kỳ. Một dòng là một công ty trong một năm; cách tổ chức này tạo dữ liệu bảng để so sánh khác biệt giữa công ty và thay đổi theo thời gian.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Vì sao chọn 5 năm 2021–2025?&lt;/b&gt; Năm năm đủ dài để mỗi doanh nghiệp có nhiều quan sát và để mô hình kiểm soát các cú sốc chung theo năm, nhờ đó kết quả không phụ thuộc vào riêng một kỳ. Đồng thời đây là giai đoạn gần nhất, giúp dữ liệu còn phù hợp với bối cảnh hiện tại và hạn chế mất mẫu hoặc thay đổi quá lớn về cấu trúc doanh nghiệp/chế độ báo cáo khi kéo kỳ nghiên cứu quá xa. Khoảng thời gian này cân bằng giữa &lt;i&gt;tính cập nhật&lt;/i&gt;, &lt;i&gt;độ lớn mẫu&lt;/i&gt; và &lt;i&gt;khả năng xử lý bài tập&lt;/i&gt;; không có nghĩa 5 năm luôn là lựa chọn tối ưu cho mọi nghiên cứu.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Vì sao loại công ty tài chính?&lt;/b&gt; Ngân hàng, chứng khoán và bảo hiểm có mẫu báo cáo, nguồn tạo doanh thu, cấu trúc tài sản–nợ và quy định thanh khoản khác doanh nghiệp sản xuất, thương mại, dịch vụ. Ví dụ tiền gửi khách hàng của ngân hàng không tương đương nợ nhà cung cấp; “tài sản ngắn hạn/nợ ngắn hạn” và vòng quay tài sản vì thế không có cùng nội hàm. Nếu gộp chung, hệ số có thể phản ánh khác biệt mô hình kinh doanh giữa hai nhóm thay vì quan hệ giữa tín dụng thương mại và hiệu quả. Chương trình nhận diện ba nhóm này từ các mẫu cột KQKD riêng &lt;code&gt;isb&lt;/code&gt;, &lt;code&gt;iss&lt;/code&gt;, &lt;code&gt;isi&lt;/code&gt; của nguồn và loại trước khi tạo tỷ số.&lt;/p&gt;
+&lt;h3&gt;Nhóm ngành theo mẫu biểu BCTC trước khi loại&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(industry_distribution, digits=0)}&lt;/div&gt;
+&lt;p&gt;&lt;b&gt;Vì sao các tiêu chí lọc gắn với mô hình?&lt;/b&gt; Cần doanh thu thuần dương để tính vòng quay tài sản (Y); tổng tài sản dương làm mẫu số cho Y và tỷ lệ phải trả (X); nợ ngắn hạn dương làm mẫu số cho thanh khoản (Z); tài sản ngắn hạn và phải trả người bán không âm để tỷ lệ có ý nghĩa. Chỉ giữ dòng có đủ các khoản mục cho cùng mã-năm để mọi biến trong OLS được tính trên cùng quan sát. Không bắt buộc một mã phải có đủ cả 5 năm, nhằm tránh loại bỏ toàn bộ công ty chỉ vì thiếu một kỳ.&lt;/p&gt;
+&lt;p&gt;Về lý thuyết, khoản phải trả người bán là tín dụng từ nhà cung cấp; thanh khoản hiện hành phản ánh khả năng đáp ứng nghĩa vụ ngắn hạn nên có cơ sở để điều tiết mối liên hệ đó; vòng quay tổng tài sản đại diện cho doanh thu tạo ra từ tài sản. Quy mô là biến kiểm soát vì doanh nghiệp lớn/nhỏ có thể khác nhau về hoạt động và nguồn lực.&lt;/p&gt;
+&lt;h3&gt;Luồng chọn mẫu có thể kiểm toán&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(sample_flow, digits=0)}&lt;/div&gt;
+&lt;h3&gt;Kiểm tra tính đúng đắn của dữ liệu gốc&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(data_checks, text=True)}&lt;/div&gt;
+&lt;p&gt;&lt;b&gt;Kiểm tra chất lượng dữ liệu:&lt;/b&gt; mỗi mã–năm có một báo cáo năm; doanh thu thuần khớp doanh thu trừ giảm trừ, tổng tài sản khớp tài sản ngắn hạn cộng dài hạn, nợ ngắn hạn cộng nợ dài hạn khớp nợ phải trả. Có {equity_gap_rows:,} công ty–năm mà tổng tài sản lệch tổng nợ cộng vốn chủ sở hữu trên 0,5%: lỗi nằm ở khoản vốn chủ sở hữu của nguồn, khoản này không dùng trong mô hình, còn phía tài sản và nợ vẫn khớp đẳng thức kế toán nên các dòng này được giữ. Giá trị cực đoan, ví dụ công ty có tổng tài sản rất nhỏ nên vòng quay tài sản rất lớn, được xử lý bằng Winsor2 thay vì đặt thêm một ngưỡng loại tùy ý. Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.&lt;/p&gt;
+&lt;p&gt;Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có &lt;b&gt;{changed:,} ô giá trị&lt;/b&gt; bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.&lt;/p&gt;
+&lt;p class=&quot;note&quot;&gt;&lt;b&gt;Giới hạn phạm vi:&lt;/b&gt; đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam, không phải nhóm vốn hóa cao nhất và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo &lt;b&gt;mẫu biểu BCTC&lt;/b&gt; để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;3. Cấu trúc bài theo yêu cầu&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(requirement_check, text=True)}&lt;/div&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;4. Bảng chú thích tên biến rút gọn&lt;/h2&gt;&lt;p&gt;Tất cả các bảng kết quả phía dưới dùng thống nhất các mã trong bảng này.&lt;/p&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(model_dictionary, text=True)}&lt;/div&gt;
+&lt;h3&gt;Khoản mục lấy từ báo cáo nào?&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(statement_dictionary, text=True)}&lt;/div&gt;
+&lt;p&gt;Các mã &lt;code&gt;isa*&lt;/code&gt; lấy từ Báo cáo kết quả kinh doanh; &lt;code&gt;bsa*&lt;/code&gt; lấy từ Bảng cân đối kế toán theo bảng ánh xạ trong README của bộ dữ liệu. Các biến DLI, TLI và TLD do nghiên cứu tự xây dựng, không phải khoản mục có sẵn trong báo cáo doanh nghiệp.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Mô hình 0 — OLS thông thường:&lt;/b&gt;&lt;/p&gt;&lt;div class=&quot;formula&quot;&gt;ATO&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;1&lt;/sub&gt;·TPRc&lt;sub&gt;i,t&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt;&lt;/div&gt;&lt;p&gt;Đây là hồi quy tuyến tính đơn để nhìn mối liên hệ thô giữa tỷ lệ phải trả người bán và hiệu quả hoạt động, trước khi thêm biến kiểm soát.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Mô hình 1 — tác động riêng lẻ:&lt;/b&gt;&lt;/p&gt;&lt;div class=&quot;formula&quot;&gt;ATO&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;1&lt;/sub&gt;·TPRc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt;·LIQc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;3&lt;/sub&gt;·SIZ&lt;sub&gt;i,t&lt;/sub&gt; + δ&lt;sub&gt;t&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt;&lt;/div&gt;&lt;p class=&quot;legend&quot;&gt;δ&lt;sub&gt;t&lt;/sub&gt;: hiệu ứng cố định năm (biến giả 2022–2025, năm gốc 2021), đại diện cho các cú sốc vĩ mô chung như tăng trưởng GDP, lạm phát, lãi suất. ε&lt;sub&gt;i,t&lt;/sub&gt;: sai số, tập hợp các thông tin có thể giải thích ATO nhưng chưa đưa vào mô hình.&lt;/p&gt;
+&lt;p&gt;Mô hình 1 trả lời: khi giữ thanh khoản, quy mô và năm không đổi, tỷ lệ phải trả người bán liên hệ thế nào với hiệu quả hoạt động?&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Mô hình 2 — có tương tác:&lt;/b&gt;&lt;/p&gt;&lt;div class=&quot;formula&quot;&gt;ATO&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;1&lt;/sub&gt;·TPRc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt;·LIQc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;3&lt;/sub&gt;·SIZ&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;4&lt;/sub&gt;·(TPRc × LIQc)&lt;sub&gt;i,t&lt;/sub&gt; + δ&lt;sub&gt;t&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;TPRc&lt;/code&gt; và &lt;code&gt;LIQc&lt;/code&gt; là TPR và LIQ đã trừ trung bình mẫu; cách trừ trung bình được dùng thống nhất ở mọi mô hình nên chỉ làm thay đổi hằng số, không đổi độ dốc của mô hình 0 và 1. α1 là độ dốc của phải trả khi thanh khoản ở mức trung bình mẫu. α4 cho biết độ dốc đó thay đổi bao nhiêu khi thanh khoản tăng một đơn vị: &lt;code&gt;tác động biên của TPR = α1 + α4·LIQc&lt;/code&gt;. Vì vậy phải đọc α1 và α4 cùng nhau, không đọc riêng hệ số tương tác.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Mô hình 3 — tương tác với biến giả:&lt;/b&gt;&lt;/p&gt;&lt;div class=&quot;formula&quot;&gt;ATO&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;1&lt;/sub&gt;·TPRc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt;·DLI&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;3&lt;/sub&gt;·SIZ&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;4&lt;/sub&gt;·(TPRc × DLI)&lt;sub&gt;i,t&lt;/sub&gt; + δ&lt;sub&gt;t&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt;&lt;/div&gt;
+&lt;p&gt;&lt;code&gt;DLI=1&lt;/code&gt; khi tài sản ngắn hạn đủ trang trải nợ ngắn hạn (&lt;code&gt;current ratio ≥ 1&lt;/code&gt;), ngược lại &lt;code&gt;DLI=0&lt;/code&gt;. Ngưỡng 1 có ý nghĩa kinh tế trực tiếp, không được chọn chỉ để chia mẫu đều. Trong mô hình này, α1 là độ dốc của nhóm DLI=0 và α4 là chênh lệch độ dốc giữa nhóm DLI=1 với nhóm DLI=0.&lt;/p&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(dummy_distribution)}&lt;/div&gt;
+&lt;p&gt;Sai số chuẩn được gom cụm theo mã cổ phiếu để cho phép sai số của cùng doanh nghiệp liên hệ qua các năm. Các mô hình 1–3 là pooled OLS có biến giả năm; chưa kiểm soát đặc điểm cố hữu của từng doanh nghiệp (ngành, mô hình kinh doanh). Mục 19 ước lượng lại bằng hiệu ứng cố định công ty để kiểm tra độ bền. Cả hai cách đều không chứng minh quan hệ nhân quả.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;5. Thống kê mô tả trước winsor hóa&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(desc_before)}&lt;/div&gt;{R5}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;6. Winsor2 (1;99) nghĩa là gì?&lt;/h2&gt;
+&lt;p&gt;&lt;b&gt;Winsor2 (1;99)&lt;/b&gt; nghĩa là xử lý hai đuôi của &lt;b&gt;từng biến liên tục&lt;/b&gt; theo phân vị 1% và 99%:&lt;/p&gt;
+&lt;ul&gt;&lt;li&gt;&lt;b&gt;p1:&lt;/b&gt; ngưỡng mà khoảng 1% giá trị nằm thấp hơn.&lt;/li&gt;&lt;li&gt;&lt;b&gt;p99:&lt;/b&gt; ngưỡng mà khoảng 1% giá trị nằm cao hơn.&lt;/li&gt;&lt;li&gt;Giá trị thấp hơn p1 được thay bằng đúng p1.&lt;/li&gt;&lt;li&gt;Giá trị cao hơn p99 được thay bằng đúng p99.&lt;/li&gt;&lt;li&gt;98% giá trị nằm giữa hai ngưỡng được giữ nguyên.&lt;/li&gt;&lt;/ul&gt;
+&lt;div class=&quot;formula&quot;&gt;x&lt;sup&gt;w&lt;/sup&gt; = p&lt;sub&gt;1&lt;/sub&gt; nếu x &amp;lt; p&lt;sub&gt;1&lt;/sub&gt;; &amp;nbsp; x&lt;sup&gt;w&lt;/sup&gt; = x nếu p&lt;sub&gt;1&lt;/sub&gt; ≤ x ≤ p&lt;sub&gt;99&lt;/sub&gt;; &amp;nbsp; x&lt;sup&gt;w&lt;/sup&gt; = p&lt;sub&gt;99&lt;/sub&gt; nếu x &amp;gt; p&lt;sub&gt;99&lt;/sub&gt;&lt;/div&gt;
+&lt;p&gt;&lt;b&gt;Ví dụ với ngưỡng thật của mẫu:&lt;/b&gt; p1 của TPR là {tpr_p1:.6f} và p99 là {tpr_p99:.4f}. Một công ty có TPR = 0 được nâng lên {tpr_p1:.6f}; TPR = 0.90 được hạ xuống {tpr_p99:.4f}; TPR = 0.10 giữ nguyên.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Điểm quan trọng:&lt;/b&gt; Winsor2 không xóa công ty–năm và không thay toàn bộ một dòng dữ liệu. Nó chỉ chặn từng giá trị quá xa ở biến đang xét, nên số Obs trước và sau vẫn bằng nhau. Đây khác với &lt;i&gt;trim&lt;/i&gt;, vì trim sẽ loại quan sát nằm ngoài ngưỡng.&lt;/p&gt;
+&lt;p&gt;Mục đích là giảm mức chi phối của các giá trị cực đoan lên Mean, SD và OLS, nhưng không được xem Winsor2 là cách sửa mọi dữ liệu sai. Bài này áp dụng riêng cho ATO, TPR, LIQ và SIZ trước khi tạo biến tương tác.&lt;/p&gt;
+&lt;h3&gt;Ngưỡng thực tế trong mẫu&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(thresholds_df)}&lt;/div&gt;{R6}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;7. Thống kê mô tả sau winsor hóa&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(desc_after)}&lt;/div&gt;&lt;p&gt;Skewness gần 0 nghĩa là phân phối tương đối cân xứng; dương là đuôi phải dài hơn, âm là đuôi trái dài hơn. Skewness không phải kiểm định phân phối chuẩn.&lt;/p&gt;
+{chart_desc_inline}&lt;p&gt;Biểu đồ dùng thang đo riêng cho từng dòng. Đường mảnh là Min–Max, đoạn xanh là p25–p75, vòng tròn là trung vị và hình thoi đỏ là trung bình.&lt;/p&gt;{R7}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;8. Skewness, Kurtosis, CV và kiểm định Jarque–Bera&lt;/h2&gt;
+&lt;div class=&quot;defs&quot;&gt;&lt;p&gt;&lt;b&gt;Định nghĩa.&lt;/b&gt; Với n quan sát x&lt;sub&gt;1&lt;/sub&gt;, …, x&lt;sub&gt;n&lt;/sub&gt; có trung bình x̄, mô-men trung tâm bậc k là m&lt;sub&gt;k&lt;/sub&gt; = (1/n)·Σ(x&lt;sub&gt;i&lt;/sub&gt; − x̄)&lt;sup&gt;k&lt;/sup&gt;.&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;Skewness (độ lệch)&lt;/b&gt;: S = m&lt;sub&gt;3&lt;/sub&gt; / m&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;3/2&lt;/sup&gt;, đo tính đối xứng của phân phối. S = 0: đối xứng như phân phối chuẩn. S &amp;gt; 0: đuôi phải dài, một số giá trị rất lớn kéo trung bình lên cao hơn trung vị. S &amp;lt; 0: đuôi trái dài. Quy ước thường dùng: |S| &amp;lt; 0,5 gần đối xứng; 0,5–1 lệch vừa; trên 1 lệch mạnh.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Kurtosis (độ nhọn, dạng Pearson)&lt;/b&gt;: K = m&lt;sub&gt;4&lt;/sub&gt; / m&lt;sub&gt;2&lt;/sub&gt;&lt;sup&gt;2&lt;/sup&gt;, đo độ dày của hai đuôi. Phân phối chuẩn có K = 3. K &amp;gt; 3 (leptokurtic): đuôi dày, nhiều giá trị cực đoan hơn phân phối chuẩn. K &amp;lt; 3 (platykurtic): đuôi mỏng. Một số phần mềm báo excess kurtosis = K − 3, khi đó mốc so sánh là 0.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;CV (hệ số biến thiên)&lt;/b&gt; = SD / |x̄| × 100%: độ phân tán tương đối so với mức trung bình, dùng để so mức biến động giữa các biến có đơn vị khác nhau. CV trên 100% nghĩa là độ lệch chuẩn lớn hơn cả trung bình, biến rất phân tán. CV không dùng cho biến có trung bình gần 0 như phần dư.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Kiểm định Jarque–Bera&lt;/b&gt;: JB = (n/6)·[S&lt;sup&gt;2&lt;/sup&gt; + (K − 3)&lt;sup&gt;2&lt;/sup&gt;/4]. H&lt;sub&gt;0&lt;/sub&gt;: biến có phân phối chuẩn (S = 0 và K = 3); H&lt;sub&gt;1&lt;/sub&gt;: không có phân phối chuẩn. Dưới H&lt;sub&gt;0&lt;/sub&gt;, JB tuân theo phân phối χ&lt;sup&gt;2&lt;/sup&gt; với 2 bậc tự do, nên p-value = e&lt;sup&gt;−JB/2&lt;/sup&gt;; giá trị tới hạn ở mức 5% là 5,99. Quy tắc: p-value &amp;lt; α (1%, 5% hoặc 10%) thì bác bỏ H&lt;sub&gt;0&lt;/sub&gt;.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(normality_html, digits=3)}&lt;/div&gt;&lt;p&gt;&lt;b&gt;RE2&lt;/b&gt; là phần dư mô hình tương tác liên tục; &lt;b&gt;RE3&lt;/b&gt; là phần dư mô hình tương tác dummy. &lt;b&gt;Kurtosis:&lt;/b&gt; phân phối chuẩn có giá trị 3. &lt;b&gt;CV:&lt;/b&gt; SD chia trị tuyệt đối của Mean, dùng để xem độ biến động tương đối; CV không có ý nghĩa cho phần dư vì trung bình phần dư gần 0. &lt;b&gt;Jarque–Bera:&lt;/b&gt; H0 là phân phối chuẩn; p-value &amp;lt; 0,05 dẫn đến bác bỏ H0.&lt;/p&gt;&lt;p class=&quot;note&quot;&gt;Với mẫu {len(wins):,} quan sát, JB rất nhạy nên một sai lệch nhỏ cũng có thể cho p-value gần 0. OLS không yêu cầu từng X hoặc Y phải phân phối chuẩn. Phân phối phần dư liên quan trực tiếp hơn đến suy luận mẫu nhỏ; ở đây báo cáo dùng sai số chuẩn gom cụm và xấp xỉ mẫu lớn.&lt;/p&gt;{R8}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;9. Trung bình các biến chính theo năm&lt;/h2&gt;{chart_year_inline}&lt;p&gt;Đây là dạng hai trục gần với hình Stata tham khảo. Hai đường có đơn vị khác nhau nên chỉ dùng để xem xu hướng theo năm, không so sánh trực tiếp độ cao của hai đường.&lt;/p&gt;{R9}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;10. Ma trận tương quan Pearson&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(corr_full)}&lt;/div&gt;{chart_corr_inline}&lt;p&gt;Tên được rút gọn còn ba chữ: &lt;b&gt;ATO&lt;/b&gt; hiệu quả, &lt;b&gt;TPR&lt;/b&gt; tỷ lệ phải trả, &lt;b&gt;LIQ&lt;/b&gt; thanh khoản, &lt;b&gt;SIZ&lt;/b&gt; quy mô, &lt;b&gt;DLI&lt;/b&gt; dummy thanh khoản, &lt;b&gt;TLI&lt;/b&gt; tương tác TPR×LIQ và &lt;b&gt;TLD&lt;/b&gt; tương tác TPR×DLI. Corr nằm từ −1 đến +1 và chỉ đo quan hệ tuyến tính cặp đôi. Tương quan cao không chứng minh quan hệ nhân quả.&lt;/p&gt;{R10}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;11. VIF&lt;/h2&gt;&lt;h3&gt;Mô hình 1 — không có tương tác&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(vif_base_short)}&lt;/div&gt;&lt;h3&gt;Mô hình 2 — tương tác liên tục&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(vif_inter_short)}&lt;/div&gt;&lt;h3&gt;Mô hình 3 — tương tác dummy&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(vif_dummy_short)}&lt;/div&gt;&lt;p&gt;VIF tính từ các biến giải thích chính, không tính biến giả năm. Quy tắc 5 hoặc 10 chỉ là mốc tham khảo. {vif_reading} VIF lớn nhất của mô hình dummy là {max_vif_dummy:.2f}.&lt;/p&gt;{R11}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;Hướng dẫn: OLS là gì và cách đọc bảng hồi quy&lt;/h2&gt;
+&lt;p&gt;&lt;b&gt;OLS (Ordinary Least Squares – bình phương nhỏ nhất thông thường)&lt;/b&gt; là phương pháp tìm đường thẳng, hoặc mặt phẳng khi có nhiều biến, mô tả tốt nhất quan hệ giữa biến phụ thuộc Y và các biến giải thích X. &quot;Tốt nhất&quot; nghĩa là tổng bình phương phần dư nhỏ nhất, trong đó phần dư là chênh lệch giữa ATO thực tế và ATO mô hình dự báo.&lt;/p&gt;&lt;p&gt;&lt;b&gt;PRF và SRF.&lt;/b&gt; Hồi quy tổng thể (PRF) mô tả quan hệ thật trong toàn bộ tổng thể với các hệ số α chưa biết. Ta chỉ có mẫu, nên ước lượng hồi quy mẫu (SRF) để có α̂ và mong muốn E(α̂) = α. Trong mô hình, Y là biến phụ thuộc, α&lt;sub&gt;0&lt;/sub&gt; là hệ số chặn, các X gồm biến độc lập chính (gắn với mục tiêu nghiên cứu, ở đây là TPR và tương tác với LIQ) và biến kiểm soát (gắn với việc giải thích Y, ở đây là SIZ và hiệu ứng năm). α&lt;sub&gt;1&lt;/sub&gt; là &lt;i&gt;tác động riêng biệt&lt;/i&gt; (isolated effect) của X&lt;sub&gt;1&lt;/sub&gt; lên Y khi các yếu tố khác không đổi (ceteris paribus). Nếu một phần của X&lt;sub&gt;1&lt;/sub&gt; nằm trong sai số ε thì Cov(ε, X&lt;sub&gt;1&lt;/sub&gt;) ≠ 0: đó là hiện tượng nội sinh (endogeneity), khi đó α̂&lt;sub&gt;1&lt;/sub&gt; không còn là tác động riêng biệt.&lt;/p&gt;
+&lt;div class=&quot;formula&quot;&gt;Y&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;0&lt;/sub&gt; + α&lt;sub&gt;1&lt;/sub&gt;·X&lt;sub&gt;1,i,t&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt;·X&lt;sub&gt;2,i,t&lt;/sub&gt; + … + α&lt;sub&gt;k&lt;/sub&gt;·X&lt;sub&gt;k,i,t&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt; &amp;nbsp;⟶&amp;nbsp; chọn α̂ sao cho Σ ε̂&lt;sup&gt;2&lt;/sup&gt;&lt;sub&gt;i,t&lt;/sub&gt; nhỏ nhất&lt;/div&gt;
+&lt;p&gt;&lt;b&gt;Cách đọc từng cột trong bảng hồi quy:&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;b&gt;Hệ số OLS (α):&lt;/b&gt; khi biến đó tăng 1 đơn vị và các biến khác giữ nguyên, ATO trung bình thay đổi α lần. TPR là tỷ lệ (0,10 = 10%), nên tăng 1 đơn vị nghĩa là tăng 100 điểm phần trăm; dễ đọc hơn là chia α cho 100 để có tác động của 1 điểm %.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;SE gom cụm:&lt;/b&gt; sai số chuẩn, đo độ không chắc chắn của α. Gom cụm theo mã vì cùng một công ty xuất hiện nhiều năm và sai số của nó có thể liên quan với nhau.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;t/z:&lt;/b&gt; α chia SE. Trị tuyệt đối lớn hơn khoảng 1,96 tương ứng p-value nhỏ hơn 0,05.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;p-value:&lt;/b&gt; nếu thực tế α = 0, xác suất thu được ước lượng xa 0 như vậy là bao nhiêu. Quy tắc: so p-value với mức ý nghĩa α = 1%, 5% hoặc 10%; p-value &amp;lt; α thì bác bỏ H&lt;sub&gt;0&lt;/sub&gt;: hệ số = 0, tức hệ số có ý nghĩa thống kê. p-value không phải xác suất giả thuyết đúng.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;CI 95%:&lt;/b&gt; khoảng tin cậy 95% của α. Nếu khoảng không chứa 0 thì hệ số có ý nghĩa ở mức 5%.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Hằng số (CON):&lt;/b&gt; ATO dự báo khi các biến giải thích bằng 0; vì TPR và LIQ đã trừ trung bình nên ở đây là ATO tại mức TPR, LIQ trung bình, chỉ dùng để tính dự báo.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;Y22–Y25:&lt;/b&gt; chênh lệch ATO của từng năm so với năm gốc 2021, sau khi kiểm soát các biến khác.&lt;/li&gt;
+&lt;li&gt;&lt;b&gt;R² và R² hiệu chỉnh:&lt;/b&gt; tỷ lệ khác biệt về ATO mà mô hình giải thích được; R² hiệu chỉnh trừ bớt phần tăng do thêm biến.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;b&gt;Giả định quan trọng nhất&lt;/b&gt; để đọc α là quan hệ nhân quả: sai số ε không tương quan với các biến X. Điều này khó đúng với dữ liệu doanh nghiệp vì còn nhiều yếu tố bị bỏ sót như ngành hay năng lực quản lý, nên bài này chỉ diễn giải α là &lt;i&gt;mối liên hệ&lt;/i&gt;. Các giả định khác gồm quan hệ tuyến tính và không có đa cộng tuyến hoàn hảo (kiểm tra bằng VIF ở mục 11); phương sai sai số không đều được xử lý bằng sai số chuẩn gom cụm. Mục 20 đánh giá lần lượt các giả định A1–A5.&lt;/p&gt;&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;12. OLS thông thường: chỉ Y và X&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(ols0_short)}&lt;/div&gt;&lt;p&gt;Mô hình này cho thấy quan hệ thô; chưa đưa thanh khoản, quy mô và năm vào nên không dùng làm kết luận cuối.&lt;/p&gt;{R12}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;13. Mô hình cơ sở chưa có tương tác&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(ols1_short)}&lt;/div&gt;{R13}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;14. Mô hình có tương tác liên tục&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(ols2_short)}&lt;/div&gt;{R14}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;15. Mô hình có tương tác với dummy&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(ols3_short)}&lt;/div&gt;&lt;p&gt;Hệ số &lt;code&gt;TLD&lt;/code&gt; = &lt;b&gt;{dummy_int_beta:.4f}&lt;/b&gt; (p ≈ {dummy_int_p:.4g}) là chênh lệch độ dốc giữa nhóm DLI=1 và DLI=0, không phải mức chênh lệch ATO đơn thuần.&lt;/p&gt;{R15}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;16. Biểu đồ tương tác liên tục kiểu marginsplot&lt;/h2&gt;{chart_interaction_inline}&lt;p&gt;Ba đường là giá trị Y dự báo ở thanh khoản p25, p50 và p75, giữ quy mô tại trung bình và năm ở mức gốc 2021. Đường không phải dữ liệu thô; nó được tính từ hệ số mô hình 2 để nhìn trực tiếp ý nghĩa của tương tác.&lt;/p&gt;{R16}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;17. Biểu đồ tương tác với dummy 0–1&lt;/h2&gt;{chart_dummy_inline}&lt;p&gt;Hai đường cho biết quan hệ dự báo giữa X và Y khác nhau thế nào giữa nhóm không đủ và đủ tài sản ngắn hạn trang trải nợ ngắn hạn.&lt;/p&gt;{R17}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;18. Kiểm tra và diễn giải kết quả&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(model_info)}&lt;/div&gt;&lt;p&gt;{interaction_reading}&lt;/p&gt;&lt;p&gt;Cụ thể, mô hình 2 cho α1 = &lt;b&gt;{ap_beta:.4f}&lt;/b&gt; (p ≈ {ap_p:.4g}) và α4 = &lt;b&gt;{int_beta:.4f}&lt;/b&gt; (p ≈ {int_p:.4g}). R² tăng từ {info1[&#x27;R2&#x27;]:.4f} lên {info2[&#x27;R2&#x27;]:.4f}, tức mô hình có tương tác giải thích thêm một phần biến thiên nhưng mức R² vẫn còn thấp. Đây là mối liên hệ có điều kiện trong mẫu, không phải bằng chứng nhân quả.&lt;/p&gt;&lt;p&gt;{liq_reading}&lt;/p&gt;&lt;p&gt;Cột &lt;code&gt;t/z&lt;/code&gt; là hệ số chia cho sai số chuẩn gom cụm; p-value/CI dùng xấp xỉ chuẩn với mẫu lớn. Không diễn giải p-value như xác suất giả thuyết đúng.&lt;/p&gt;&lt;p class=&quot;note&quot;&gt;&lt;b&gt;Giới hạn:&lt;/b&gt; phân ngành mới ở mức mẫu biểu BCTC; mô hình pooled chưa kiểm soát ngành nên hệ số có thể phản ánh khác biệt giữa các nhóm doanh nghiệp (xem mục 19); VIF của mô hình tương tác liên tục cao; dấu kết quả khác bài tham khảo. Cần thận trọng khi suy rộng.&lt;/p&gt;{R18}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;19. Kiểm tra độ bền: hiệu ứng cố định công ty và biến trễ 1 năm&lt;/h2&gt;&lt;p&gt;Pooled OLS so sánh cả giữa các công ty lẫn trong cùng công ty. Công ty thương mại, bán lẻ thường vừa có tỷ lệ phải trả cao vừa có vòng quay tài sản cao, nên một phần quan hệ trong pooled OLS có thể đến từ khác biệt ngành. Mô hình hiệu ứng cố định (FE) trừ trung bình riêng của từng công ty, nên chỉ dùng biến động &lt;i&gt;trong cùng một công ty qua các năm&lt;/i&gt;; mọi đặc điểm không đổi theo thời gian như ngành đều được kiểm soát. Hằng số bị hấp thụ vào hiệu ứng cố định; công ty chỉ có một năm bị loại khỏi FE.&lt;/p&gt;
+&lt;div class=&quot;formula&quot;&gt;ATO&lt;sub&gt;i,t&lt;/sub&gt; = α&lt;sub&gt;1&lt;/sub&gt;·TPRc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;2&lt;/sub&gt;·LIQc&lt;sub&gt;i,t&lt;/sub&gt; + α&lt;sub&gt;3&lt;/sub&gt;·SIZ&lt;sub&gt;i,t&lt;/sub&gt; + … + δ&lt;sub&gt;t&lt;/sub&gt; + f&lt;sub&gt;i&lt;/sub&gt; + ε&lt;sub&gt;i,t&lt;/sub&gt;&lt;/div&gt;&lt;p class=&quot;legend&quot;&gt;f&lt;sub&gt;i&lt;/sub&gt;: hiệu ứng cố định công ty, hấp thụ mọi đặc điểm không đổi theo thời gian của từng công ty (ngành, mô hình kinh doanh, năng lực quản lý ổn định). δ&lt;sub&gt;t&lt;/sub&gt;: hiệu ứng cố định năm. Ước lượng bằng phép biến đổi within: trừ trung bình riêng của từng công ty khỏi Y và mọi biến X.&lt;/p&gt;
+&lt;div class=&quot;scroll&quot;&gt;{table_html(robust_compare)}&lt;/div&gt;&lt;p&gt;Ô bảng: hệ số (SE gom cụm theo mã). *** p &amp;lt; 0.01, ** p &amp;lt; 0.05, * p &amp;lt; 0.10. R² của FE là R² within. Cột &quot;M2 trễ 1 năm&quot; dùng TPR, LIQ, SIZ của năm trước (t − 1) để giải thích ATO năm t, nên mẫu chỉ gồm 2022–2025 và năm gốc là 2022.&lt;/p&gt;
+&lt;p&gt;{fe_reading}&lt;/p&gt;&lt;p class=&quot;note&quot;&gt;Phần lớn độ lớn của hệ số trong pooled OLS đến từ khác biệt giữa các doanh nghiệp. Kết luận nên dựa trên kết quả nhất quán giữa hai cách ước lượng; kết quả chỉ xuất hiện trong pooled OLS cần được diễn giải là khác biệt giữa doanh nghiệp, không phải tác động khi một doanh nghiệp thay đổi tỷ lệ phải trả.&lt;/p&gt;{R19}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;20. Đánh giá mô hình: kỳ vọng dấu và giả định OLS&lt;/h2&gt;
+&lt;h3&gt;Kỳ vọng dấu so với kết quả&lt;/h3&gt;&lt;p class=&quot;legend&quot;&gt;Kết quả lấy từ mô hình 2 (TLD từ mô hình 3). *** p &amp;lt; 0,01; ** p &amp;lt; 0,05; * p &amp;lt; 0,10.&lt;/p&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(sign_table, text=True)}&lt;/div&gt;
+{R20a}
+&lt;h3&gt;Kiểm tra các giả định A1–A5&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(assumption_table, text=True)}&lt;/div&gt;
+{R20b}&lt;/section&gt;
+&lt;section class=&quot;card&quot;&gt;&lt;h2&gt;Nguồn và tính tái lập&lt;/h2&gt;&lt;p&gt;Nguồn dữ liệu báo cáo tài chính: &lt;a href=&quot;https://stock.quanganh.org/vi/downloads&quot;&gt;trang tải dữ liệu cổ phiếu Việt Nam của Quang Anh&lt;/a&gt;; nguồn được trang này ghi cho chỉ số cổ phiếu là Vietcap và bổ sung SSI đối với một số chuỗi chỉ số. Bộ dữ liệu kèm theo trong thư mục &lt;code&gt;data_source&lt;/code&gt;.&lt;/p&gt;&lt;p&gt;Bài tham khảo: &lt;a href=&quot;https://nckh.tapchicongthuong.vn/j/nckh/articles/3252-the-effects-of-trade-payables-on-the-performance-of-firms-listed-on-the-vietnam-stock-exchange?lang=en-US&quot;&gt;The effects of trade payables on the performance of firms listed on the Vietnam Stock Exchange&lt;/a&gt;. Tóm tắt bài báo đề cập panel 2011–2022, thanh khoản điều tiết quan hệ và sử dụng OLS, FE, RE, 2SLS. Bài này dùng 2021–2025 để thực hành, vì vậy khác kỳ nghiên cứu gốc.&lt;/p&gt;&lt;/section&gt;
+&lt;/div&gt;
+&lt;div id=&quot;tab-tables&quot; hidden&gt;{gallery_html}&lt;/div&gt;
+{data_tab_html}
+{code_tab_html}
+&lt;script&gt;function showTab(t){{for(const k of [&#x27;full&#x27;,&#x27;tables&#x27;,&#x27;data&#x27;,&#x27;code&#x27;]){{document.getElementById(&#x27;tab-&#x27;+k).hidden=k!==t;document.getElementById(&#x27;btn-&#x27;+k).setAttribute(&#x27;aria-selected&#x27;,String(k===t));}}const h={{tables:&#x27;#bang-bieu&#x27;,data:&#x27;#du-lieu&#x27;,code:&#x27;#code&#x27;}};try{{history.replaceState(null,&#x27;&#x27;,h[t]||location.pathname);}}catch(e){{}}window.scrollTo(0,0);}}if(location.hash===&#x27;#bang-bieu&#x27;)showTab(&#x27;tables&#x27;);if(location.hash===&#x27;#du-lieu&#x27;)showTab(&#x27;data&#x27;);if(location.hash===&#x27;#code&#x27;)showTab(&#x27;code&#x27;);&lt;/script&gt;
+&lt;footer&gt;&lt;small&gt;Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm&lt;/small&gt;&lt;/footer&gt;&lt;/main&gt;&lt;/body&gt;&lt;/html&gt;&#x27;&#x27;&#x27;
+    (OUT / &quot;bao_cao_ket_qua.html&quot;).write_text(report, encoding=&quot;utf-8&quot;)
+    print(f&quot;Hoàn tất: {len(wins):,} quan sát, {wins[&#x27;ticker&#x27;].nunique():,} mã, {YEARS[0]}–{YEARS[-1]}.&quot;)
+    print(f&quot;Đã ghi báo cáo: {OUT / &#x27;bao_cao_ket_qua.html&#x27;}&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre></section><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script><script>(function(){const c=document.querySelector("pre.code code");if(window.hljs){hljs.highlightElement(c);}const b=document.getElementById("copy-code");b.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(c.innerText);b.textContent="Đã sao chép";}catch(e){const r=document.createRange();r.selectNodeContents(c);const sel=getSelection();sel.removeAllRanges();sel.addRange(r);b.textContent="Đã chọn code, bấm Ctrl+C";}setTimeout(()=>{b.textContent="Sao chép code";},2500);});})();</script></div>
+<script>function showTab(t){for(const k of ['full','tables','data','code']){document.getElementById('tab-'+k).hidden=k!==t;document.getElementById('btn-'+k).setAttribute('aria-selected',String(k===t));}const h={tables:'#bang-bieu',data:'#du-lieu',code:'#code'};try{history.replaceState(null,'',h[t]||location.pathname);}catch(e){}window.scrollTo(0,0);}if(location.hash==='#bang-bieu')showTab('tables');if(location.hash==='#du-lieu')showTab('data');if(location.hash==='#code')showTab('code');</script>
 <footer><small>Tạo bởi main.py • phân vị Winsor: p1 và p99 • winsor không xóa công ty-năm</small></footer></main></body></html>
