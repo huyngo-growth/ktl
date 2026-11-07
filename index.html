@@ -94,11 +94,6 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>1,460</td>
     </tr>
     <tr>
-      <th>Bảng cân đối khớp (lệch ≤ 0,5%)</th>
-      <td>7,101</td>
-      <td>1,460</td>
-    </tr>
-    <tr>
       <th>Doanh thu thuần &gt; 0</th>
       <td>7,015</td>
       <td>1,454</td>
@@ -120,53 +115,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div>
-<h3>Kiểm tra tính đúng đắn của dữ liệu gốc</h3><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Số dòng vi phạm</th>
-      <th>Xử lý</th>
-    </tr>
-    <tr>
-      <th>Kiểm tra</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Trùng mã–năm sau khi ghép</th>
-      <td>0</td>
-      <td>Giữ bản công bố mới nhất</td>
-    </tr>
-    <tr>
-      <th>Doanh thu thuần ≠ doanh thu − giảm trừ (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-    <tr>
-      <th>Tổng tài sản ≠ TS ngắn hạn + TS dài hạn (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Loại</td>
-    </tr>
-    <tr>
-      <th>Tổng tài sản ≠ nợ phải trả + vốn chủ sở hữu (lệch &gt; 0,5%)</th>
-      <td>3</td>
-      <td>Giữ: sai ở khoản VCSH của nguồn, khoản này không dùng trong mô hình</td>
-    </tr>
-    <tr>
-      <th>Nợ phải trả ≠ nợ ngắn hạn + nợ dài hạn (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-    <tr>
-      <th>Phải trả người bán &gt; nợ ngắn hạn</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-  </tbody>
-</table></div>
-<p><b>Kiểm tra chất lượng dữ liệu:</b> mỗi mã–năm có một báo cáo năm; doanh thu thuần khớp doanh thu trừ giảm trừ, tổng tài sản khớp tài sản ngắn hạn cộng dài hạn, nợ ngắn hạn cộng nợ dài hạn khớp nợ phải trả. Có 3 công ty–năm mà tổng tài sản lệch tổng nợ cộng vốn chủ sở hữu trên 0,5%: lỗi nằm ở khoản vốn chủ sở hữu của nguồn, khoản này không dùng trong mô hình, còn phía tài sản và nợ vẫn khớp đẳng thức kế toán nên các dòng này được giữ. Giá trị cực đoan, ví dụ công ty có tổng tài sản rất nhỏ nên vòng quay tài sản rất lớn, được xử lý bằng Winsor2 thay vì đặt thêm một ngưỡng loại tùy ý. Mẫu có 248 công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
+<p>Mẫu có 248 công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
 <p>Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có <b>568 ô giá trị</b> bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.</p>
 <p class="note"><b>Giới hạn phạm vi:</b> đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam, không phải nhóm vốn hóa cao nhất và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo <b>mẫu biểu BCTC</b> để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…</p></section>
 <section class="card"><h2>3. Cấu trúc bài theo yêu cầu</h2><div class="scroll"><table class="dataframe data text">
@@ -188,7 +137,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     <tr>
       <th>1</th>
       <td>Chuẩn hóa lại dữ liệu</td>
-      <td>Kiểm tra đẳng thức kế toán, lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99</td>
+      <td>Lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99</td>
       <td>2, 5–7</td>
     </tr>
     <tr>
@@ -2013,11 +1962,6 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>1,460</td>
     </tr>
     <tr>
-      <th>Bảng cân đối khớp (lệch ≤ 0,5%)</th>
-      <td>7,101</td>
-      <td>1,460</td>
-    </tr>
-    <tr>
       <th>Doanh thu thuần &gt; 0</th>
       <td>7,015</td>
       <td>1,454</td>
@@ -2039,53 +1983,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 3. Kiểm tra tính đúng đắn của dữ liệu gốc</h3><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Số dòng vi phạm</th>
-      <th>Xử lý</th>
-    </tr>
-    <tr>
-      <th>Kiểm tra</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Trùng mã–năm sau khi ghép</th>
-      <td>0</td>
-      <td>Giữ bản công bố mới nhất</td>
-    </tr>
-    <tr>
-      <th>Doanh thu thuần ≠ doanh thu − giảm trừ (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-    <tr>
-      <th>Tổng tài sản ≠ TS ngắn hạn + TS dài hạn (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Loại</td>
-    </tr>
-    <tr>
-      <th>Tổng tài sản ≠ nợ phải trả + vốn chủ sở hữu (lệch &gt; 0,5%)</th>
-      <td>3</td>
-      <td>Giữ: sai ở khoản VCSH của nguồn, khoản này không dùng trong mô hình</td>
-    </tr>
-    <tr>
-      <th>Nợ phải trả ≠ nợ ngắn hạn + nợ dài hạn (lệch &gt; 0,5%)</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-    <tr>
-      <th>Phải trả người bán &gt; nợ ngắn hạn</th>
-      <td>0</td>
-      <td>Không có</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card gallery"><h3>Bảng 4. Chú thích tên biến</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 3. Chú thích tên biến</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2210,7 +2108,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 5. Nguồn khoản mục và cách tính biến</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 4. Nguồn khoản mục và cách tính biến</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2286,7 +2184,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 6. Phân bổ biến giả thanh khoản DLI</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 5. Phân bổ biến giả thanh khoản DLI</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2307,7 +2205,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 7. Thống kê mô tả trước winsor hóa</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 6. Thống kê mô tả trước winsor hóa</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2373,7 +2271,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 8. Ngưỡng Winsor2 p1–p99</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 7. Ngưỡng Winsor2 p1–p99</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2427,7 +2325,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 9. Thống kê mô tả sau winsor hóa</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 8. Thống kê mô tả sau winsor hóa</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2527,7 +2425,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <polygon points="620,616 629,625 620,634 611,625" fill="#b44c4c"/><text x="638" y="630" font-family="Arial" font-size="13" fill="#263746">Trung bình</text>
 <text x="500.0" y="657" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 10. Skewness, Kurtosis, CV và Jarque–Bera</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 9. Skewness, Kurtosis, CV và Jarque–Bera</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2660,7 +2558,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="285" y1="548" x2="330" y2="548" stroke="#245b86" stroke-width="2.2"/><circle cx="307" cy="548" r="5" fill="#245b86"/><text x="340" y="553" font-family="Arial" font-size="14" fill="#263746">Phải trả / tổng tài sản</text>
 <line x1="575" y1="548" x2="620" y2="548" stroke="#b44c4c" stroke-width="2.2"/><polygon points="597,541 604,548 597,555 590,548" fill="#b44c4c"/><text x="630" y="553" font-family="Arial" font-size="14" fill="#263746">Hiệu quả hoạt động</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 11. Ma trận tương quan Pearson</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 10. Ma trận tương quan Pearson</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2970,7 +2868,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text x="838" y="706.0" font-family="Arial" font-size="12" fill="#202b3c">−1.00</text>
 <text x="460.0" y="796" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 12. VIF mô hình 1</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 11. VIF mô hình 1</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3001,7 +2899,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 13. VIF mô hình 2</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 12. VIF mô hình 2</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3037,7 +2935,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 14. VIF mô hình 3</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 13. VIF mô hình 3</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3073,7 +2971,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 15. Mô hình 0: OLS đơn giản ATO ~ TPR</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 14. Mô hình 0: OLS đơn giản ATO ~ TPR</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3106,7 +3004,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 16. Mô hình 1: cơ sở chưa có tương tác</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 15. Mô hình 1: cơ sở chưa có tương tác</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3193,7 +3091,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 17. Mô hình 2: tương tác TPR × LIQ</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 16. Mô hình 2: tương tác TPR × LIQ</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3289,7 +3187,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 18. Mô hình 3: tương tác TPR × DLI</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 17. Mô hình 3: tương tác TPR × DLI</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3457,7 +3355,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="550" y1="535" x2="590" y2="535" stroke="#245b86" stroke-width="2.5"/><text x="600" y="540" font-family="Arial" font-size="13" fill="#263746">D=1: tài sản ngắn hạn ≥ nợ ngắn hạn</text>
 <text x="500" y="580" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 19. Tóm tắt các mô hình</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 18. Tóm tắt các mô hình</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3523,7 +3421,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 20. So sánh pooled OLS, hiệu ứng cố định công ty và biến trễ 1 năm</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 19. So sánh pooled OLS, hiệu ứng cố định công ty và biến trễ 1 năm</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3629,7 +3527,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 21. Kỳ vọng dấu so với kết quả</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 20. Kỳ vọng dấu so với kết quả</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3691,7 +3589,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 22. Kiểm tra các giả định A1–A5</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 21. Kiểm tra các giả định A1–A5</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3797,7 +3695,7 @@ b('‹ Trước',st.page-1,st.page===0);const sp=document.createElement('span');
 q.addEventListener('input',()=>{st.q=q.value;st.page=0;render();});if(f)f.addEventListener('change',()=>{st.f=f.value;st.page=0;render();});render();}
 mk('raw');mk('clean');})();
 </script></div>
-<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,225 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
+<div id="tab-code" hidden><section class="card"><h3>Mã nguồn main.py</h3><p class="legend">Toàn bộ code Python (1,220 dòng) đọc dữ liệu, lọc mẫu, winsor hóa, tính thống kê, chạy OLS/FE và sinh ra mọi bảng, biểu đồ trong trang này. Chạy bằng lệnh <code>py main.py</code> trong thư mục bài tập; chỉ cần thư viện pandas và numpy. Mỗi bảng được tạo bởi một biến DataFrame cùng tên trong code, ví dụ ols2 là mô hình 2, robust_compare là bảng so sánh pooled–FE.</p><div class="dt-controls"><button type="button" class="btn" id="copy-code">Sao chép code</button><a class="dl" href="code/main.py" download>Tải main.py</a></div><pre class="code"><code class="language-python"># -*- coding: utf-8 -*-
 &quot;&quot;&quot;Bài thực hành: mô tả, tương quan, VIF, winsorization và OLS có tương tác.
 
 Chạy từ thư mục dự án bằng: py main.py
@@ -4387,7 +4285,6 @@ def main() -&gt; None:
     bad_balance = valid[gap(valid[&quot;bsa1&quot;] + valid[&quot;bsa23&quot;], valid[&quot;bsa53&quot;]) &gt; .005]
     equity_gap_rows = int((gap(valid[&quot;bsa54&quot;] + valid[&quot;bsa78&quot;], valid[&quot;bsa53&quot;]) &gt; .005).sum())
     valid = valid.drop(bad_balance.index)
-    add_step(&quot;Bảng cân đối khớp (lệch ≤ 0,5%)&quot;, valid)
     dropped_bad_balance = len(bad_balance)
     dropped_rows = bad_balance.assign(**{&quot;Lý do loại&quot;: &quot;Bảng cân đối không khớp&quot;})[
         [&quot;ticker&quot;, &quot;year&quot;, &quot;Lý do loại&quot;, &quot;bsa53&quot;, &quot;bsa1&quot;, &quot;bsa23&quot;, &quot;bsa54&quot;, &quot;bsa78&quot;, &quot;bsa55&quot;, &quot;bsa57&quot;, &quot;isa3&quot;]]
@@ -4590,7 +4487,7 @@ def main() -&gt; None:
         {&quot;Mã biến&quot;: &quot;YDM&quot;, &quot;Khoản mục gốc&quot;: &quot;Năm tài chính&quot;, &quot;Mã nguồn&quot;: &quot;year&quot;, &quot;Báo cáo doanh nghiệp&quot;: &quot;Thông tin kỳ báo cáo&quot;, &quot;Cách đưa vào biến&quot;: &quot;Dummy 2022–2025; gốc 2021&quot;},
     ]).set_index(&quot;Mã biến&quot;)
     requirement_check = pd.DataFrame([
-        {&quot;STT&quot;: &quot;1&quot;, &quot;Yêu cầu&quot;: &quot;Chuẩn hóa lại dữ liệu&quot;, &quot;Nội dung&quot;: &quot;Kiểm tra đẳng thức kế toán, lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99&quot;, &quot;Mục báo cáo&quot;: &quot;2, 5–7&quot;},
+        {&quot;STT&quot;: &quot;1&quot;, &quot;Yêu cầu&quot;: &quot;Chuẩn hóa lại dữ liệu&quot;, &quot;Nội dung&quot;: &quot;Lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99&quot;, &quot;Mục báo cáo&quot;: &quot;2, 5–7&quot;},
         {&quot;STT&quot;: &quot;2&quot;, &quot;Yêu cầu&quot;: &quot;Hoàn thiện mô hình và cách đo biến&quot;, &quot;Nội dung&quot;: &quot;Bảng Y, X, Z, biến kiểm soát, dummy, tương tác và công thức&quot;, &quot;Mục báo cáo&quot;: &quot;4&quot;},
         {&quot;STT&quot;: &quot;3&quot;, &quot;Yêu cầu&quot;: &quot;Biến giả 0–1&quot;, &quot;Nội dung&quot;: &quot;DLI = 1 nếu LIQ ≥ 1; DLI = 0 nếu LIQ &lt; 1&quot;, &quot;Mục báo cáo&quot;: &quot;4, 15&quot;},
         {&quot;STT&quot;: &quot;4&quot;, &quot;Yêu cầu&quot;: &quot;OLS thông thường&quot;, &quot;Nội dung&quot;: &quot;Mô hình 0: Y ~ X&quot;, &quot;Mục báo cáo&quot;: &quot;12&quot;},
@@ -4669,7 +4566,6 @@ def main() -&gt; None:
     industry_distribution.to_csv(OUT / &quot;00_phan_bo_nhom_nganh_truoc_loai.csv&quot;,
                                  encoding=&quot;utf-8-sig&quot;)
     sample_flow.to_csv(OUT / &quot;00_luong_chon_mau.csv&quot;, encoding=&quot;utf-8-sig&quot;)
-    data_checks.to_csv(OUT / &quot;00_kiem_tra_du_lieu_goc.csv&quot;, encoding=&quot;utf-8-sig&quot;)
     dropped_rows.to_csv(OUT / &quot;00_dong_bi_loai_khi_kiem_tra.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)
     model_dictionary.to_csv(OUT / &quot;00_tu_dien_bien.csv&quot;, encoding=&quot;utf-8-sig&quot;)
     statement_dictionary.to_csv(OUT / &quot;00_nguon_khoan_muc_va_cach_tinh_bien.csv&quot;,
@@ -4822,7 +4718,6 @@ def main() -&gt; None:
     gallery_items = [
         (&quot;Bảng&quot;, &quot;Nhóm ngành theo mẫu biểu BCTC trước khi loại&quot;, table_html(industry_distribution, digits=0)),
         (&quot;Bảng&quot;, &quot;Luồng chọn mẫu&quot;, table_html(sample_flow, digits=0)),
-        (&quot;Bảng&quot;, &quot;Kiểm tra tính đúng đắn của dữ liệu gốc&quot;, table_html(data_checks, text=True)),
     ]
     gallery_items += [
         (&quot;Bảng&quot;, &quot;Chú thích tên biến&quot;, table_html(model_dictionary, text=True)),
@@ -4865,7 +4760,6 @@ def main() -&gt; None:
         (merged[&quot;industry_group&quot;] != NONFIN, &quot;Loại: ngân hàng, chứng khoán, bảo hiểm&quot;),
         (merged[raw_cols].isna().any(axis=1), &quot;Loại: thiếu khoản mục&quot;),
         (~(merged[&quot;bsa53&quot;] &gt; 0), &quot;Loại: tổng tài sản ≤ 0&quot;),
-        (gap(merged[&quot;bsa1&quot;] + merged[&quot;bsa23&quot;], merged[&quot;bsa53&quot;]) &gt; .005, &quot;Loại: bảng cân đối không khớp&quot;),
         (~(merged[&quot;isa3&quot;] &gt; 0), &quot;Loại: doanh thu thuần ≤ 0&quot;),
         (~(merged[&quot;bsa55&quot;] &gt; 0), &quot;Loại: nợ ngắn hạn ≤ 0&quot;),
         ((merged[&quot;bsa1&quot;] &lt; 0) | (merged[&quot;bsa57&quot;] &lt; 0), &quot;Loại: TSNH hoặc phải trả âm&quot;),
@@ -4941,8 +4835,7 @@ h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inl
 &lt;p&gt;&lt;b&gt;Vì sao các tiêu chí lọc gắn với mô hình?&lt;/b&gt; Cần doanh thu thuần dương để tính vòng quay tài sản (Y); tổng tài sản dương làm mẫu số cho Y và tỷ lệ phải trả (X); nợ ngắn hạn dương làm mẫu số cho thanh khoản (Z); tài sản ngắn hạn và phải trả người bán không âm để tỷ lệ có ý nghĩa. Chỉ giữ dòng có đủ các khoản mục cho cùng mã-năm để mọi biến trong OLS được tính trên cùng quan sát. Không bắt buộc một mã phải có đủ cả 5 năm, nhằm tránh loại bỏ toàn bộ công ty chỉ vì thiếu một kỳ.&lt;/p&gt;
 &lt;p&gt;Về lý thuyết, khoản phải trả người bán là tín dụng từ nhà cung cấp; thanh khoản hiện hành phản ánh khả năng đáp ứng nghĩa vụ ngắn hạn nên có cơ sở để điều tiết mối liên hệ đó; vòng quay tổng tài sản đại diện cho doanh thu tạo ra từ tài sản. Quy mô là biến kiểm soát vì doanh nghiệp lớn/nhỏ có thể khác nhau về hoạt động và nguồn lực.&lt;/p&gt;
 &lt;h3&gt;Luồng chọn mẫu có thể kiểm toán&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(sample_flow, digits=0)}&lt;/div&gt;
-&lt;h3&gt;Kiểm tra tính đúng đắn của dữ liệu gốc&lt;/h3&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(data_checks, text=True)}&lt;/div&gt;
-&lt;p&gt;&lt;b&gt;Kiểm tra chất lượng dữ liệu:&lt;/b&gt; mỗi mã–năm có một báo cáo năm; doanh thu thuần khớp doanh thu trừ giảm trừ, tổng tài sản khớp tài sản ngắn hạn cộng dài hạn, nợ ngắn hạn cộng nợ dài hạn khớp nợ phải trả. Có {equity_gap_rows:,} công ty–năm mà tổng tài sản lệch tổng nợ cộng vốn chủ sở hữu trên 0,5%: lỗi nằm ở khoản vốn chủ sở hữu của nguồn, khoản này không dùng trong mô hình, còn phía tài sản và nợ vẫn khớp đẳng thức kế toán nên các dòng này được giữ. Giá trị cực đoan, ví dụ công ty có tổng tài sản rất nhỏ nên vòng quay tài sản rất lớn, được xử lý bằng Winsor2 thay vì đặt thêm một ngưỡng loại tùy ý. Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.&lt;/p&gt;
+&lt;p&gt;Mẫu có {negative_equity:,} công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.&lt;/p&gt;
 &lt;p&gt;Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có &lt;b&gt;{changed:,} ô giá trị&lt;/b&gt; bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.&lt;/p&gt;
 &lt;p class=&quot;note&quot;&gt;&lt;b&gt;Giới hạn phạm vi:&lt;/b&gt; đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam, không phải nhóm vốn hóa cao nhất và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo &lt;b&gt;mẫu biểu BCTC&lt;/b&gt; để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…&lt;/p&gt;&lt;/section&gt;
 &lt;section class=&quot;card&quot;&gt;&lt;h2&gt;3. Cấu trúc bài theo yêu cầu&lt;/h2&gt;&lt;div class=&quot;scroll&quot;&gt;{table_html(requirement_check, text=True)}&lt;/div&gt;&lt;/section&gt;
