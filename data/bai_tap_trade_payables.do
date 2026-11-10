@@ -224,7 +224,7 @@ forvalues m = 1/3 {
 *==== 16. Bản chất FEM: within transformation, LSDV và biến bị loại
 * (a) Within bằng tay: trừ trung bình theo công ty rồi chạy OLS không hằng số
 foreach v in ATO TPRc LIQc SIZ {
-    capture drop w_`v'
+    capture drop w_`v' bar_`v'
     bysort firm: egen bar_`v' = mean(`v')
     gen w_`v' = `v' - bar_`v'
 }
