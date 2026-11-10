@@ -4971,7 +4971,7 @@ forvalues m = 1/3 {
     testparm mn_*
 }</code></pre></section><section class="card"><h3>Bước 16. Bản chất FEM: within transformation, LSDV và biến bị loại</h3><div class="read"><b>Bước này làm gì:</b> Hiểu bản chất FEM: tự làm within transformation, so với LSDV, và xem vì sao biến không đổi theo thời gian bị loại.</div><table class="data text stata-explain"><thead><tr><th>Lệnh</th><th>Chạy gì và vì sao</th></tr></thead><tbody><tr><td><code>bysort firm: egen bar_ = mean() / gen w_ = ... − bar_</code></td><td>Tính trung bình theo công ty rồi trừ đi: đây chính là phép biến đổi within. u_i không đổi theo thời gian nên bị triệt tiêu.</td></tr><tr><td><code>regress w_ATO w_TPRc ..., noconstant</code></td><td>OLS trên dữ liệu đã trừ trung bình cho hệ số giống hệt xtreg, fe. Hằng số bị loại vì cũng đã bị trừ thành 0.</td></tr><tr><td><code>areg ..., absorb(firm)</code></td><td>LSDV: OLS với một biến giả cho mỗi công ty, cho cùng hệ số với FEM. areg hấp thụ các biến giả nên không vượt giới hạn số biến của Stata.</td></tr><tr><td><code>xtreg ... i.nganh, fe</code></td><td>Thêm biến giả ngành vào FEM: ngành không đổi theo thời gian nên sau within bằng 0, Stata báo omitted because of collinearity.</td></tr><tr><td><code>list ... if ticker == &quot;VNM&quot;</code></td><td>Xem tận mắt giá trị gốc, trung bình công ty và giá trị sau khi trừ trung bình của một doanh nghiệp.</td></tr></tbody></table><p class="legend">Code:</p><pre class="code stata-code"><code class="language-stata">* (a) Within bằng tay: trừ trung bình theo công ty rồi chạy OLS không hằng số
 foreach v in ATO TPRc LIQc SIZ {
-    capture drop w_`v&#x27;
+    capture drop w_`v&#x27; bar_`v&#x27;
     bysort firm: egen bar_`v&#x27; = mean(`v&#x27;)
     gen w_`v&#x27; = `v&#x27; - bar_`v&#x27;
 }
