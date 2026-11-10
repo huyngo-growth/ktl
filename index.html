@@ -14,10 +14,11 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 </header>
 <nav class="tabs" role="tablist"><button type="button" role="tab" id="btn-full" aria-selected="true" onclick="showTab('full')">Báo cáo đầy đủ</button><button type="button" role="tab" id="btn-models" aria-selected="false" onclick="showTab('models')">Mô hình</button><button type="button" role="tab" id="btn-tables" aria-selected="false" onclick="showTab('tables')">Chỉ bảng và biểu đồ</button><button type="button" role="tab" id="btn-data" aria-selected="false" onclick="showTab('data')">Dữ liệu trước và sau lọc</button><button type="button" role="tab" id="btn-stata" aria-selected="false" onclick="showTab('stata')">Hướng dẫn Stata</button></nav>
 <div id="tab-full">
-<section class="card"><h2>1. Tóm tắt đề tài nghiên cứu</h2>
+<section class="card"><h2>1. Đề tài và câu hỏi nghiên cứu</h2>
 <p>Đề tài xem xét việc doanh nghiệp sử dụng <b>khoản phải trả người bán</b> — một dạng tín dụng thương mại do nhà cung cấp cho phép trả chậm — có liên hệ như thế nào với <b>hiệu quả hoạt động</b>, đo bằng vòng quay tổng tài sản. Nghiên cứu đồng thời hỏi liệu <b>thanh khoản</b> có làm mối liên hệ này thay đổi hay không.</p>
 <p>Về kinh tế, trả chậm có thể hỗ trợ vốn lưu động và duy trì hoạt động, nhưng phụ thuộc quá nhiều cũng có thể phản ánh thiếu tiền hoặc tạo áp lực thanh toán. Doanh nghiệp thanh khoản tốt có khả năng quản lý nghĩa vụ với nhà cung cấp khác doanh nghiệp thiếu thanh khoản; đó là cơ sở của biến tương tác. Mục tiêu của bài thực hành là đo <b>mối liên hệ có điều kiện</b> bằng OLS, không khẳng định khoản phải trả là nguyên nhân gây thay đổi hiệu quả.</p></section>
-<section class="card"><h2>2. Mẫu và cách xử lý</h2><p>Đã ghép báo cáo kết quả kinh doanh với bảng cân đối theo mã và năm. Sau tiêu chí hợp lệ còn <b>7,015 quan sát công ty–năm</b> thuộc <b>1,454 mã</b>; số quan sát theo năm: 2021: 1,388, 2022: 1,407, 2023: 1,408, 2024: 1,406, 2025: 1,406. Mẫu không cân bằng.</p>
+
+<section class="card"><h2>2. Dữ liệu bảng và chọn mẫu</h2><p>Đã ghép báo cáo kết quả kinh doanh với bảng cân đối theo mã và năm. Sau tiêu chí hợp lệ còn <b>7,015 quan sát công ty–năm</b> thuộc <b>1,454 mã</b>; số quan sát theo năm: 2021: 1,388, 2022: 1,407, 2023: 1,408, 2024: 1,406, 2025: 1,406. Mẫu không cân bằng.</p>
 <p><b>Vì sao chọn các công ty này?</b> Phạm vi tải là toàn bộ mã có trong dữ liệu thị trường HOSE, HNX và UPCoM. Doanh nghiệp niêm yết được chọn vì báo cáo tài chính năm công khai giúp lấy cùng các khoản mục giữa nhiều công ty và nhiều kỳ. Một dòng là một công ty trong một năm; cách tổ chức này tạo dữ liệu bảng để so sánh khác biệt giữa công ty và thay đổi theo thời gian.</p>
 <p><b>Vì sao chọn 5 năm 2021–2025?</b> Năm năm đủ dài để mỗi doanh nghiệp có nhiều quan sát và để mô hình kiểm soát các cú sốc chung theo năm, nhờ đó kết quả không phụ thuộc vào riêng một kỳ. Đồng thời đây là giai đoạn gần nhất, giúp dữ liệu còn phù hợp với bối cảnh hiện tại và hạn chế mất mẫu hoặc thay đổi quá lớn về cấu trúc doanh nghiệp/chế độ báo cáo khi kéo kỳ nghiên cứu quá xa. Khoảng thời gian này cân bằng giữa <i>tính cập nhật</i>, <i>độ lớn mẫu</i> và <i>khả năng xử lý bài tập</i>; không có nghĩa 5 năm luôn là lựa chọn tối ưu cho mọi nghiên cứu.</p>
 <p><b>Vì sao loại công ty tài chính?</b> Ngân hàng, chứng khoán và bảo hiểm có mẫu báo cáo, nguồn tạo doanh thu, cấu trúc tài sản–nợ và quy định thanh khoản khác doanh nghiệp sản xuất, thương mại, dịch vụ. Ví dụ tiền gửi khách hàng của ngân hàng không tương đương nợ nhà cung cấp; “tài sản ngắn hạn/nợ ngắn hạn” và vòng quay tài sản vì thế không có cùng nội hàm. Nếu gộp chung, hệ số có thể phản ánh khác biệt mô hình kinh doanh giữa hai nhóm thay vì quan hệ giữa tín dụng thương mại và hiệu quả. Chương trình nhận diện ba nhóm này từ các mẫu cột KQKD riêng <code>isb</code>, <code>iss</code>, <code>isi</code> của nguồn và loại trước khi tạo tỷ số.</p>
@@ -326,97 +327,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <p>Mẫu có 248 công ty–năm có nợ ngắn hạn lớn hơn tổng tài sản, tức vốn chủ sở hữu âm; các quan sát này được giữ vì là doanh nghiệp khó khăn thật, không phải lỗi dữ liệu. Vòng quay tài sản dùng tổng tài sản cuối kỳ thay vì bình quân đầu–cuối kỳ để không mất năm 2021.</p>
 <p>Winsor2 p1/p99 được tính riêng cho từng biến liên tục. Có <b>568 ô giá trị</b> bị chặn về ngưỡng (một quan sát có thể bị chặn ở nhiều biến); không xóa dòng nên Obs trước và sau giữ nguyên.</p>
 <p class="note"><b>Giới hạn phạm vi:</b> đây là mẫu rộng của các công ty phi tài chính có đủ dữ liệu, không phải mẫu ngẫu nhiên đại diện cho mọi doanh nghiệp Việt Nam và không phải mẫu gốc của bài báo. Nhóm ngành ở đây chỉ là phân loại rộng theo <b>mẫu biểu BCTC</b> để loại ba nhóm tài chính; chưa phải phân ngành ICB/GICS chi tiết cho từng ngành sản xuất, bất động sản, công nghệ…</p></section>
-<section class="card"><h2>3. Cấu trúc bài theo yêu cầu</h2><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Yêu cầu</th>
-      <th>Nội dung</th>
-      <th>Mục báo cáo</th>
-    </tr>
-    <tr>
-      <th>STT</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1</th>
-      <td>Chuẩn hóa lại dữ liệu</td>
-      <td>Lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99</td>
-      <td>2, 5–7</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Hoàn thiện mô hình và cách đo biến</td>
-      <td>Bảng Y, X, Z, biến kiểm soát, dummy, tương tác và công thức</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>Biến giả 0–1</td>
-      <td>DLI = 1 nếu LIQ ≥ 1; DLI = 0 nếu LIQ &lt; 1</td>
-      <td>4, 15</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>OLS thông thường</td>
-      <td>Mô hình 0: Y ~ X</td>
-      <td>12</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Mô hình cơ sở chưa tương tác</td>
-      <td>Mô hình 1: TPR + LIQ + SIZ + biến giả năm</td>
-      <td>13</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Mô hình có tương tác</td>
-      <td>Mô hình 2: TPR × LIQ; mô hình 3: TPR × DLI</td>
-      <td>14–17</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Cơ sở kinh tế cho tương tác</td>
-      <td>Thanh khoản quyết định khả năng chịu áp lực nghĩa vụ với nhà cung cấp</td>
-      <td>1, 4</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Kiểm tra độ bền</td>
-      <td>Ước lượng lại với hiệu ứng cố định công ty và với biến giải thích trễ 1 năm</td>
-      <td>19</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>Đánh giá mô hình</td>
-      <td>Kỳ vọng dấu, kiểm tra giả định A1–A5, tính chất BLUE</td>
-      <td>20</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>Dữ liệu bảng</td>
-      <td>Số doanh nghiệp, số năm, số quan sát, cân bằng hay không và lý do</td>
-      <td>2</td>
-    </tr>
-    <tr>
-      <th>11</th>
-      <td>Pooled OLS, FEM, REM</td>
-      <td>Bảng hồi quy ba cách, kiểm định F, Breusch–Pagan LM, Hausman, Mundlak</td>
-      <td>21</td>
-    </tr>
-    <tr>
-      <th>12</th>
-      <td>Bản chất FEM</td>
-      <td>Within transformation, ví dụ số, vì sao biến bị loại, within = LSDV</td>
-      <td>22</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card"><h2>4. Bảng chú thích tên biến rút gọn</h2><p>Tất cả các bảng kết quả phía dưới dùng thống nhất các mã trong bảng này.</p><div class="scroll"><table class="dataframe data text">
+
+<section class="card"><h2>3. Biến và mô hình nghiên cứu</h2><p>Tất cả các bảng kết quả phía dưới dùng thống nhất các mã trong bảng này.</p><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -645,8 +557,150 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div>
-<p>Sai số chuẩn được gom cụm theo mã cổ phiếu để cho phép sai số của cùng doanh nghiệp liên hệ qua các năm. Các mô hình 1–3 là pooled OLS có biến giả năm; chưa kiểm soát đặc điểm cố hữu của từng doanh nghiệp (ngành, mô hình kinh doanh). Mục 19 ước lượng lại bằng hiệu ứng cố định công ty để kiểm tra độ bền. Cả hai cách đều không chứng minh quan hệ nhân quả.</p></section>
-<section class="card"><h2>5. Thống kê mô tả trước winsor hóa</h2><div class="scroll"><table class="dataframe data">
+<p>Sai số chuẩn được gom cụm theo mã cổ phiếu để cho phép sai số của cùng doanh nghiệp liên hệ qua các năm. Các mô hình 1–3 là pooled OLS có biến giả năm; chưa kiểm soát đặc điểm cố hữu của từng doanh nghiệp (ngành, mô hình kinh doanh). Mục 20 ước lượng bằng FEM, REM và chọn mô hình; mục 21 ước lượng lại bằng hiệu ứng cố định công ty để kiểm tra độ bền. Cả hai cách đều không chứng minh quan hệ nhân quả.</p></section>
+
+<section class="card"><h2>4. Phương pháp OLS và cách đọc bảng hồi quy</h2>
+<p><b>OLS (Ordinary Least Squares – bình phương nhỏ nhất thông thường)</b> là phương pháp tìm đường thẳng, hoặc mặt phẳng khi có nhiều biến, mô tả tốt nhất quan hệ giữa biến phụ thuộc Y và các biến giải thích X. "Tốt nhất" nghĩa là tổng bình phương phần dư nhỏ nhất, trong đó phần dư là chênh lệch giữa ATO thực tế và ATO mô hình dự báo.</p><p><b>PRF và SRF.</b> Hồi quy tổng thể (PRF) mô tả quan hệ thật trong toàn bộ tổng thể với các hệ số α chưa biết. Ta chỉ có mẫu, nên ước lượng hồi quy mẫu (SRF) để có α̂ và mong muốn E(α̂) = α. Trong mô hình, Y là biến phụ thuộc, α<sub>0</sub> là hệ số chặn, các X gồm biến độc lập chính (gắn với mục tiêu nghiên cứu, ở đây là TPR và tương tác với LIQ) và biến kiểm soát (gắn với việc giải thích Y, ở đây là SIZ và hiệu ứng năm). α<sub>1</sub> là <i>tác động riêng biệt</i> (isolated effect) của X<sub>1</sub> lên Y khi các yếu tố khác không đổi (ceteris paribus). Nếu một phần của X<sub>1</sub> nằm trong sai số ε thì Cov(ε, X<sub>1</sub>) ≠ 0: đó là hiện tượng nội sinh (endogeneity), khi đó α̂<sub>1</sub> không còn là tác động riêng biệt.</p>
+<div class="formula">Y<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·X<sub>1,i,t</sub> + α<sub>2</sub>·X<sub>2,i,t</sub> + … + α<sub>k</sub>·X<sub>k,i,t</sub> + ε<sub>i,t</sub> &nbsp;⟶&nbsp; chọn α̂ sao cho Σ ε̂<sup>2</sup><sub>i,t</sub> nhỏ nhất</div>
+<p><b>Cách đọc từng cột trong bảng hồi quy:</b></p>
+<ul>
+<li><b>Hệ số OLS (α):</b> khi biến đó tăng 1 đơn vị và các biến khác giữ nguyên, ATO trung bình thay đổi α lần. TPR là tỷ lệ (0,10 = 10%), nên tăng 1 đơn vị nghĩa là tăng 100 điểm phần trăm; dễ đọc hơn là chia α cho 100 để có tác động của 1 điểm %.</li>
+<li><b>SE gom cụm:</b> sai số chuẩn, đo độ không chắc chắn của α. Gom cụm theo mã vì cùng một công ty xuất hiện nhiều năm và sai số của nó có thể liên quan với nhau.</li>
+<li><b>t/z:</b> α chia SE. Trị tuyệt đối lớn hơn khoảng 1,96 tương ứng p-value nhỏ hơn 0,05.</li>
+<li><b>p-value:</b> nếu thực tế α = 0, xác suất thu được ước lượng xa 0 như vậy là bao nhiêu. Quy tắc: so p-value với mức ý nghĩa α = 1%, 5% hoặc 10%; p-value &lt; α thì bác bỏ H<sub>0</sub>: hệ số = 0, tức hệ số có ý nghĩa thống kê. p-value không phải xác suất giả thuyết đúng.</li>
+<li><b>CI 95%:</b> khoảng tin cậy 95% của α. Nếu khoảng không chứa 0 thì hệ số có ý nghĩa ở mức 5%.</li>
+<li><b>Hằng số (CON):</b> ATO dự báo khi các biến giải thích bằng 0; vì TPR và LIQ đã trừ trung bình nên ở đây là ATO tại mức TPR, LIQ trung bình, chỉ dùng để tính dự báo.</li>
+<li><b>Y22–Y25:</b> chênh lệch ATO của từng năm so với năm gốc 2021, sau khi kiểm soát các biến khác.</li>
+<li><b>R² và R² hiệu chỉnh:</b> tỷ lệ khác biệt về ATO mà mô hình giải thích được; R² hiệu chỉnh trừ bớt phần tăng do thêm biến.</li>
+</ul>
+<p><b>Giả định quan trọng nhất</b> để đọc α là quan hệ nhân quả: sai số ε không tương quan với các biến X. Điều này khó đúng với dữ liệu doanh nghiệp vì còn nhiều yếu tố bị bỏ sót như ngành hay năng lực quản lý, nên bài này chỉ diễn giải α là <i>mối liên hệ</i>. Các giả định khác gồm quan hệ tuyến tính và không có đa cộng tuyến hoàn hảo (kiểm tra bằng VIF ở mục 12); phương sai sai số không đều được xử lý bằng sai số chuẩn gom cụm. Mục 22 đánh giá lần lượt các giả định A1–A5.</p></section>
+
+<section class="card"><h2>5. Dữ liệu bảng: bản chất FEM và phép biến đổi within</h2>
+<p><b>Vấn đề:</b> mỗi doanh nghiệp có những đặc điểm riêng gần như không đổi theo thời gian (ngành, mô hình kinh doanh, năng lực quản lý…), gọi chung là u<sub>i</sub>. Chúng tác động lên ATO nhưng không quan sát được nên nằm trong sai số. Nếu u<sub>i</sub> tương quan với TPR thì Cov(X, ε) ≠ 0, Pooled OLS bị chệch (nội sinh do bỏ sót biến).</p>
+<p><b>Cách FEM xử lý – phép biến đổi within:</b> lấy trung bình theo thời gian của từng doanh nghiệp rồi trừ đi.</p>
+<div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPR<sub>i,t</sub> + u<sub>i</sub> + ε<sub>i,t</sub> &nbsp;⟶&nbsp; ATO̅<sub>i</sub> = α<sub>1</sub>·TPR̅<sub>i</sub> + u<sub>i</sub> + ε̅<sub>i</sub></div>
+<div class="formula">(ATO<sub>i,t</sub> − ATO̅<sub>i</sub>) = α<sub>1</sub>·(TPR<sub>i,t</sub> − TPR̅<sub>i</sub>) + (ε<sub>i,t</sub> − ε̅<sub>i</sub>) &nbsp;&nbsp; vì u<sub>i</sub> − u<sub>i</sub> = 0</div>
+<p>u<sub>i</sub> không đổi theo thời gian nên trung bình của nó bằng chính nó, và bị triệt tiêu khi trừ. Sau đó chạy OLS trên dữ liệu đã trừ trung bình. Hệ số α<sub>1</sub> của FEM vì vậy chỉ đo: <i>khi chính doanh nghiệp đó có TPR cao hơn mức bình thường của nó, ATO của nó cao hơn mức bình thường bao nhiêu</i>. Đây là biến động trong cùng doanh nghiệp (within), không so sánh giữa các doanh nghiệp.</p>
+<h3>Ví dụ số: VNM (Thực phẩm và đồ uống)</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ATO</th>
+      <th>ATO trung bình công ty</th>
+      <th>ATO − trung bình</th>
+      <th>TPR</th>
+      <th>TPR trung bình công ty</th>
+      <th>TPR − trung bình</th>
+      <th>Ngành (dummy)</th>
+      <th>Ngành − trung bình</th>
+    </tr>
+    <tr>
+      <th>Năm</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021</th>
+      <td>1.1423</td>
+      <td>1.1682</td>
+      <td>-0.0260</td>
+      <td>0.0790</td>
+      <td>0.0767</td>
+      <td>0.0023</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2022</th>
+      <td>1.2367</td>
+      <td>1.1682</td>
+      <td>0.0684</td>
+      <td>0.0884</td>
+      <td>0.0767</td>
+      <td>0.0116</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2023</th>
+      <td>1.1461</td>
+      <td>1.1682</td>
+      <td>-0.0221</td>
+      <td>0.0723</td>
+      <td>0.0767</td>
+      <td>-0.0045</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2024</th>
+      <td>1.1223</td>
+      <td>1.1682</td>
+      <td>-0.0459</td>
+      <td>0.0704</td>
+      <td>0.0767</td>
+      <td>-0.0063</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2025</th>
+      <td>1.1938</td>
+      <td>1.1682</td>
+      <td>0.0256</td>
+      <td>0.0736</td>
+      <td>0.0767</td>
+      <td>-0.0031</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+  </tbody>
+</table></div>
+<p class="legend">FEM dùng hai cột "− trung bình". Cột ngành của VNM luôn bằng 1 nên sau khi trừ trung bình chỉ còn 0.</p>
+<p><b>Vì sao một số biến bị loại khỏi FEM:</b> biến không đổi theo thời gian trong mỗi doanh nghiệp (ngành, sàn niêm yết, năm thành lập…) sau khi trừ trung bình đều bằng 0 ở mọi quan sát. Một cột toàn số 0 không có biến động nên không ước lượng được hệ số, và trùng hoàn toàn với hiệu ứng cố định (đa cộng tuyến hoàn hảo). Stata báo các biến này "omitted because of collinearity". Trong dữ liệu bài, giá trị tuyệt đối lớn nhất của biến giả ngành sau biến đổi within là 0. Vì cùng lý do, doanh nghiệp chỉ có 1 năm không đóng góp vào ước lượng (FEM còn 6,997 quan sát), và hằng số α<sub>0</sub> bị hấp thụ vào u<sub>i</sub>.</p>
+<p><b>Within và LSDV cho cùng kết quả:</b> chạy OLS với một biến giả cho từng doanh nghiệp (LSDV) cho hệ số giống hệt phép biến đổi within. Within tiện hơn vì không phải ước lượng hàng nghìn hệ số biến giả.</p>
+<div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Within (FEM)</th>
+      <th>LSDV (OLS + biến giả công ty)</th>
+    </tr>
+    <tr>
+      <th>Biến</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>0.7731</td>
+      <td>0.7731</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>-0.0070</td>
+      <td>-0.0070</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.2844</td>
+      <td>-0.2844</td>
+    </tr>
+  </tbody>
+</table></div>
+<p><b>Cách đọc kết quả FEM:</b> hệ số TPR = 0.773 ở mô hình 1 nghĩa là trong cùng một doanh nghiệp, năm nào tỷ lệ phải trả người bán cao hơn 1 điểm % so với mức bình thường của chính nó thì vòng quay tài sản cao hơn khoảng 0.0077 lần. R² within cho biết mô hình giải thích được bao nhiêu biến động <i>trong</i> doanh nghiệp, nên thường thấp hơn R² của Pooled OLS. Đổi lại, hệ số FEM không bị chệch do các đặc điểm cố định của doanh nghiệp, kể cả những đặc điểm không đo được.</p></section>
+
+<section class="card"><h2>6. Thống kê mô tả trước winsor hóa</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -712,7 +766,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><div class="read"><b>Ý nghĩa kết quả:</b> ATO có trung bình 1.14 lần nhưng trung vị chỉ 0.77 và Max tới 185.7: trung bình bị kéo lên bởi một số ít công ty có vòng quay rất cao (Skewness 49.3). LIQ cũng vậy: Max 297 lần trong khi trung vị 1.53. Trung vị TPR là 6.4%, tức một nửa số công ty–năm có phải trả người bán dưới 6.4% tổng tài sản. Các đuôi dài này là lý do cần winsor hóa trước khi hồi quy.</div></section>
-<section class="card"><h2>6. Winsor2 (1;99) nghĩa là gì?</h2>
+
+<section class="card"><h2>7. Winsor2 (1;99) nghĩa là gì?</h2>
 <p><b>Winsor2 (1;99)</b> nghĩa là xử lý hai đuôi của <b>từng biến liên tục</b> theo phân vị 1% và 99%:</p>
 <ul><li><b>p1:</b> ngưỡng mà khoảng 1% giá trị nằm thấp hơn.</li><li><b>p99:</b> ngưỡng mà khoảng 1% giá trị nằm cao hơn.</li><li>Giá trị thấp hơn p1 được thay bằng đúng p1.</li><li>Giá trị cao hơn p99 được thay bằng đúng p99.</li><li>98% giá trị nằm giữa hai ngưỡng được giữ nguyên.</li></ul>
 <div class="formula">x<sup>w</sup> = p<sub>1</sub> nếu x &lt; p<sub>1</sub>; &nbsp; x<sup>w</sup> = x nếu p<sub>1</sub> ≤ x ≤ p<sub>99</sub>; &nbsp; x<sup>w</sup> = p<sub>99</sub> nếu x &gt; p<sub>99</sub></div>
@@ -773,7 +828,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><div class="read"><b>Ý nghĩa kết quả:</b> Mỗi biến có khoảng 71 giá trị bị nâng lên p1 và 71 giá trị bị hạ xuống p99, đúng khoảng 1% mỗi đuôi của 7,015 quan sát. Ví dụ mọi công ty có ATO trên 8.13 lần đều được đặt bằng 8.13.</div></section>
-<section class="card"><h2>7. Thống kê mô tả sau winsor hóa</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>8. Thống kê mô tả sau winsor hóa</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -873,7 +929,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <polygon points="620,616 629,625 620,634 611,625" fill="#b44c4c"/><text x="638" y="630" font-family="Arial" font-size="13" fill="#263746">Trung bình</text>
 <text x="500.0" y="657" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.</text>
 </svg><p>Biểu đồ dùng thang đo riêng cho từng dòng. Đường mảnh là Min–Max, đoạn xanh là p25–p75, vòng tròn là trung vị và hình thoi đỏ là trung bình.</p><div class="read"><b>Ý nghĩa kết quả:</b> Sau winsor hóa, độ lệch chuẩn của ATO giảm từ 2.65 xuống 1.23, của LIQ từ 7.36 xuống 3.83; trung vị, p25 và p75 giữ nguyên. Winsor chỉ thu hẹp hai đuôi, không làm thay đổi phần giữa của dữ liệu.</div></section>
-<section class="card"><h2>8. Skewness, Kurtosis, CV và kiểm định Jarque–Bera</h2>
+
+<section class="card"><h2>9. Skewness, Kurtosis, CV và kiểm định Jarque–Bera</h2>
 <div class="defs"><p><b>Định nghĩa.</b> Với n quan sát x<sub>1</sub>, …, x<sub>n</sub> có trung bình x̄, mô-men trung tâm bậc k là m<sub>k</sub> = (1/n)·Σ(x<sub>i</sub> − x̄)<sup>k</sup>.</p><ul>
 <li><b>Skewness (độ lệch)</b>: S = m<sub>3</sub> / m<sub>2</sub><sup>3/2</sup>, đo tính đối xứng của phân phối. S = 0: đối xứng như phân phối chuẩn. S &gt; 0: đuôi phải dài, một số giá trị rất lớn kéo trung bình lên cao hơn trung vị. S &lt; 0: đuôi trái dài. Quy ước thường dùng: |S| &lt; 0,5 gần đối xứng; 0,5–1 lệch vừa; trên 1 lệch mạnh.</li>
 <li><b>Kurtosis (độ nhọn, dạng Pearson)</b>: K = m<sub>4</sub> / m<sub>2</sub><sup>2</sup>, đo độ dày của hai đuôi. Phân phối chuẩn có K = 3. K &gt; 3 (leptokurtic): đuôi dày, nhiều giá trị cực đoan hơn phân phối chuẩn. K &lt; 3 (platykurtic): đuôi mỏng. Một số phần mềm báo excess kurtosis = K − 3, khi đó mốc so sánh là 0.</li>
@@ -964,7 +1021,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><p><b>RE2</b> là phần dư mô hình tương tác liên tục; <b>RE3</b> là phần dư mô hình tương tác dummy. <b>Kurtosis:</b> phân phối chuẩn có giá trị 3. <b>CV:</b> SD chia trị tuyệt đối của Mean, dùng để xem độ biến động tương đối; CV không có ý nghĩa cho phần dư vì trung bình phần dư gần 0. <b>Jarque–Bera:</b> H0 là phân phối chuẩn; p-value &lt; 0,05 dẫn đến bác bỏ H0.</p><p class="note">Với mẫu 7,015 quan sát, JB rất nhạy nên một sai lệch nhỏ cũng có thể cho p-value gần 0. OLS không yêu cầu từng X hoặc Y phải phân phối chuẩn. Phân phối phần dư liên quan trực tiếp hơn đến suy luận mẫu nhỏ; ở đây báo cáo dùng sai số chuẩn gom cụm và xấp xỉ mẫu lớn.</p><div class="read"><b>Ý nghĩa kết quả:</b> Cả bốn biến và phần dư đều bác bỏ giả thuyết phân phối chuẩn (p-value gần 0). Kurtosis của ATO là 16.3, cao hơn nhiều mức 3 của phân phối chuẩn, tức đuôi dày. Với mẫu lớn và sai số chuẩn gom cụm, điều này không làm hệ số OLS bị chệch; nó chỉ nhắc rằng p-value là xấp xỉ và cần đọc thận trọng.</div></section>
-<section class="card"><h2>9. Trung bình các biến chính theo năm</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
+
+<section class="card"><h2>10. Trung bình các biến chính theo năm</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" role="img" aria-labelledby="title desc">
 <title id="title">Tỷ lệ phải trả và hiệu quả hoạt động trung bình theo năm</title>
 <desc id="desc">Biểu đồ hai trục từ năm 2021 đến 2025, đường xanh là phải trả người bán trên tổng tài sản, đường đỏ là vòng quay tổng tài sản.</desc>
 <rect width="100%" height="100%" fill="#ffffff"/>
@@ -1011,7 +1069,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="285" y1="548" x2="330" y2="548" stroke="#245b86" stroke-width="2.2"/><circle cx="307" cy="548" r="5" fill="#245b86"/><text x="340" y="553" font-family="Arial" font-size="14" fill="#263746">Phải trả / tổng tài sản</text>
 <line x1="575" y1="548" x2="620" y2="548" stroke="#b44c4c" stroke-width="2.2"/><polygon points="597,541 604,548 597,555 590,548" fill="#b44c4c"/><text x="630" y="553" font-family="Arial" font-size="14" fill="#263746">Hiệu quả hoạt động</text>
 </svg><p>Đây là dạng hai trục gần với hình Stata tham khảo. Hai đường có đơn vị khác nhau nên chỉ dùng để xem xu hướng theo năm, không so sánh trực tiếp độ cao của hai đường.</p><div class="read"><b>Ý nghĩa kết quả:</b> TPR trung bình theo năm: 2021: 10.9%, 2022: 11.2%, 2023: 10.6%, 2024: 10.7%, 2025: 10.2%. ATO trung bình: 2021: 1.04, 2022: 1.14, 2023: 1.05, 2024: 1.09, 2025: 1.08. Năm có TPR cao nhất là 2022, năm có ATO cao nhất là 2022. Biến động theo năm nhỏ so với khác biệt giữa các công ty; biến giả năm trong mô hình dùng để hấp thụ các biến động chung này.</div></section>
-<section class="card"><h2>10. Ma trận tương quan Pearson</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>11. Ma trận tương quan Pearson</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1320,7 +1379,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text x="838" y="706.0" font-family="Arial" font-size="12" fill="#202b3c">−1.00</text>
 <text x="460.0" y="796" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1</text>
 </svg><p>Tên được rút gọn còn ba chữ: <b>ATO</b> hiệu quả, <b>TPR</b> tỷ lệ phải trả, <b>LIQ</b> thanh khoản, <b>SIZ</b> quy mô, <b>DLI</b> dummy thanh khoản, <b>TLI</b> tương tác TPR×LIQ và <b>TLD</b> tương tác TPR×DLI. Corr nằm từ −1 đến +1 và chỉ đo quan hệ tuyến tính cặp đôi. Tương quan cao không chứng minh quan hệ nhân quả.</p><div class="read"><b>Ý nghĩa kết quả:</b> ATO tương quan dương với TPR (r = 0.26), âm nhẹ với LIQ (r = -0.13) và SIZ (r = -0.15). Tương quan giữa các biến giải thích chính TPR, LIQ, SIZ cao nhất chỉ 0.27, nên mô hình cơ sở ít bị đa cộng tuyến. TLI tương quan -0.80 với LIQ và TLD tương quan 0.82 với TPR là do hai biến tương tác được tạo từ chính các biến này.</div></section>
-<section class="card"><h2>11. VIF</h2><h3>Mô hình 1 — không có tương tác</h3><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>12. VIF</h2><h3>Mô hình 1 — không có tương tác</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1421,22 +1481,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><p>VIF tính từ các biến giải thích chính, không tính biến giả năm. Quy tắc 5 hoặc 10 chỉ là mốc tham khảo. VIF lớn nhất của mô hình tương tác là 11.69, vượt mốc tham khảo 10. Đây là dấu hiệu đa cộng tuyến giữa thanh khoản và tích số; hệ số có thể nhạy với đặc tả mô hình. Không nên xóa biến tương tác chỉ để hạ VIF, vì nó là biến cốt lõi của giả thuyết; cần báo cáo giới hạn và kiểm tra độ bền. VIF lớn nhất của mô hình dummy là 3.26.</p><div class="read"><b>Ý nghĩa kết quả:</b> Mô hình 1 có VIF lớn nhất 1.12, dưới mốc 5 nên không đáng lo. Ở mô hình 2, LIQ và TLI có VIF khoảng 11.7: sai số chuẩn của hai hệ số này bị phóng to khoảng √VIF ≈ 3.4 lần so với khi không có đa cộng tuyến, nên hệ số LIQ ở mô hình 2 kém ổn định. Mô hình 3 có VIF lớn nhất 3.26, chấp nhận được.</div></section>
-<section class="card"><h2>Hướng dẫn: OLS là gì và cách đọc bảng hồi quy</h2>
-<p><b>OLS (Ordinary Least Squares – bình phương nhỏ nhất thông thường)</b> là phương pháp tìm đường thẳng, hoặc mặt phẳng khi có nhiều biến, mô tả tốt nhất quan hệ giữa biến phụ thuộc Y và các biến giải thích X. "Tốt nhất" nghĩa là tổng bình phương phần dư nhỏ nhất, trong đó phần dư là chênh lệch giữa ATO thực tế và ATO mô hình dự báo.</p><p><b>PRF và SRF.</b> Hồi quy tổng thể (PRF) mô tả quan hệ thật trong toàn bộ tổng thể với các hệ số α chưa biết. Ta chỉ có mẫu, nên ước lượng hồi quy mẫu (SRF) để có α̂ và mong muốn E(α̂) = α. Trong mô hình, Y là biến phụ thuộc, α<sub>0</sub> là hệ số chặn, các X gồm biến độc lập chính (gắn với mục tiêu nghiên cứu, ở đây là TPR và tương tác với LIQ) và biến kiểm soát (gắn với việc giải thích Y, ở đây là SIZ và hiệu ứng năm). α<sub>1</sub> là <i>tác động riêng biệt</i> (isolated effect) của X<sub>1</sub> lên Y khi các yếu tố khác không đổi (ceteris paribus). Nếu một phần của X<sub>1</sub> nằm trong sai số ε thì Cov(ε, X<sub>1</sub>) ≠ 0: đó là hiện tượng nội sinh (endogeneity), khi đó α̂<sub>1</sub> không còn là tác động riêng biệt.</p>
-<div class="formula">Y<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·X<sub>1,i,t</sub> + α<sub>2</sub>·X<sub>2,i,t</sub> + … + α<sub>k</sub>·X<sub>k,i,t</sub> + ε<sub>i,t</sub> &nbsp;⟶&nbsp; chọn α̂ sao cho Σ ε̂<sup>2</sup><sub>i,t</sub> nhỏ nhất</div>
-<p><b>Cách đọc từng cột trong bảng hồi quy:</b></p>
-<ul>
-<li><b>Hệ số OLS (α):</b> khi biến đó tăng 1 đơn vị và các biến khác giữ nguyên, ATO trung bình thay đổi α lần. TPR là tỷ lệ (0,10 = 10%), nên tăng 1 đơn vị nghĩa là tăng 100 điểm phần trăm; dễ đọc hơn là chia α cho 100 để có tác động của 1 điểm %.</li>
-<li><b>SE gom cụm:</b> sai số chuẩn, đo độ không chắc chắn của α. Gom cụm theo mã vì cùng một công ty xuất hiện nhiều năm và sai số của nó có thể liên quan với nhau.</li>
-<li><b>t/z:</b> α chia SE. Trị tuyệt đối lớn hơn khoảng 1,96 tương ứng p-value nhỏ hơn 0,05.</li>
-<li><b>p-value:</b> nếu thực tế α = 0, xác suất thu được ước lượng xa 0 như vậy là bao nhiêu. Quy tắc: so p-value với mức ý nghĩa α = 1%, 5% hoặc 10%; p-value &lt; α thì bác bỏ H<sub>0</sub>: hệ số = 0, tức hệ số có ý nghĩa thống kê. p-value không phải xác suất giả thuyết đúng.</li>
-<li><b>CI 95%:</b> khoảng tin cậy 95% của α. Nếu khoảng không chứa 0 thì hệ số có ý nghĩa ở mức 5%.</li>
-<li><b>Hằng số (CON):</b> ATO dự báo khi các biến giải thích bằng 0; vì TPR và LIQ đã trừ trung bình nên ở đây là ATO tại mức TPR, LIQ trung bình, chỉ dùng để tính dự báo.</li>
-<li><b>Y22–Y25:</b> chênh lệch ATO của từng năm so với năm gốc 2021, sau khi kiểm soát các biến khác.</li>
-<li><b>R² và R² hiệu chỉnh:</b> tỷ lệ khác biệt về ATO mà mô hình giải thích được; R² hiệu chỉnh trừ bớt phần tăng do thêm biến.</li>
-</ul>
-<p><b>Giả định quan trọng nhất</b> để đọc α là quan hệ nhân quả: sai số ε không tương quan với các biến X. Điều này khó đúng với dữ liệu doanh nghiệp vì còn nhiều yếu tố bị bỏ sót như ngành hay năng lực quản lý, nên bài này chỉ diễn giải α là <i>mối liên hệ</i>. Các giả định khác gồm quan hệ tuyến tính và không có đa cộng tuyến hoàn hảo (kiểm tra bằng VIF ở mục 11); phương sai sai số không đều được xử lý bằng sai số chuẩn gom cụm. Mục 20 đánh giá lần lượt các giả định A1–A5.</p></section>
-<section class="card"><h2>12. OLS thông thường: chỉ Y và X</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>13. Pooled OLS – Mô hình 0: chỉ Y và X</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1469,7 +1515,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><p>Mô hình này cho thấy quan hệ thô; chưa đưa thanh khoản, quy mô và năm vào nên không dùng làm kết luận cuối.</p><div class="read"><b>Ý nghĩa kết quả:</b> Hệ số TPR = 2.5935 (có ý nghĩa thống kê ở mức 1%). Vì TPR là tỷ lệ, nên đọc theo 1 điểm phần trăm: TPR cao hơn 0,01 gắn với ATO cao hơn khoảng 0.026 lần; công ty có TPR cao hơn 10 điểm % có ATO cao hơn khoảng 0.26 lần. R² = 0.070: riêng TPR giải thích khoảng 7.0% khác biệt về ATO. Hằng số 1.079 là ATO trung bình tại TPR trung bình (vì TPR đã trừ trung bình).</div></section>
-<section class="card"><h2>13. Mô hình cơ sở chưa có tương tác</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>14. Pooled OLS – Mô hình 1: mô hình cơ sở</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1556,7 +1603,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><div class="read"><b>Ý nghĩa kết quả:</b> Khi giữ LIQ, SIZ và năm không đổi, 1 điểm % TPR gắn với ATO cao hơn 0.022 lần (có ý nghĩa thống kê ở mức 1%); hệ số giảm từ 2.59 ở mô hình 0 xuống 2.20, tức một phần quan hệ thô đến từ thanh khoản và quy mô. LIQ tăng 1 lần gắn với ATO thay đổi -0.028 (có ý nghĩa thống kê ở mức 1%). SIZ tăng 1 đơn vị (tổng tài sản lớn gấp khoảng 2,7 lần) gắn với ATO thay đổi -0.099 (có ý nghĩa thống kê ở mức 1%): công ty lớn hơn có vòng quay thấp hơn. Y22 = 0.103 nghĩa là năm 2022 ATO cao hơn năm gốc 2021 khoảng 0.103 lần sau khi kiểm soát các biến khác (có ý nghĩa thống kê ở mức 1%).</div></section>
-<section class="card"><h2>14. Mô hình có tương tác liên tục</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>15. Pooled OLS – Mô hình 2: tương tác liên tục</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1652,7 +1700,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><div class="read"><b>Ý nghĩa kết quả:</b> Tác động biên của TPR = α1 + α4 × (LIQ − trung bình). Với α1 = 5.034 và α4 = 1.620: tại LIQ p25 (1.10), 1 điểm % TPR gắn với ATO cao hơn 0.024 lần; tại p50 (1.53) là 0.031; tại p75 (2.67) là 0.050. Hệ số TLI dương và có ý nghĩa thống kê ở mức 1%: trong pooled OLS, công ty thanh khoản cao hơn có quan hệ TPR–ATO dốc hơn. Lưu ý LIQ trung bình mẫu khá cao do đuôi phải, nên α1 là độ dốc tại mức LIQ cao hơn trung vị.</div></section>
-<section class="card"><h2>15. Mô hình có tương tác với dummy</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>16. Pooled OLS – Mô hình 3: tương tác với biến giả</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1748,7 +1797,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div><p>Hệ số <code>TLD</code> = <b>1.8199</b> (p ≈ 0.001764) là chênh lệch độ dốc giữa nhóm DLI=1 và DLI=0, không phải mức chênh lệch ATO đơn thuần.</p><div class="read"><b>Ý nghĩa kết quả:</b> Nhóm DLI = 0 (tài sản ngắn hạn không đủ trả nợ ngắn hạn) có độ dốc TPR là 1.404 (có ý nghĩa thống kê ở mức 1%), tức 1 điểm % TPR gắn với ATO cao hơn 0.014 lần. Nhóm DLI = 1 có độ dốc 3.224 (1.404 + 1.820); chênh lệch độ dốc 1.820 có ý nghĩa thống kê ở mức 1%. Hệ số DLI = 0.313: tại TPR trung bình, nhóm đủ thanh khoản có ATO cao hơn nhóm còn lại khoảng 0.31 lần. Theo cách đọc biến giả trong bài giảng: nhóm DLI = 1 có hệ số chặn mới α<sub>0</sub> + α<sub>2</sub> và độ dốc mới α<sub>1</sub> + α<sub>4</sub> = 3.224, lớn hơn α<sub>1</sub> = 1.404.</div></section>
-<section class="card"><h2>16. Biểu đồ tương tác liên tục kiểu marginsplot</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 610" role="img" aria-labelledby="title desc">
+
+<section class="card"><h2>17. Biểu đồ tương tác liên tục</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 610" role="img" aria-labelledby="title desc">
 <title id="title">Biểu đồ tương tác giữa phải trả người bán và thanh khoản</title>
 <desc id="desc">Dự báo vòng quay tài sản theo tỷ lệ phải trả người bán ở ba mức thanh khoản, giữ quy mô ở trung bình và năm gốc 2021.</desc>
 <rect width="100%" height="100%" fill="#ffffff"/>
@@ -1787,8 +1837,9 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text transform="translate(25 272.5) rotate(-90)" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Vòng quay tổng tài sản dự báo (lần)</text>
 <text x="512.5" y="528" text-anchor="middle" font-family="Arial" font-size="15" fill="#263746">Phải trả người bán / tổng tài sản</text>
 <text x="500" y="585" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
-</svg><p>Ba đường là giá trị Y dự báo ở thanh khoản p25, p50 và p75, giữ quy mô tại trung bình và năm ở mức gốc 2021. Đường không phải dữ liệu thô; nó được tính từ hệ số mô hình 2 để nhìn trực tiếp ý nghĩa của tương tác.</p><div class="read"><b>Ý nghĩa kết quả:</b> Ba đường đều dốc lên, nghĩa là TPR cao hơn đi kèm ATO dự báo cao hơn ở cả ba mức thanh khoản. Đường p75 dốc nhất và khoảng cách giữa các đường mở rộng khi TPR tăng: đây là hình ảnh trực quan của hệ số tương tác dương. Biểu đồ tính từ pooled OLS nên mang cùng giới hạn của mô hình 2 (xem mục 19).</div></section>
-<section class="card"><h2>17. Biểu đồ tương tác với dummy 0–1</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+</svg><p>Ba đường là giá trị Y dự báo ở thanh khoản p25, p50 và p75, giữ quy mô tại trung bình và năm ở mức gốc 2021. Đường không phải dữ liệu thô; nó được tính từ hệ số mô hình 2 để nhìn trực tiếp ý nghĩa của tương tác.</p><div class="read"><b>Ý nghĩa kết quả:</b> Ba đường đều dốc lên, nghĩa là TPR cao hơn đi kèm ATO dự báo cao hơn ở cả ba mức thanh khoản. Đường p75 dốc nhất và khoảng cách giữa các đường mở rộng khi TPR tăng: đây là hình ảnh trực quan của hệ số tương tác dương. Biểu đồ tính từ pooled OLS nên mang cùng giới hạn của mô hình 2 (xem mục 20).</div></section>
+
+<section class="card"><h2>18. Biểu đồ tương tác với biến giả 0–1</h2><svg class="inline-chart" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
 <title id="title">Tương tác giữa phải trả người bán và dummy thanh khoản</title>
 <desc id="desc">Hai đường dự báo vòng quay tổng tài sản cho nhóm có và không có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</desc>
 <rect width="100%" height="100%" fill="#ffffff"/>
@@ -1820,7 +1871,8 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="550" y1="535" x2="590" y2="535" stroke="#245b86" stroke-width="2.5"/><text x="600" y="540" font-family="Arial" font-size="13" fill="#263746">D=1: tài sản ngắn hạn ≥ nợ ngắn hạn</text>
 <text x="500" y="580" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
 </svg><p>Hai đường cho biết quan hệ dự báo giữa X và Y khác nhau thế nào giữa nhóm không đủ và đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</p><div class="read"><b>Ý nghĩa kết quả:</b> Đường DLI = 1 dốc hơn đường DLI = 0 (độ dốc 3.22 so với 1.40) và nằm cao hơn ở phần lớn khoảng TPR. Trong pooled OLS, quan hệ TPR–ATO mạnh hơn ở nhóm có đủ tài sản ngắn hạn trang trải nợ ngắn hạn.</div></section>
-<section class="card"><h2>18. Kiểm tra và diễn giải kết quả</h2><div class="scroll"><table class="dataframe data">
+
+<section class="card"><h2>19. Tóm tắt các mô hình Pooled OLS</h2><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -1885,237 +1937,9 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>0.0000</td>
     </tr>
   </tbody>
-</table></div><p>Trong mẫu này, tại mức thanh khoản trung bình, tỷ lệ phải trả người bán có liên hệ dương với vòng quay tài sản. Hệ số tương tác dương cho thấy độ dốc dương mạnh hơn khi thanh khoản cao hơn. Kết quả này khác dấu tác động chính được tóm tắt trong bài nghiên cứu tham khảo; không được diễn giải là ‘thanh khoản làm dịu tác động âm’.</p><p>Cụ thể, mô hình 2 cho α1 = <b>5.0337</b> (p ≈ 1.075e-23) và α4 = <b>1.6197</b> (p ≈ 2.627e-10). R² tăng từ 0.0919 lên 0.1155, tức mô hình có tương tác giải thích thêm một phần biến thiên nhưng mức R² vẫn còn thấp. Đây là mối liên hệ có điều kiện trong mẫu, không phải bằng chứng nhân quả.</p><p>Hệ số LIQ đổi dấu từ -0.0284 ở mô hình 1 sang 0.1315 ở mô hình 2. Trong mô hình 2, hệ số này là độ dốc của LIQ tại mức TPR trung bình nên không cùng nghĩa với mô hình 1; kết hợp với VIF cao, hệ số LIQ nhạy với đặc tả và không nên diễn giải riêng.</p><p>Cột <code>t/z</code> là hệ số chia cho sai số chuẩn gom cụm; p-value/CI dùng xấp xỉ chuẩn với mẫu lớn. Không diễn giải p-value như xác suất giả thuyết đúng.</p><p class="note"><b>Giới hạn:</b> phân ngành mới ở mức mẫu biểu BCTC; mô hình pooled chưa kiểm soát ngành nên hệ số có thể phản ánh khác biệt giữa các nhóm doanh nghiệp (xem mục 19); VIF của mô hình tương tác liên tục cao; dấu kết quả khác bài tham khảo. Cần thận trọng khi suy rộng.</p><div class="read"><b>Ý nghĩa kết quả:</b> R² hiệu chỉnh tăng từ 0.070 (mô hình 0) lên 0.091 (mô hình 1), 0.115 (mô hình 2) và 0.104 (mô hình 3). Thêm tương tác có cải thiện mức giải thích, nhưng mọi mô hình chỉ giải thích khoảng 12% khác biệt về ATO; phần lớn còn lại đến từ yếu tố ngoài mô hình như ngành và chiến lược kinh doanh. R² thấp là bình thường với dữ liệu doanh nghiệp và không làm hệ số sai, nhưng không nên dùng mô hình để dự báo ATO của từng công ty. Kiểm định F với H<sub>0</sub>: R² = 0 bị bác bỏ ở mọi mô hình (p-value lớn nhất 1.5e-54). Theo bài giảng, mục tiêu của bài là đo lường mệnh đề X → Y (dấu +/−, có hay không có ý nghĩa) nên chỉ cần R² &gt; 0; R² rất cao chỉ cần khi mục tiêu là cảnh báo, dự báo.</div></section>
-<section class="card"><h2>19. Kiểm tra độ bền: hiệu ứng cố định công ty và biến trễ 1 năm</h2><p>Pooled OLS so sánh cả giữa các công ty lẫn trong cùng công ty. Công ty thương mại, bán lẻ thường vừa có tỷ lệ phải trả cao vừa có vòng quay tài sản cao, nên một phần quan hệ trong pooled OLS có thể đến từ khác biệt ngành. Mô hình hiệu ứng cố định (FE) trừ trung bình riêng của từng công ty, nên chỉ dùng biến động <i>trong cùng một công ty qua các năm</i>; mọi đặc điểm không đổi theo thời gian như ngành đều được kiểm soát. Hằng số bị hấp thụ vào hiệu ứng cố định; công ty chỉ có một năm bị loại khỏi FE.</p>
-<div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + … + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p class="legend">f<sub>i</sub>: hiệu ứng cố định công ty, hấp thụ mọi đặc điểm không đổi theo thời gian của từng công ty (ngành, mô hình kinh doanh, năng lực quản lý ổn định). δ<sub>t</sub>: hiệu ứng cố định năm. Ước lượng bằng phép biến đổi within: trừ trung bình riêng của từng công ty khỏi Y và mọi biến X.</p>
-<div class="scroll"><table class="dataframe data">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>M1 Pooled</th>
-      <th>M1 FE</th>
-      <th>M2 Pooled</th>
-      <th>M2 FE</th>
-      <th>M3 Pooled</th>
-      <th>M3 FE</th>
-      <th>M2 trễ 1 năm</th>
-    </tr>
-    <tr>
-      <th>Biến</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>TPR</th>
-      <td>2.2009*** (0.2939)</td>
-      <td>0.7731** (0.3051)</td>
-      <td>5.0337*** (0.5016)</td>
-      <td>1.0054*** (0.3693)</td>
-      <td>1.4043*** (0.5169)</td>
-      <td>1.0882* (0.6107)</td>
-      <td>4.9031*** (0.5227)</td>
-    </tr>
-    <tr>
-      <th>LIQ</th>
-      <td>-0.0284*** (0.0041)</td>
-      <td>-0.0070 (0.0045)</td>
-      <td>0.1315*** (0.0264)</td>
-      <td>0.0083 (0.0266)</td>
-      <td></td>
-      <td></td>
-      <td>0.1240*** (0.0284)</td>
-    </tr>
-    <tr>
-      <th>DLI</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>0.3134*** (0.0647)</td>
-      <td>0.1052*** (0.0360)</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>SIZ</th>
-      <td>-0.0988*** (0.0144)</td>
-      <td>-0.2844*** (0.0699)</td>
-      <td>-0.0931*** (0.0141)</td>
-      <td>-0.2832*** (0.0710)</td>
-      <td>-0.0945*** (0.0134)</td>
-      <td>-0.2748*** (0.0664)</td>
-      <td>-0.0956*** (0.0147)</td>
-    </tr>
-    <tr>
-      <th>TLI</th>
-      <td></td>
-      <td></td>
-      <td>1.6197*** (0.2563)</td>
-      <td>0.1457 (0.2589)</td>
-      <td></td>
-      <td></td>
-      <td>1.5817*** (0.2735)</td>
-    </tr>
-    <tr>
-      <th>TLD</th>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td>1.8199*** (0.5820)</td>
-      <td>-0.3163 (0.5166)</td>
-      <td></td>
-    </tr>
-    <tr>
-      <th>Obs</th>
-      <td>7,015</td>
-      <td>6,997</td>
-      <td>7,015</td>
-      <td>6,997</td>
-      <td>7,015</td>
-      <td>6,997</td>
-      <td>5,542</td>
-    </tr>
-    <tr>
-      <th>R²</th>
-      <td>0.0919</td>
-      <td>0.0459</td>
-      <td>0.1155</td>
-      <td>0.0463</td>
-      <td>0.1047</td>
-      <td>0.0484</td>
-      <td>0.1145</td>
-    </tr>
-  </tbody>
-</table></div><p>Ô bảng: hệ số (SE gom cụm theo mã). *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10. R² của FE là R² within. Cột "M2 trễ 1 năm" dùng TPR, LIQ, SIZ của năm trước (t − 1) để giải thích ATO năm t, nên mẫu chỉ gồm 2022–2025 và năm gốc là 2022.</p>
-<p>Khi thêm hiệu ứng cố định công ty, hệ số TPR ở mô hình 2 đi từ 5.0337 xuống 1.0054 (p ≈ 0.00648); hệ số TLI đi từ 1.6197 xuống 0.1457 (p ≈ 0.574). Hệ số TLD của mô hình 3 đổi dấu: 1.8199 trong pooled OLS và -0.3163 trong FE (p ≈ 0.54). Trong FE, cả TLI và TLD đều không có ý nghĩa thống kê ở mức 10%: vai trò điều tiết của thanh khoản không còn rõ khi chỉ xét biến động trong cùng một công ty. Hệ số TPR vẫn dương nhưng nhỏ hơn nhiều so với pooled OLS.</p><p class="note">Phần lớn độ lớn của hệ số trong pooled OLS đến từ khác biệt giữa các doanh nghiệp. Kết luận nên dựa trên kết quả nhất quán giữa hai cách ước lượng; kết quả chỉ xuất hiện trong pooled OLS cần được diễn giải là khác biệt giữa doanh nghiệp, không phải tác động khi một doanh nghiệp thay đổi tỷ lệ phải trả.</p><div class="read"><b>Ý nghĩa kết quả:</b> Pooled OLS trả lời câu hỏi: công ty có TPR cao hơn công ty khác thì ATO có cao hơn không. FE trả lời: khi chính một công ty tăng TPR qua các năm thì ATO của nó có tăng không. Trong FE, 1 điểm % TPR gắn với ATO cao hơn 0.008 lần ở mô hình 1 (có ý nghĩa thống kê ở mức 5%), nhỏ hơn nhiều so với pooled OLS. TLI (không có ý nghĩa thống kê) và TLD (không có ý nghĩa thống kê) trong FE cho thấy: kết luận vững là TPR có liên hệ dương với ATO, còn vai trò điều tiết của thanh khoản chưa đủ bằng chứng.</div></section>
-<section class="card"><h2>20. Đánh giá mô hình: kỳ vọng dấu và giả định OLS</h2>
-<h3>Kỳ vọng dấu so với kết quả</h3><p class="legend">Kết quả lấy từ mô hình 2 (TLD từ mô hình 3). *** p &lt; 0,01; ** p &lt; 0,05; * p &lt; 0,10.</p><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Dấu kỳ vọng</th>
-      <th>Cơ sở</th>
-      <th>Pooled</th>
-      <th>FE công ty</th>
-      <th>Trễ 1 năm</th>
-    </tr>
-    <tr>
-      <th>Biến</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>TPR</th>
-      <td>−</td>
-      <td>Bài tham khảo: phụ thuộc tín dụng nhà cung cấp phản ánh thiếu tiền và áp lực thanh toán, làm giảm hiệu quả</td>
-      <td>+***</td>
-      <td>+***</td>
-      <td>+***</td>
-    </tr>
-    <tr>
-      <th>LIQ</th>
-      <td>+/−</td>
-      <td>Thanh khoản tốt giúp hoạt động liên tục (+), nhưng giữ nhiều tài sản ngắn hạn nhàn rỗi làm vòng quay thấp (−)</td>
-      <td>+***</td>
-      <td>+ (không ý nghĩa)</td>
-      <td>+***</td>
-    </tr>
-    <tr>
-      <th>SIZ</th>
-      <td>+/−</td>
-      <td>Lợi thế quy mô (+), nhưng công ty lớn thường nhiều tài sản dài hạn nên vòng quay thấp (−)</td>
-      <td>−***</td>
-      <td>−***</td>
-      <td>−***</td>
-    </tr>
-    <tr>
-      <th>TLI</th>
-      <td>+</td>
-      <td>Bài tham khảo: thanh khoản cao làm yếu tác động bất lợi của khoản phải trả</td>
-      <td>+***</td>
-      <td>+ (không ý nghĩa)</td>
-      <td>+***</td>
-    </tr>
-    <tr>
-      <th>TLD</th>
-      <td>+</td>
-      <td>Như TLI, so sánh nhóm đủ thanh khoản (LIQ ≥ 1) với nhóm còn lại</td>
-      <td>+***</td>
-      <td>− (không ý nghĩa)</td>
-      <td>—</td>
-    </tr>
-  </tbody>
-</table></div>
-<div class="read"><b>Ý nghĩa kết quả:</b> TPR mang dấu dương ở cả ba cách ước lượng, trái với kỳ vọng âm của bài tham khảo. Các giải thích có thể: (1) khác biệt ngành – doanh nghiệp thương mại, phân phối vừa mua chịu nhiều vừa có vòng quay tài sản cao tự nhiên; (2) quan hệ ngược – doanh thu cao kéo theo mua hàng nhiều nên khoản phải trả tăng, tức ATO tác động lên TPR; (3) bài này đo hiệu quả bằng vòng quay tài sản, trong khi nhiều nghiên cứu dùng ROA hoặc ROE. TLI đúng dấu kỳ vọng (+) và có ý nghĩa ở pooled OLS, biến trễ 1 năm, nhưng mất ý nghĩa khi thêm hiệu ứng cố định công ty: vai trò điều tiết của thanh khoản chủ yếu đến từ khác biệt giữa các công ty, không phải từ thay đổi trong cùng một công ty. Hướng mở rộng: thêm hiệu ứng cố định ngành chi tiết (ICB), dùng ROA làm biến phụ thuộc thay thế, và dùng biến công cụ (2SLS) như bài gốc để xử lý nội sinh.</div>
-<h3>Kiểm tra các giả định A1–A5</h3><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Nội dung</th>
-      <th>Kiểm tra trong bài</th>
-      <th>Kết quả</th>
-      <th>Đánh giá / xử lý</th>
-    </tr>
-    <tr>
-      <th>Giả định</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>A1</th>
-      <td>Tuyến tính theo tham số (hàm bậc 1 của các α)</td>
-      <td>Thêm TPRc² vào mô hình 1</td>
-      <td>Hệ số TPR² = -7.368, p ≈ 6.45e-10</td>
-      <td>Có dấu hiệu phi tuyến: quan hệ TPR–ATO cong xuống, mô hình tuyến tính là xấp xỉ</td>
-    </tr>
-    <tr>
-      <th>A2</th>
-      <td>Không đa cộng tuyến hoàn hảo: Xi ≠ hằng số, Xi ≠ f(Xj)</td>
-      <td>|Corr| ≥ 0,8 hoặc VIF ≥ 10 là nghiêm trọng</td>
-      <td>VIF lớn nhất: M1 1.12; M2 11.69; M3 3.26. |Corr(TPR, TLD)| = 0.82</td>
-      <td>Không hoàn hảo nên OLS vẫn ước lượng được. M2 đa cộng tuyến nghiêm trọng do tích số chứa LIQ: SE của LIQ, TLI bị phóng to; vẫn giữ biến tương tác vì là biến cốt lõi</td>
-    </tr>
-    <tr>
-      <th>A3</th>
-      <td>Cov(ui, uj) = 0: mẫu ngẫu nhiên, sai số độc lập</td>
-      <td>Cấu trúc dữ liệu bảng</td>
-      <td>Mỗi công ty lặp lại tối đa 5 năm; mẫu là toàn bộ công ty phi tài chính đủ dữ liệu, không chọn ngẫu nhiên</td>
-      <td>Vi phạm: sai số của cùng công ty tương quan qua các năm. Xử lý bằng sai số chuẩn gom cụm theo mã</td>
-    </tr>
-    <tr>
-      <th>A4</th>
-      <td>Var(ui) = σ² không đổi</td>
-      <td>Breusch–Pagan trên mô hình 2 (H0: phương sai không đổi)</td>
-      <td>LM = 103.6, bậc tự do 8, p ≈ 7.44e-17</td>
-      <td>Bác bỏ H0: phương sai thay đổi. Sai số chuẩn gom cụm vững với vấn đề này</td>
-    </tr>
-    <tr>
-      <th>A5</th>
-      <td>Cov(Xi, ε) = 0: X ngoại sinh</td>
-      <td>So sánh pooled, FE công ty và biến trễ 1 năm</td>
-      <td>Hệ số TPR (M2): pooled 5.03; FE 1.01; trễ 1 năm 4.90</td>
-      <td>Khó đáp ứng nhất. Hệ số thay đổi mạnh giữa các cách ước lượng cho thấy có nội sinh do bỏ sót biến; FE và biến trễ chỉ giảm bớt, chưa loại bỏ hẳn</td>
-    </tr>
-  </tbody>
-</table></div>
-<div class="read"><b>Ý nghĩa kết quả:</b> Theo bài giảng, ước lượng OLS là BLUE khi thỏa các giả định: <b>không chệch</b> E(α̂) = α cần A1, A2, A5; <b>hiệu quả</b> (phương sai nhỏ nhất) cần A3, A4; <b>vững</b> (α̂ hội tụ về α khi n tăng) cần A5 và là tính chất quan trọng nhất. Trong bài này A3, A4 bị vi phạm nên OLS không còn hiệu quả nhất, nhưng suy luận vẫn dùng được nhờ sai số chuẩn gom cụm. A5 là điểm yếu chính: chưa thể khẳng định tính không chệch và vững, nên các hệ số chỉ được diễn giải là mối liên hệ, không phải tác động nhân quả. Vì vậy bài kiểm tra độ bền bằng ba cách (pooled OLS, FE công ty, biến trễ 1 năm). Theo nguyên tắc không có phương pháp nào tốt nhất, tốt nhất là các phương pháp cùng dẫn đến một kết quả: kết quả nhất quán là TPR có liên hệ dương với ATO và có ý nghĩa ở cả ba cách ước lượng; vai trò điều tiết của thanh khoản thì không vững vì mất ý nghĩa khi thêm hiệu ứng cố định công ty, nên chưa đủ bằng chứng để kết luận.</div></section>
-<section class="card"><h2>21. Pooled OLS, FEM, REM và kiểm định chọn mô hình</h2>
+</table></div><p>Trong mẫu này, tại mức thanh khoản trung bình, tỷ lệ phải trả người bán có liên hệ dương với vòng quay tài sản. Hệ số tương tác dương cho thấy độ dốc dương mạnh hơn khi thanh khoản cao hơn. Kết quả này khác dấu tác động chính được tóm tắt trong bài nghiên cứu tham khảo; không được diễn giải là ‘thanh khoản làm dịu tác động âm’.</p><p>Cụ thể, mô hình 2 cho α1 = <b>5.0337</b> (p ≈ 1.075e-23) và α4 = <b>1.6197</b> (p ≈ 2.627e-10). R² tăng từ 0.0919 lên 0.1155, tức mô hình có tương tác giải thích thêm một phần biến thiên nhưng mức R² vẫn còn thấp. Đây là mối liên hệ có điều kiện trong mẫu, không phải bằng chứng nhân quả.</p><p>Hệ số LIQ đổi dấu từ -0.0284 ở mô hình 1 sang 0.1315 ở mô hình 2. Trong mô hình 2, hệ số này là độ dốc của LIQ tại mức TPR trung bình nên không cùng nghĩa với mô hình 1; kết hợp với VIF cao, hệ số LIQ nhạy với đặc tả và không nên diễn giải riêng.</p><p>Cột <code>t/z</code> là hệ số chia cho sai số chuẩn gom cụm; p-value/CI dùng xấp xỉ chuẩn với mẫu lớn. Không diễn giải p-value như xác suất giả thuyết đúng.</p><p class="note"><b>Giới hạn:</b> phân ngành mới ở mức mẫu biểu BCTC; mô hình pooled chưa kiểm soát ngành nên hệ số có thể phản ánh khác biệt giữa các nhóm doanh nghiệp (xem mục 20); VIF của mô hình tương tác liên tục cao; dấu kết quả khác bài tham khảo. Cần thận trọng khi suy rộng.</p><div class="read"><b>Ý nghĩa kết quả:</b> R² hiệu chỉnh tăng từ 0.070 (mô hình 0) lên 0.091 (mô hình 1), 0.115 (mô hình 2) và 0.104 (mô hình 3). Thêm tương tác có cải thiện mức giải thích, nhưng mọi mô hình chỉ giải thích khoảng 12% khác biệt về ATO; phần lớn còn lại đến từ yếu tố ngoài mô hình như ngành và chiến lược kinh doanh. R² thấp là bình thường với dữ liệu doanh nghiệp và không làm hệ số sai, nhưng không nên dùng mô hình để dự báo ATO của từng công ty. Kiểm định F với H<sub>0</sub>: R² = 0 bị bác bỏ ở mọi mô hình (p-value lớn nhất 1.5e-54). Theo bài giảng, mục tiêu của bài là đo lường mệnh đề X → Y (dấu +/−, có hay không có ý nghĩa) nên chỉ cần R² &gt; 0; R² rất cao chỉ cần khi mục tiêu là cảnh báo, dự báo.</div></section>
+
+<section class="card"><h2>20. Chọn mô hình: Pooled OLS, FEM hay REM</h2>
 <p>Ba cách ước lượng khác nhau ở cách xử lý hiệu ứng riêng u<sub>i</sub> của từng doanh nghiệp:</p>
 <div class="formula">Pooled OLS: ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + … + δ<sub>t</sub> + ε<sub>i,t</sub> &nbsp;&nbsp;(bỏ qua u<sub>i</sub>)</div>
 <div class="formula">FEM: ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + … + δ<sub>t</sub> + u<sub>i</sub> + ε<sub>i,t</sub>, &nbsp; u<sub>i</sub> được phép tương quan với X</div>
@@ -2331,134 +2155,422 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div>
-<div class="read"><b>Ý nghĩa kết quả:</b> Kiểm định F bác bỏ Pooled OLS ở cả ba mô hình: có hiệu ứng riêng của từng doanh nghiệp. Breusch–Pagan LM cũng bác bỏ Pooled OLS: phương sai của hiệu ứng riêng khác 0. Như vậy phải dùng FEM hoặc REM. Ở REM mô hình 1, hiệu ứng riêng chiếm ρ = 89% phương sai sai số tổng, hệ số trừ trung bình trung bình θ = 0.84. Hausman và bản vững Mundlak đều bác bỏ H0, tức hiệu ứng riêng tương quan với các biến giải thích; REM bị chệch nên <b>chọn FEM</b>. Hệ số TPR: Pooled 2.20, REM 0.98, FEM 0.77. REM nằm giữa vì nó kết hợp biến động giữa các doanh nghiệp và trong cùng doanh nghiệp. Lưu ý: Hausman bản gốc giả định sai số đồng nhất, trong khi bài đã bác bỏ giả định này (mục 20), nên kết luận dựa thêm vào kiểm định Mundlak dùng sai số chuẩn gom cụm.</div></section>
-<section class="card"><h2>22. Bản chất FEM và phép biến đổi within</h2>
-<p><b>Vấn đề:</b> mỗi doanh nghiệp có những đặc điểm riêng gần như không đổi theo thời gian (ngành, mô hình kinh doanh, năng lực quản lý…), gọi chung là u<sub>i</sub>. Chúng tác động lên ATO nhưng không quan sát được nên nằm trong sai số. Nếu u<sub>i</sub> tương quan với TPR thì Cov(X, ε) ≠ 0, Pooled OLS bị chệch (nội sinh do bỏ sót biến).</p>
-<p><b>Cách FEM xử lý – phép biến đổi within:</b> lấy trung bình theo thời gian của từng doanh nghiệp rồi trừ đi.</p>
-<div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPR<sub>i,t</sub> + u<sub>i</sub> + ε<sub>i,t</sub> &nbsp;⟶&nbsp; ATO̅<sub>i</sub> = α<sub>1</sub>·TPR̅<sub>i</sub> + u<sub>i</sub> + ε̅<sub>i</sub></div>
-<div class="formula">(ATO<sub>i,t</sub> − ATO̅<sub>i</sub>) = α<sub>1</sub>·(TPR<sub>i,t</sub> − TPR̅<sub>i</sub>) + (ε<sub>i,t</sub> − ε̅<sub>i</sub>) &nbsp;&nbsp; vì u<sub>i</sub> − u<sub>i</sub> = 0</div>
-<p>u<sub>i</sub> không đổi theo thời gian nên trung bình của nó bằng chính nó, và bị triệt tiêu khi trừ. Sau đó chạy OLS trên dữ liệu đã trừ trung bình. Hệ số α<sub>1</sub> của FEM vì vậy chỉ đo: <i>khi chính doanh nghiệp đó có TPR cao hơn mức bình thường của nó, ATO của nó cao hơn mức bình thường bao nhiêu</i>. Đây là biến động trong cùng doanh nghiệp (within), không so sánh giữa các doanh nghiệp.</p>
-<h3>Ví dụ số: VNM (Thực phẩm và đồ uống)</h3><div class="scroll"><table class="dataframe data">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ATO</th>
-      <th>ATO trung bình công ty</th>
-      <th>ATO − trung bình</th>
-      <th>TPR</th>
-      <th>TPR trung bình công ty</th>
-      <th>TPR − trung bình</th>
-      <th>Ngành (dummy)</th>
-      <th>Ngành − trung bình</th>
-    </tr>
-    <tr>
-      <th>Năm</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2021</th>
-      <td>1.1423</td>
-      <td>1.1682</td>
-      <td>-0.0260</td>
-      <td>0.0790</td>
-      <td>0.0767</td>
-      <td>0.0023</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2022</th>
-      <td>1.2367</td>
-      <td>1.1682</td>
-      <td>0.0684</td>
-      <td>0.0884</td>
-      <td>0.0767</td>
-      <td>0.0116</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2023</th>
-      <td>1.1461</td>
-      <td>1.1682</td>
-      <td>-0.0221</td>
-      <td>0.0723</td>
-      <td>0.0767</td>
-      <td>-0.0045</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2024</th>
-      <td>1.1223</td>
-      <td>1.1682</td>
-      <td>-0.0459</td>
-      <td>0.0704</td>
-      <td>0.0767</td>
-      <td>-0.0063</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2025</th>
-      <td>1.1938</td>
-      <td>1.1682</td>
-      <td>0.0256</td>
-      <td>0.0736</td>
-      <td>0.0767</td>
-      <td>-0.0031</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-  </tbody>
-</table></div>
-<p class="legend">FEM dùng hai cột "− trung bình". Cột ngành của VNM luôn bằng 1 nên sau khi trừ trung bình chỉ còn 0.</p>
-<p><b>Vì sao một số biến bị loại khỏi FEM:</b> biến không đổi theo thời gian trong mỗi doanh nghiệp (ngành, sàn niêm yết, năm thành lập…) sau khi trừ trung bình đều bằng 0 ở mọi quan sát. Một cột toàn số 0 không có biến động nên không ước lượng được hệ số, và trùng hoàn toàn với hiệu ứng cố định (đa cộng tuyến hoàn hảo). Stata báo các biến này "omitted because of collinearity". Trong dữ liệu bài, giá trị tuyệt đối lớn nhất của biến giả ngành sau biến đổi within là 0. Vì cùng lý do, doanh nghiệp chỉ có 1 năm không đóng góp vào ước lượng (FEM còn 6,997 quan sát), và hằng số α<sub>0</sub> bị hấp thụ vào u<sub>i</sub>.</p>
-<p><b>Within và LSDV cho cùng kết quả:</b> chạy OLS với một biến giả cho từng doanh nghiệp (LSDV) cho hệ số giống hệt phép biến đổi within. Within tiện hơn vì không phải ước lượng hàng nghìn hệ số biến giả.</p>
+<div class="read"><b>Ý nghĩa kết quả:</b> Kiểm định F bác bỏ Pooled OLS ở cả ba mô hình: có hiệu ứng riêng của từng doanh nghiệp. Breusch–Pagan LM cũng bác bỏ Pooled OLS: phương sai của hiệu ứng riêng khác 0. Như vậy phải dùng FEM hoặc REM. Ở REM mô hình 1, hiệu ứng riêng chiếm ρ = 89% phương sai sai số tổng, hệ số trừ trung bình trung bình θ = 0.84. Hausman và bản vững Mundlak đều bác bỏ H0, tức hiệu ứng riêng tương quan với các biến giải thích; REM bị chệch nên <b>chọn FEM</b>. Hệ số TPR: Pooled 2.20, REM 0.98, FEM 0.77. REM nằm giữa vì nó kết hợp biến động giữa các doanh nghiệp và trong cùng doanh nghiệp. Lưu ý: Hausman bản gốc giả định sai số đồng nhất, trong khi bài đã bác bỏ giả định này (mục 22), nên kết luận dựa thêm vào kiểm định Mundlak dùng sai số chuẩn gom cụm.</div></section>
+
+<section class="card"><h2>21. Kiểm tra độ bền: FEM và biến trễ 1 năm</h2><p>Pooled OLS so sánh cả giữa các công ty lẫn trong cùng công ty. Công ty thương mại, bán lẻ thường vừa có tỷ lệ phải trả cao vừa có vòng quay tài sản cao, nên một phần quan hệ trong pooled OLS có thể đến từ khác biệt ngành. Mô hình hiệu ứng cố định (FE) trừ trung bình riêng của từng công ty, nên chỉ dùng biến động <i>trong cùng một công ty qua các năm</i>; mọi đặc điểm không đổi theo thời gian như ngành đều được kiểm soát. Hằng số bị hấp thụ vào hiệu ứng cố định; công ty chỉ có một năm bị loại khỏi FE.</p>
+<div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + … + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p class="legend">f<sub>i</sub>: hiệu ứng cố định công ty, hấp thụ mọi đặc điểm không đổi theo thời gian của từng công ty (ngành, mô hình kinh doanh, năng lực quản lý ổn định). δ<sub>t</sub>: hiệu ứng cố định năm. Ước lượng bằng phép biến đổi within: trừ trung bình riêng của từng công ty khỏi Y và mọi biến X.</p>
 <div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Within (FEM)</th>
-      <th>LSDV (OLS + biến giả công ty)</th>
+      <th>M1 Pooled</th>
+      <th>M1 FE</th>
+      <th>M2 Pooled</th>
+      <th>M2 FE</th>
+      <th>M3 Pooled</th>
+      <th>M3 FE</th>
+      <th>M2 trễ 1 năm</th>
     </tr>
     <tr>
       <th>Biến</th>
       <th></th>
       <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>TPR</th>
-      <td>0.7731</td>
-      <td>0.7731</td>
+      <td>2.2009*** (0.2939)</td>
+      <td>0.7731** (0.3051)</td>
+      <td>5.0337*** (0.5016)</td>
+      <td>1.0054*** (0.3693)</td>
+      <td>1.4043*** (0.5169)</td>
+      <td>1.0882* (0.6107)</td>
+      <td>4.9031*** (0.5227)</td>
     </tr>
     <tr>
       <th>LIQ</th>
-      <td>-0.0070</td>
-      <td>-0.0070</td>
+      <td>-0.0284*** (0.0041)</td>
+      <td>-0.0070 (0.0045)</td>
+      <td>0.1315*** (0.0264)</td>
+      <td>0.0083 (0.0266)</td>
+      <td></td>
+      <td></td>
+      <td>0.1240*** (0.0284)</td>
+    </tr>
+    <tr>
+      <th>DLI</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>0.3134*** (0.0647)</td>
+      <td>0.1052*** (0.0360)</td>
+      <td></td>
     </tr>
     <tr>
       <th>SIZ</th>
-      <td>-0.2844</td>
-      <td>-0.2844</td>
+      <td>-0.0988*** (0.0144)</td>
+      <td>-0.2844*** (0.0699)</td>
+      <td>-0.0931*** (0.0141)</td>
+      <td>-0.2832*** (0.0710)</td>
+      <td>-0.0945*** (0.0134)</td>
+      <td>-0.2748*** (0.0664)</td>
+      <td>-0.0956*** (0.0147)</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td></td>
+      <td></td>
+      <td>1.6197*** (0.2563)</td>
+      <td>0.1457 (0.2589)</td>
+      <td></td>
+      <td></td>
+      <td>1.5817*** (0.2735)</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>1.8199*** (0.5820)</td>
+      <td>-0.3163 (0.5166)</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>Obs</th>
+      <td>7,015</td>
+      <td>6,997</td>
+      <td>7,015</td>
+      <td>6,997</td>
+      <td>7,015</td>
+      <td>6,997</td>
+      <td>5,542</td>
+    </tr>
+    <tr>
+      <th>R²</th>
+      <td>0.0919</td>
+      <td>0.0459</td>
+      <td>0.1155</td>
+      <td>0.0463</td>
+      <td>0.1047</td>
+      <td>0.0484</td>
+      <td>0.1145</td>
+    </tr>
+  </tbody>
+</table></div><p>Ô bảng: hệ số (SE gom cụm theo mã). *** p &lt; 0.01, ** p &lt; 0.05, * p &lt; 0.10. R² của FE là R² within. Cột "M2 trễ 1 năm" dùng TPR, LIQ, SIZ của năm trước (t − 1) để giải thích ATO năm t, nên mẫu chỉ gồm 2022–2025 và năm gốc là 2022.</p>
+<p>Khi thêm hiệu ứng cố định công ty, hệ số TPR ở mô hình 2 đi từ 5.0337 xuống 1.0054 (p ≈ 0.00648); hệ số TLI đi từ 1.6197 xuống 0.1457 (p ≈ 0.574). Hệ số TLD của mô hình 3 đổi dấu: 1.8199 trong pooled OLS và -0.3163 trong FE (p ≈ 0.54). Trong FE, cả TLI và TLD đều không có ý nghĩa thống kê ở mức 10%: vai trò điều tiết của thanh khoản không còn rõ khi chỉ xét biến động trong cùng một công ty. Hệ số TPR vẫn dương nhưng nhỏ hơn nhiều so với pooled OLS.</p><p class="note">Phần lớn độ lớn của hệ số trong pooled OLS đến từ khác biệt giữa các doanh nghiệp. Kết luận nên dựa trên kết quả nhất quán giữa hai cách ước lượng; kết quả chỉ xuất hiện trong pooled OLS cần được diễn giải là khác biệt giữa doanh nghiệp, không phải tác động khi một doanh nghiệp thay đổi tỷ lệ phải trả.</p><div class="read"><b>Ý nghĩa kết quả:</b> Pooled OLS trả lời câu hỏi: công ty có TPR cao hơn công ty khác thì ATO có cao hơn không. FE trả lời: khi chính một công ty tăng TPR qua các năm thì ATO của nó có tăng không. Trong FE, 1 điểm % TPR gắn với ATO cao hơn 0.008 lần ở mô hình 1 (có ý nghĩa thống kê ở mức 5%), nhỏ hơn nhiều so với pooled OLS. TLI (không có ý nghĩa thống kê) và TLD (không có ý nghĩa thống kê) trong FE cho thấy: kết luận vững là TPR có liên hệ dương với ATO, còn vai trò điều tiết của thanh khoản chưa đủ bằng chứng.</div></section>
+
+<section class="card"><h2>22. Đánh giá mô hình: kỳ vọng dấu và giả định OLS</h2>
+<h3>Kỳ vọng dấu so với kết quả</h3><p class="legend">Kết quả lấy từ mô hình 2 (TLD từ mô hình 3). *** p &lt; 0,01; ** p &lt; 0,05; * p &lt; 0,10.</p><div class="scroll"><table class="dataframe data text">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Dấu kỳ vọng</th>
+      <th>Cơ sở</th>
+      <th>Pooled</th>
+      <th>FE công ty</th>
+      <th>Trễ 1 năm</th>
+    </tr>
+    <tr>
+      <th>Biến</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>−</td>
+      <td>Bài tham khảo: phụ thuộc tín dụng nhà cung cấp phản ánh thiếu tiền và áp lực thanh toán, làm giảm hiệu quả</td>
+      <td>+***</td>
+      <td>+***</td>
+      <td>+***</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>+/−</td>
+      <td>Thanh khoản tốt giúp hoạt động liên tục (+), nhưng giữ nhiều tài sản ngắn hạn nhàn rỗi làm vòng quay thấp (−)</td>
+      <td>+***</td>
+      <td>+ (không ý nghĩa)</td>
+      <td>+***</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>+/−</td>
+      <td>Lợi thế quy mô (+), nhưng công ty lớn thường nhiều tài sản dài hạn nên vòng quay thấp (−)</td>
+      <td>−***</td>
+      <td>−***</td>
+      <td>−***</td>
+    </tr>
+    <tr>
+      <th>TLI</th>
+      <td>+</td>
+      <td>Bài tham khảo: thanh khoản cao làm yếu tác động bất lợi của khoản phải trả</td>
+      <td>+***</td>
+      <td>+ (không ý nghĩa)</td>
+      <td>+***</td>
+    </tr>
+    <tr>
+      <th>TLD</th>
+      <td>+</td>
+      <td>Như TLI, so sánh nhóm đủ thanh khoản (LIQ ≥ 1) với nhóm còn lại</td>
+      <td>+***</td>
+      <td>− (không ý nghĩa)</td>
+      <td>—</td>
     </tr>
   </tbody>
 </table></div>
-<p><b>Cách đọc kết quả FEM:</b> hệ số TPR = 0.773 ở mô hình 1 nghĩa là trong cùng một doanh nghiệp, năm nào tỷ lệ phải trả người bán cao hơn 1 điểm % so với mức bình thường của chính nó thì vòng quay tài sản cao hơn khoảng 0.0077 lần. R² within cho biết mô hình giải thích được bao nhiêu biến động <i>trong</i> doanh nghiệp, nên thường thấp hơn R² của Pooled OLS. Đổi lại, hệ số FEM không bị chệch do các đặc điểm cố định của doanh nghiệp, kể cả những đặc điểm không đo được.</p></section>
+<div class="read"><b>Ý nghĩa kết quả:</b> TPR mang dấu dương ở cả ba cách ước lượng, trái với kỳ vọng âm của bài tham khảo. Các giải thích có thể: (1) khác biệt ngành – doanh nghiệp thương mại, phân phối vừa mua chịu nhiều vừa có vòng quay tài sản cao tự nhiên; (2) quan hệ ngược – doanh thu cao kéo theo mua hàng nhiều nên khoản phải trả tăng, tức ATO tác động lên TPR; (3) bài này đo hiệu quả bằng vòng quay tài sản, trong khi nhiều nghiên cứu dùng ROA hoặc ROE. TLI đúng dấu kỳ vọng (+) và có ý nghĩa ở pooled OLS, biến trễ 1 năm, nhưng mất ý nghĩa khi thêm hiệu ứng cố định công ty: vai trò điều tiết của thanh khoản chủ yếu đến từ khác biệt giữa các công ty, không phải từ thay đổi trong cùng một công ty. Hướng mở rộng: thêm hiệu ứng cố định ngành chi tiết (ICB), dùng ROA làm biến phụ thuộc thay thế, và dùng biến công cụ (2SLS) như bài gốc để xử lý nội sinh.</div>
+<h3>Kiểm tra các giả định A1–A5</h3><div class="scroll"><table class="dataframe data text">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Nội dung</th>
+      <th>Kiểm tra trong bài</th>
+      <th>Kết quả</th>
+      <th>Đánh giá / xử lý</th>
+    </tr>
+    <tr>
+      <th>Giả định</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A1</th>
+      <td>Tuyến tính theo tham số (hàm bậc 1 của các α)</td>
+      <td>Thêm TPRc² vào mô hình 1</td>
+      <td>Hệ số TPR² = -7.368, p ≈ 6.45e-10</td>
+      <td>Có dấu hiệu phi tuyến: quan hệ TPR–ATO cong xuống, mô hình tuyến tính là xấp xỉ</td>
+    </tr>
+    <tr>
+      <th>A2</th>
+      <td>Không đa cộng tuyến hoàn hảo: Xi ≠ hằng số, Xi ≠ f(Xj)</td>
+      <td>|Corr| ≥ 0,8 hoặc VIF ≥ 10 là nghiêm trọng</td>
+      <td>VIF lớn nhất: M1 1.12; M2 11.69; M3 3.26. |Corr(TPR, TLD)| = 0.82</td>
+      <td>Không hoàn hảo nên OLS vẫn ước lượng được. M2 đa cộng tuyến nghiêm trọng do tích số chứa LIQ: SE của LIQ, TLI bị phóng to; vẫn giữ biến tương tác vì là biến cốt lõi</td>
+    </tr>
+    <tr>
+      <th>A3</th>
+      <td>Cov(ui, uj) = 0: mẫu ngẫu nhiên, sai số độc lập</td>
+      <td>Cấu trúc dữ liệu bảng</td>
+      <td>Mỗi công ty lặp lại tối đa 5 năm; mẫu là toàn bộ công ty phi tài chính đủ dữ liệu, không chọn ngẫu nhiên</td>
+      <td>Vi phạm: sai số của cùng công ty tương quan qua các năm. Xử lý bằng sai số chuẩn gom cụm theo mã</td>
+    </tr>
+    <tr>
+      <th>A4</th>
+      <td>Var(ui) = σ² không đổi</td>
+      <td>Breusch–Pagan trên mô hình 2 (H0: phương sai không đổi)</td>
+      <td>LM = 103.6, bậc tự do 8, p ≈ 7.44e-17</td>
+      <td>Bác bỏ H0: phương sai thay đổi. Sai số chuẩn gom cụm vững với vấn đề này</td>
+    </tr>
+    <tr>
+      <th>A5</th>
+      <td>Cov(Xi, ε) = 0: X ngoại sinh</td>
+      <td>So sánh pooled, FE công ty và biến trễ 1 năm</td>
+      <td>Hệ số TPR (M2): pooled 5.03; FE 1.01; trễ 1 năm 4.90</td>
+      <td>Khó đáp ứng nhất. Hệ số thay đổi mạnh giữa các cách ước lượng cho thấy có nội sinh do bỏ sót biến; FE và biến trễ chỉ giảm bớt, chưa loại bỏ hẳn</td>
+    </tr>
+  </tbody>
+</table></div>
+<div class="read"><b>Ý nghĩa kết quả:</b> Theo bài giảng, ước lượng OLS là BLUE khi thỏa các giả định: <b>không chệch</b> E(α̂) = α cần A1, A2, A5; <b>hiệu quả</b> (phương sai nhỏ nhất) cần A3, A4; <b>vững</b> (α̂ hội tụ về α khi n tăng) cần A5 và là tính chất quan trọng nhất. Trong bài này A3, A4 bị vi phạm nên OLS không còn hiệu quả nhất, nhưng suy luận vẫn dùng được nhờ sai số chuẩn gom cụm. A5 là điểm yếu chính: chưa thể khẳng định tính không chệch và vững, nên các hệ số chỉ được diễn giải là mối liên hệ, không phải tác động nhân quả. Vì vậy bài kiểm tra độ bền bằng ba cách (pooled OLS, FE công ty, biến trễ 1 năm). Theo nguyên tắc không có phương pháp nào tốt nhất, tốt nhất là các phương pháp cùng dẫn đến một kết quả: kết quả nhất quán là TPR có liên hệ dương với ATO và có ý nghĩa ở cả ba cách ước lượng; vai trò điều tiết của thanh khoản thì không vững vì mất ý nghĩa khi thêm hiệu ứng cố định công ty, nên chưa đủ bằng chứng để kết luận.</div></section>
+
+<section class="card"><h2>23. Kết luận</h2><p><b>Dữ liệu:</b> 1,454 doanh nghiệp phi tài chính niêm yết trên HOSE, HNX, UPCoM; 7,015 quan sát giai đoạn 2021–2025; dữ liệu bảng không cân bằng.</p><p><b>Chọn mô hình:</b> kiểm định F và Breusch–Pagan LM đều bác bỏ Pooled OLS; Hausman và bản vững Mundlak đều bác bỏ REM. <b>FEM là mô hình phù hợp</b> để kết luận.</p><p><b>Kết quả chính (FEM, mô hình 1):</b> hệ số TPR = 0.773 (có ý nghĩa thống kê ở mức 5%). Trong cùng một doanh nghiệp, năm có tỷ lệ phải trả người bán cao hơn đi kèm vòng quay tài sản cao hơn. Dấu dương nhất quán ở Pooled OLS, REM, FEM và mô hình biến trễ, nhưng trái với kỳ vọng âm của bài tham khảo. Quy mô có hệ số -0.284 (có ý nghĩa thống kê ở mức 1%): doanh nghiệp tăng quy mô tài sản thì vòng quay giảm.</p><p><b>Vai trò điều tiết của thanh khoản:</b> trong FEM, TLI = 0.146 (không có ý nghĩa thống kê) và TLD = -0.316 (không có ý nghĩa thống kê). Ý nghĩa thống kê của biến tương tác trong Pooled OLS chủ yếu đến từ khác biệt giữa các doanh nghiệp, nên chưa đủ bằng chứng để kết luận thanh khoản điều tiết mối liên hệ.</p><p><b>Giới hạn và hướng mở rộng:</b> R² thấp vì nhiều yếu tố khác ảnh hưởng tới hiệu quả hoạt động; nội sinh do quan hệ ngược chưa được xử lý triệt để (A5). Hướng mở rộng: dùng ROA làm biến phụ thuộc thay thế, biến công cụ (2SLS) như bài gốc, và phân tích riêng nhóm doanh nghiệp sản xuất – thương mại.</p></section>
+<section class="card"><h2>Phụ lục. Đối chiếu yêu cầu bài tập</h2><div class="scroll"><table class="dataframe data text">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Yêu cầu</th>
+      <th>Nội dung</th>
+      <th>Mục báo cáo</th>
+    </tr>
+    <tr>
+      <th>STT</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Chuẩn hóa lại dữ liệu</td>
+      <td>Lọc tuần tự, tỷ lệ/log, Winsor2 p1–p99</td>
+      <td>2, 6–8</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Hoàn thiện mô hình và cách đo biến</td>
+      <td>Bảng Y, X, Z, biến kiểm soát, dummy, tương tác và công thức</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Biến giả 0–1</td>
+      <td>DLI = 1 nếu LIQ ≥ 1; DLI = 0 nếu LIQ &lt; 1</td>
+      <td>3, 16</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>OLS thông thường</td>
+      <td>Mô hình 0: Y ~ X</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>Mô hình cơ sở chưa tương tác</td>
+      <td>Mô hình 1: TPR + LIQ + SIZ + biến giả năm</td>
+      <td>14</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>Mô hình có tương tác</td>
+      <td>Mô hình 2: TPR × LIQ; mô hình 3: TPR × DLI</td>
+      <td>15–18</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>Cơ sở kinh tế cho tương tác</td>
+      <td>Thanh khoản quyết định khả năng chịu áp lực nghĩa vụ với nhà cung cấp</td>
+      <td>1, 3</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>Kiểm tra độ bền</td>
+      <td>Ước lượng lại với hiệu ứng cố định công ty và với biến giải thích trễ 1 năm</td>
+      <td>21</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>Đánh giá mô hình</td>
+      <td>Kỳ vọng dấu, kiểm tra giả định A1–A5, tính chất BLUE</td>
+      <td>22</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>Dữ liệu bảng</td>
+      <td>Số doanh nghiệp, số năm, số quan sát, cân bằng hay không và lý do</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>Pooled OLS, FEM, REM</td>
+      <td>Bảng hồi quy ba cách, kiểm định F, Breusch–Pagan LM, Hausman, Mundlak</td>
+      <td>20</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>Bản chất FEM</td>
+      <td>Within transformation, ví dụ số, vì sao biến bị loại, within = LSDV</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table></div></section>
+
 <section class="card"><h2>Nguồn và tính tái lập</h2><p>Nguồn dữ liệu báo cáo tài chính: <a href="https://stock.quanganh.org/vi/downloads">trang tải dữ liệu cổ phiếu Việt Nam của Quang Anh</a>; nguồn được trang này ghi cho chỉ số cổ phiếu là Vietcap và bổ sung SSI đối với một số chuỗi chỉ số. Bộ dữ liệu kèm theo trong thư mục <code>data_source</code>.</p><p>Bài tham khảo: <a href="https://nckh.tapchicongthuong.vn/j/nckh/articles/3252-the-effects-of-trade-payables-on-the-performance-of-firms-listed-on-the-vietnam-stock-exchange?lang=en-US">The effects of trade payables on the performance of firms listed on the Vietnam Stock Exchange</a>. Tóm tắt bài báo đề cập panel 2011–2022, thanh khoản điều tiết quan hệ và sử dụng OLS, FE, RE, 2SLS. Bài này dùng 2021–2025 để thực hành, vì vậy khác kỳ nghiên cứu gốc.</p></section>
+
 </div>
-<div id="tab-tables" hidden><section class="card gallery"><h3>Bảng 1. Nhóm ngành theo mẫu biểu BCTC trước khi loại</h3><div class="scroll"><table class="dataframe data">
+<div id="tab-tables" hidden><section class="card gallery"><h3>Bảng 1. Đặc điểm dữ liệu bảng</h3><div class="scroll"><table class="dataframe data text">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Giá trị</th>
+    </tr>
+    <tr>
+      <th>Đặc điểm</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Đơn vị chéo (i)</th>
+      <td>Doanh nghiệp phi tài chính niêm yết HOSE, HNX, UPCoM</td>
+    </tr>
+    <tr>
+      <th>Số doanh nghiệp (N)</th>
+      <td>1,454</td>
+    </tr>
+    <tr>
+      <th>Thời gian (t)</th>
+      <td>2021–2025, T = 5 năm</td>
+    </tr>
+    <tr>
+      <th>Số quan sát</th>
+      <td>7,015</td>
+    </tr>
+    <tr>
+      <th>Số quan sát nếu cân bằng (N × T)</th>
+      <td>7,270</td>
+    </tr>
+    <tr>
+      <th>Doanh nghiệp đủ cả 5 năm</th>
+      <td>1,328 (91.3%)</td>
+    </tr>
+    <tr>
+      <th>Số năm trung bình mỗi doanh nghiệp</th>
+      <td>4.82 (nhỏ nhất 1, lớn nhất 5)</td>
+    </tr>
+    <tr>
+      <th>Loại dữ liệu bảng</th>
+      <td>Không cân bằng (unbalanced panel)</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 2. Phân bổ số năm có dữ liệu của mỗi doanh nghiệp</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Số doanh nghiệp</th>
+      <th>Số quan sát</th>
+    </tr>
+    <tr>
+      <th>Số năm có dữ liệu</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5 năm</th>
+      <td>1,328</td>
+      <td>6,640</td>
+    </tr>
+    <tr>
+      <th>4 năm</th>
+      <td>53</td>
+      <td>212</td>
+    </tr>
+    <tr>
+      <th>3 năm</th>
+      <td>35</td>
+      <td>105</td>
+    </tr>
+    <tr>
+      <th>2 năm</th>
+      <td>20</td>
+      <td>40</td>
+    </tr>
+    <tr>
+      <th>1 năm</th>
+      <td>18</td>
+      <td>18</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 3. Nhóm ngành theo mẫu biểu BCTC trước khi loại</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2494,7 +2606,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 2. Luồng chọn mẫu</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 4. Luồng chọn mẫu</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2550,7 +2662,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 3. Phân bổ mẫu phân tích theo ngành ICB cấp 2</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 5. Phân bổ mẫu phân tích theo ngành ICB cấp 2</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2670,7 +2782,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 4. Chú thích tên biến</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 6. Chú thích tên biến</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2795,7 +2907,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 5. Nguồn khoản mục và cách tính biến</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 7. Nguồn khoản mục và cách tính biến</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2871,7 +2983,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 6. Phân bổ biến giả thanh khoản DLI</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 8. Phân bổ biến giả thanh khoản DLI</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2892,7 +3004,121 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 7. Thống kê mô tả trước winsor hóa</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 9. Minh họa within transformation: VNM</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>ATO</th>
+      <th>ATO trung bình công ty</th>
+      <th>ATO − trung bình</th>
+      <th>TPR</th>
+      <th>TPR trung bình công ty</th>
+      <th>TPR − trung bình</th>
+      <th>Ngành (dummy)</th>
+      <th>Ngành − trung bình</th>
+    </tr>
+    <tr>
+      <th>Năm</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2021</th>
+      <td>1.1423</td>
+      <td>1.1682</td>
+      <td>-0.0260</td>
+      <td>0.0790</td>
+      <td>0.0767</td>
+      <td>0.0023</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2022</th>
+      <td>1.2367</td>
+      <td>1.1682</td>
+      <td>0.0684</td>
+      <td>0.0884</td>
+      <td>0.0767</td>
+      <td>0.0116</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2023</th>
+      <td>1.1461</td>
+      <td>1.1682</td>
+      <td>-0.0221</td>
+      <td>0.0723</td>
+      <td>0.0767</td>
+      <td>-0.0045</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2024</th>
+      <td>1.1223</td>
+      <td>1.1682</td>
+      <td>-0.0459</td>
+      <td>0.0704</td>
+      <td>0.0767</td>
+      <td>-0.0063</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>2025</th>
+      <td>1.1938</td>
+      <td>1.1682</td>
+      <td>0.0256</td>
+      <td>0.0736</td>
+      <td>0.0767</td>
+      <td>-0.0031</td>
+      <td>1.0000</td>
+      <td>0.0000</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 10. FEM (within) và LSDV cho cùng hệ số</h3><div class="scroll"><table class="dataframe data">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Within (FEM)</th>
+      <th>LSDV (OLS + biến giả công ty)</th>
+    </tr>
+    <tr>
+      <th>Biến</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>TPR</th>
+      <td>0.7731</td>
+      <td>0.7731</td>
+    </tr>
+    <tr>
+      <th>LIQ</th>
+      <td>-0.0070</td>
+      <td>-0.0070</td>
+    </tr>
+    <tr>
+      <th>SIZ</th>
+      <td>-0.2844</td>
+      <td>-0.2844</td>
+    </tr>
+  </tbody>
+</table></div></section>
+<section class="card gallery"><h3>Bảng 11. Thống kê mô tả trước winsor hóa</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -2958,7 +3184,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 8. Ngưỡng Winsor2 p1–p99</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 12. Ngưỡng Winsor2 p1–p99</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3012,7 +3238,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 9. Thống kê mô tả sau winsor hóa</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 13. Thống kê mô tả sau winsor hóa</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3112,7 +3338,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <polygon points="620,616 629,625 620,634 611,625" fill="#b44c4c"/><text x="638" y="630" font-family="Arial" font-size="13" fill="#263746">Trung bình</text>
 <text x="500.0" y="657" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Mỗi dòng dùng thang đo riêng; không so sánh độ dài giữa các dòng.</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 10. Skewness, Kurtosis, CV và Jarque–Bera</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 14. Skewness, Kurtosis, CV và Jarque–Bera</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3245,7 +3471,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="285" y1="548" x2="330" y2="548" stroke="#245b86" stroke-width="2.2"/><circle cx="307" cy="548" r="5" fill="#245b86"/><text x="340" y="553" font-family="Arial" font-size="14" fill="#263746">Phải trả / tổng tài sản</text>
 <line x1="575" y1="548" x2="620" y2="548" stroke="#b44c4c" stroke-width="2.2"/><polygon points="597,541 604,548 597,555 590,548" fill="#b44c4c"/><text x="630" y="553" font-family="Arial" font-size="14" fill="#263746">Hiệu quả hoạt động</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 11. Ma trận tương quan Pearson</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 15. Ma trận tương quan Pearson</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3555,7 +3781,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <text x="838" y="706.0" font-family="Arial" font-size="12" fill="#202b3c">−1.00</text>
 <text x="460.0" y="796" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Đỏ: tương quan dương · Xanh: tương quan âm · Đường chéo luôn bằng 1</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 12. VIF mô hình 1</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 16. VIF mô hình 1</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3586,7 +3812,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 13. VIF mô hình 2</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 17. VIF mô hình 2</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3622,7 +3848,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 14. VIF mô hình 3</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 18. VIF mô hình 3</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3658,7 +3884,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 15. Mô hình 0: OLS đơn giản ATO ~ TPR</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 19. Mô hình 0: OLS đơn giản ATO ~ TPR</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3691,7 +3917,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 16. Mô hình 1: cơ sở chưa có tương tác</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 20. Mô hình 1: cơ sở chưa có tương tác</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3778,7 +4004,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 17. Mô hình 2: tương tác TPR × LIQ</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 21. Mô hình 2: tương tác TPR × LIQ</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -3874,7 +4100,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 18. Mô hình 3: tương tác TPR × DLI</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 22. Mô hình 3: tương tác TPR × DLI</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -4042,7 +4268,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
 <line x1="550" y1="535" x2="590" y2="535" stroke="#245b86" stroke-width="2.5"/><text x="600" y="540" font-family="Arial" font-size="13" fill="#263746">D=1: tài sản ngắn hạn ≥ nợ ngắn hạn</text>
 <text x="500" y="580" text-anchor="middle" font-family="Arial" font-size="12" fill="#5f6c78">Dự báo OLS tại quy mô trung bình, năm gốc 2021; trục X giới hạn từ p10 đến p90.</text>
 </svg></div></section>
-<section class="card gallery"><h3>Bảng 19. Tóm tắt các mô hình</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 23. Tóm tắt các mô hình</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -4108,94 +4334,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 20. Đặc điểm dữ liệu bảng</h3><div class="scroll"><table class="dataframe data text">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Giá trị</th>
-    </tr>
-    <tr>
-      <th>Đặc điểm</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Đơn vị chéo (i)</th>
-      <td>Doanh nghiệp phi tài chính niêm yết HOSE, HNX, UPCoM</td>
-    </tr>
-    <tr>
-      <th>Số doanh nghiệp (N)</th>
-      <td>1,454</td>
-    </tr>
-    <tr>
-      <th>Thời gian (t)</th>
-      <td>2021–2025, T = 5 năm</td>
-    </tr>
-    <tr>
-      <th>Số quan sát</th>
-      <td>7,015</td>
-    </tr>
-    <tr>
-      <th>Số quan sát nếu cân bằng (N × T)</th>
-      <td>7,270</td>
-    </tr>
-    <tr>
-      <th>Doanh nghiệp đủ cả 5 năm</th>
-      <td>1,328 (91.3%)</td>
-    </tr>
-    <tr>
-      <th>Số năm trung bình mỗi doanh nghiệp</th>
-      <td>4.82 (nhỏ nhất 1, lớn nhất 5)</td>
-    </tr>
-    <tr>
-      <th>Loại dữ liệu bảng</th>
-      <td>Không cân bằng (unbalanced panel)</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card gallery"><h3>Bảng 21. Phân bổ số năm có dữ liệu của mỗi doanh nghiệp</h3><div class="scroll"><table class="dataframe data">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Số doanh nghiệp</th>
-      <th>Số quan sát</th>
-    </tr>
-    <tr>
-      <th>Số năm có dữ liệu</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>5 năm</th>
-      <td>1,328</td>
-      <td>6,640</td>
-    </tr>
-    <tr>
-      <th>4 năm</th>
-      <td>53</td>
-      <td>212</td>
-    </tr>
-    <tr>
-      <th>3 năm</th>
-      <td>35</td>
-      <td>105</td>
-    </tr>
-    <tr>
-      <th>2 năm</th>
-      <td>20</td>
-      <td>40</td>
-    </tr>
-    <tr>
-      <th>1 năm</th>
-      <td>18</td>
-      <td>18</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card gallery"><h3>Bảng 22. So sánh Pooled OLS, FEM và REM</h3><div class="scroll"><table class="dataframe data">
+<section class="card gallery"><h3>Bảng 24. So sánh Pooled OLS, FEM và REM</h3><div class="scroll"><table class="dataframe data">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -4345,7 +4484,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section>
-<section class="card gallery"><h3>Bảng 23. Kiểm định chọn mô hình</h3><div class="scroll"><table class="dataframe data text">
+<section class="card gallery"><h3>Bảng 25. Kiểm định chọn mô hình</h3><div class="scroll"><table class="dataframe data text">
   <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -4402,120 +4541,6 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
       <td>χ²(4) = 101.27; p &lt; 0,0001</td>
       <td>χ²(4) = 62.18; p &lt; 0,0001</td>
       <td>Bác bỏ H0 → chọn FEM</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card gallery"><h3>Bảng 24. Minh họa within transformation: VNM</h3><div class="scroll"><table class="dataframe data">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>ATO</th>
-      <th>ATO trung bình công ty</th>
-      <th>ATO − trung bình</th>
-      <th>TPR</th>
-      <th>TPR trung bình công ty</th>
-      <th>TPR − trung bình</th>
-      <th>Ngành (dummy)</th>
-      <th>Ngành − trung bình</th>
-    </tr>
-    <tr>
-      <th>Năm</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>2021</th>
-      <td>1.1423</td>
-      <td>1.1682</td>
-      <td>-0.0260</td>
-      <td>0.0790</td>
-      <td>0.0767</td>
-      <td>0.0023</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2022</th>
-      <td>1.2367</td>
-      <td>1.1682</td>
-      <td>0.0684</td>
-      <td>0.0884</td>
-      <td>0.0767</td>
-      <td>0.0116</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2023</th>
-      <td>1.1461</td>
-      <td>1.1682</td>
-      <td>-0.0221</td>
-      <td>0.0723</td>
-      <td>0.0767</td>
-      <td>-0.0045</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2024</th>
-      <td>1.1223</td>
-      <td>1.1682</td>
-      <td>-0.0459</td>
-      <td>0.0704</td>
-      <td>0.0767</td>
-      <td>-0.0063</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-    <tr>
-      <th>2025</th>
-      <td>1.1938</td>
-      <td>1.1682</td>
-      <td>0.0256</td>
-      <td>0.0736</td>
-      <td>0.0767</td>
-      <td>-0.0031</td>
-      <td>1.0000</td>
-      <td>0.0000</td>
-    </tr>
-  </tbody>
-</table></div></section>
-<section class="card gallery"><h3>Bảng 25. FEM (within) và LSDV cho cùng hệ số</h3><div class="scroll"><table class="dataframe data">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Within (FEM)</th>
-      <th>LSDV (OLS + biến giả công ty)</th>
-    </tr>
-    <tr>
-      <th>Biến</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>TPR</th>
-      <td>0.7731</td>
-      <td>0.7731</td>
-    </tr>
-    <tr>
-      <th>LIQ</th>
-      <td>-0.0070</td>
-      <td>-0.0070</td>
-    </tr>
-    <tr>
-      <th>SIZ</th>
-      <td>-0.2844</td>
-      <td>-0.2844</td>
     </tr>
   </tbody>
 </table></div></section>
@@ -4742,7 +4767,7 @@ h1,h2{color:#123d64} h1{margin:0 0 6px} h2{margin-top:0} .tag{display:inline-blo
     </tr>
   </tbody>
 </table></div></section></div>
-<div id="tab-models" hidden><section class="card"><h3>Ký hiệu dùng trong các mô hình</h3><table class="data text"><tbody><tr><th>ATO<sub>i,t</sub></th><td>Vòng quay tổng tài sản của công ty i năm t = doanh thu thuần / tổng tài sản (biến phụ thuộc)</td></tr><tr><th>TPRc<sub>i,t</sub></th><td>Tỷ lệ phải trả người bán / tổng tài sản, đã trừ trung bình mẫu (biến độc lập chính)</td></tr><tr><th>LIQc<sub>i,t</sub></th><td>Thanh khoản hiện hành = tài sản ngắn hạn / nợ ngắn hạn, đã trừ trung bình mẫu (biến điều tiết)</td></tr><tr><th>SIZ<sub>i,t</sub></th><td>ln(tổng tài sản, tỷ đồng) (biến kiểm soát)</td></tr><tr><th>DLI<sub>i,t</sub></th><td>Biến giả = 1 nếu LIQ ≥ 1, ngược lại = 0</td></tr><tr><th>δ<sub>t</sub></th><td>Hiệu ứng cố định năm: biến giả từng năm so với năm gốc</td></tr><tr><th>f<sub>i</sub></th><td>Hiệu ứng cố định công ty: hệ số chặn riêng cho từng công ty</td></tr><tr><th>ε<sub>i,t</sub></th><td>Sai số: thông tin có thể giải thích ATO nhưng chưa đưa vào mô hình</td></tr><tr><th>t − 1</th><td>Giá trị của năm trước</td></tr></tbody></table><p class="legend">Mọi biến liên tục đã được winsor hóa p1–p99. i: công ty, t: năm.</p></section><section class="card"><h3>Mô hình 0 — OLS đơn giản</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + ε<sub>i,t</sub></div><p>Mối liên hệ thô giữa tỷ lệ phải trả người bán và hiệu quả hoạt động, chưa có biến kiểm soát.</p><p class="legend">Ước lượng: Pooled OLS, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 12 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1 — Mô hình cơ sở</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Tác động riêng biệt của TPR khi giữ thanh khoản, quy mô và năm không đổi.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 13 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 — Tương tác liên tục</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ dốc TPR–ATO có thay đổi theo mức thanh khoản không. Tác động biên của TPR = α<sub>1</sub> + α<sub>4</sub>·LIQc.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 14, 16 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 3 — Tương tác với biến giả</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>So sánh hai nhóm: DLI = 1 có hệ số chặn mới α<sub>0</sub> + α<sub>2</sub> và độ dốc mới α<sub>1</sub> + α<sub>4</sub>.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 15, 17 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1 FE — Hiệu ứng cố định công ty</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ bền: chỉ dùng biến động trong cùng một công ty qua các năm, loại bỏ đặc điểm không đổi theo thời gian như ngành.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 19 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 FE</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Mô hình 2 có thêm hiệu ứng cố định công ty.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 19 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 3 FE</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Mô hình 3 có thêm hiệu ứng cố định công ty.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 19 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1–3 REM — Hiệu ứng ngẫu nhiên</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + … + δ<sub>t</sub> + (u<sub>i</sub> + ε<sub>i,t</sub>)</div><p>u<sub>i</sub> là hiệu ứng riêng ngẫu nhiên, giả định không tương quan với X. Ước lượng bằng GLS với θ<sub>i</sub> = 1 − √(σ²<sub>ε</sub>/(T<sub>i</sub>σ²<sub>u</sub> + σ²<sub>ε</sub>)). Áp dụng cho cả mô hình 1, 2, 3 (thêm biến tương tác tương ứng).</p><p class="legend">Ước lượng: GLS (Swamy–Arora), sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 21 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 trễ 1 năm</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t−1</sub> + α<sub>2</sub>·LIQc<sub>i,t−1</sub> + α<sub>3</sub>·SIZ<sub>i,t−1</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t−1</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ bền với nội sinh do quan hệ ngược: TPR năm trước không thể bị ATO năm nay tác động.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm (năm gốc 2022), sai số chuẩn gom cụm theo mã. Số quan sát: 5,542. Kết quả ở mục 19, 20 của báo cáo đầy đủ.</p></section><section class="card"><h3>Kiểm tra A1 — Mô hình 1 thêm bình phương TPR</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·TPRc<sup>2</sup><sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra giả định tuyến tính: α<sub>4</sub> có ý nghĩa thống kê nghĩa là quan hệ TPR–ATO cong.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 20 của báo cáo đầy đủ.</p></section><section class="card"><h3>Kiểm tra A4 — Hồi quy phụ Breusch–Pagan</h3><div class="formula">ε̂<sup>2</sup><sub>i,t</sub> = γ<sub>0</sub> + γ<sub>1</sub>·TPRc<sub>i,t</sub> + γ<sub>2</sub>·LIQc<sub>i,t</sub> + γ<sub>3</sub>·SIZ<sub>i,t</sub> + γ<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + v<sub>i,t</sub></div><p>Hồi quy phần dư bình phương của mô hình 2 lên các biến giải thích. LM = n·R² ~ χ²(k); H<sub>0</sub>: phương sai sai số không đổi.</p><p class="legend">Ước lượng: OLS. Số quan sát: 7,015. Kết quả ở mục 20 của báo cáo đầy đủ.</p></section></div>
+<div id="tab-models" hidden><section class="card"><h3>Ký hiệu dùng trong các mô hình</h3><table class="data text"><tbody><tr><th>ATO<sub>i,t</sub></th><td>Vòng quay tổng tài sản của công ty i năm t = doanh thu thuần / tổng tài sản (biến phụ thuộc)</td></tr><tr><th>TPRc<sub>i,t</sub></th><td>Tỷ lệ phải trả người bán / tổng tài sản, đã trừ trung bình mẫu (biến độc lập chính)</td></tr><tr><th>LIQc<sub>i,t</sub></th><td>Thanh khoản hiện hành = tài sản ngắn hạn / nợ ngắn hạn, đã trừ trung bình mẫu (biến điều tiết)</td></tr><tr><th>SIZ<sub>i,t</sub></th><td>ln(tổng tài sản, tỷ đồng) (biến kiểm soát)</td></tr><tr><th>DLI<sub>i,t</sub></th><td>Biến giả = 1 nếu LIQ ≥ 1, ngược lại = 0</td></tr><tr><th>δ<sub>t</sub></th><td>Hiệu ứng cố định năm: biến giả từng năm so với năm gốc</td></tr><tr><th>f<sub>i</sub></th><td>Hiệu ứng cố định công ty: hệ số chặn riêng cho từng công ty</td></tr><tr><th>ε<sub>i,t</sub></th><td>Sai số: thông tin có thể giải thích ATO nhưng chưa đưa vào mô hình</td></tr><tr><th>t − 1</th><td>Giá trị của năm trước</td></tr></tbody></table><p class="legend">Mọi biến liên tục đã được winsor hóa p1–p99. i: công ty, t: năm.</p></section><section class="card"><h3>Mô hình 0 — OLS đơn giản</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + ε<sub>i,t</sub></div><p>Mối liên hệ thô giữa tỷ lệ phải trả người bán và hiệu quả hoạt động, chưa có biến kiểm soát.</p><p class="legend">Ước lượng: Pooled OLS, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 13 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1 — Mô hình cơ sở</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Tác động riêng biệt của TPR khi giữ thanh khoản, quy mô và năm không đổi.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 14 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 — Tương tác liên tục</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ dốc TPR–ATO có thay đổi theo mức thanh khoản không. Tác động biên của TPR = α<sub>1</sub> + α<sub>4</sub>·LIQc.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 15, 17 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 3 — Tương tác với biến giả</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>So sánh hai nhóm: DLI = 1 có hệ số chặn mới α<sub>0</sub> + α<sub>2</sub> và độ dốc mới α<sub>1</sub> + α<sub>4</sub>.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 16, 18 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1 FE — Hiệu ứng cố định công ty</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ bền: chỉ dùng biến động trong cùng một công ty qua các năm, loại bỏ đặc điểm không đổi theo thời gian như ngành.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 20, 21 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 FE</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Mô hình 2 có thêm hiệu ứng cố định công ty.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 20, 21 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 3 FE</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·DLI<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·(TPRc × DLI)<sub>i,t</sub> + δ<sub>t</sub> + f<sub>i</sub> + ε<sub>i,t</sub></div><p>Mô hình 3 có thêm hiệu ứng cố định công ty.</p><p class="legend">Ước lượng: OLS trên dữ liệu biến đổi within, sai số chuẩn gom cụm theo mã. Số quan sát: 6,997. Kết quả ở mục 20, 21 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 1–3 REM — Hiệu ứng ngẫu nhiên</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + … + δ<sub>t</sub> + (u<sub>i</sub> + ε<sub>i,t</sub>)</div><p>u<sub>i</sub> là hiệu ứng riêng ngẫu nhiên, giả định không tương quan với X. Ước lượng bằng GLS với θ<sub>i</sub> = 1 − √(σ²<sub>ε</sub>/(T<sub>i</sub>σ²<sub>u</sub> + σ²<sub>ε</sub>)). Áp dụng cho cả mô hình 1, 2, 3 (thêm biến tương tác tương ứng).</p><p class="legend">Ước lượng: GLS (Swamy–Arora), sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 20 của báo cáo đầy đủ.</p></section><section class="card"><h3>Mô hình 2 trễ 1 năm</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t−1</sub> + α<sub>2</sub>·LIQc<sub>i,t−1</sub> + α<sub>3</sub>·SIZ<sub>i,t−1</sub> + α<sub>4</sub>·(TPRc × LIQc)<sub>i,t−1</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra độ bền với nội sinh do quan hệ ngược: TPR năm trước không thể bị ATO năm nay tác động.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm (năm gốc 2022), sai số chuẩn gom cụm theo mã. Số quan sát: 5,542. Kết quả ở mục 21, 22 của báo cáo đầy đủ.</p></section><section class="card"><h3>Kiểm tra A1 — Mô hình 1 thêm bình phương TPR</h3><div class="formula">ATO<sub>i,t</sub> = α<sub>0</sub> + α<sub>1</sub>·TPRc<sub>i,t</sub> + α<sub>2</sub>·LIQc<sub>i,t</sub> + α<sub>3</sub>·SIZ<sub>i,t</sub> + α<sub>4</sub>·TPRc<sup>2</sup><sub>i,t</sub> + δ<sub>t</sub> + ε<sub>i,t</sub></div><p>Kiểm tra giả định tuyến tính: α<sub>4</sub> có ý nghĩa thống kê nghĩa là quan hệ TPR–ATO cong.</p><p class="legend">Ước lượng: Pooled OLS có hiệu ứng cố định năm, sai số chuẩn gom cụm theo mã. Số quan sát: 7,015. Kết quả ở mục 22 của báo cáo đầy đủ.</p></section><section class="card"><h3>Kiểm tra A4 — Hồi quy phụ Breusch–Pagan</h3><div class="formula">ε̂<sup>2</sup><sub>i,t</sub> = γ<sub>0</sub> + γ<sub>1</sub>·TPRc<sub>i,t</sub> + γ<sub>2</sub>·LIQc<sub>i,t</sub> + γ<sub>3</sub>·SIZ<sub>i,t</sub> + γ<sub>4</sub>·(TPRc × LIQc)<sub>i,t</sub> + δ<sub>t</sub> + v<sub>i,t</sub></div><p>Hồi quy phần dư bình phương của mô hình 2 lên các biến giải thích. LM = n·R² ~ χ²(k); H<sub>0</sub>: phương sai sai số không đổi.</p><p class="legend">Ước lượng: OLS. Số quan sát: 7,015. Kết quả ở mục 22 của báo cáo đầy đủ.</p></section></div>
 <div id="tab-data" hidden>
 <section class="card"><h3>Dữ liệu trước khi lọc (7,525 công ty–năm)</h3>
 <p class="legend">Toàn bộ công ty–năm ghép được từ báo cáo kết quả kinh doanh và bảng cân đối kế toán, FY2021–FY2025. Đơn vị: tỷ đồng. Cột Trạng thái cho biết dòng được giữ lại hay bị loại ở bước lọc nào (xét theo thứ tự các bước ở mục 2).</p>
