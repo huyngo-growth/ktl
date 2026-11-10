@@ -517,6 +517,109 @@ mk('raw');mk('clean');})();
 </script></div>"""
 
 
+STATA_NOTES = {
+"0": ("Stata bản gốc chưa có sẵn một số lệnh mà bài dùng, nên cần tải thêm gói từ kho SSC. Chỉ chạy một lần trên mỗi máy.",
+ [("ssc install winsor2", "Winsor hóa p1–p99 đúng như bài: chặn giá trị cực đoan về ngưỡng, không xóa quan sát."),
+  ("ssc install estout", "Cung cấp eststo và esttab để lưu nhiều mô hình rồi in chúng cạnh nhau thành một bảng, xuất ra Word."),
+  ("ssc install ftools / reghdfe", "reghdfe chạy hồi quy với nhiều hiệu ứng cố định (công ty và năm) cùng lúc và tự loại công ty chỉ có 1 năm; ftools là thư viện nền mà reghdfe cần."),
+  ("ssc install heatplot / palettes / colrspace", "heatplot vẽ heatmap ma trận tương quan; palettes và colrspace cung cấp bảng màu cho heatplot."),
+  (", replace", "Cài đè bản mới nhất nếu máy đã có gói đó.")]),
+"1": ("Đặt thư mục làm việc và đọc dữ liệu gốc vào Stata.",
+ [("cd \"...\"", "Chọn thư mục làm việc: mọi file đọc vào và xuất ra (CSV, PNG, RTF) đều nằm ở đây, không phải gõ đường dẫn dài."),
+  ("import delimited ..., clear", "Đọc file CSV. clear xóa dữ liệu cũ trong bộ nhớ trước khi đọc."),
+  ("encoding(\"utf-8\")", "Đọc đúng chữ tiếng Việt trong tên ngành; thiếu tùy chọn này chữ có dấu sẽ bị lỗi."),
+  ("varnames(1)", "Lấy dòng đầu tiên của file làm tên biến."),
+  ("describe / count", "Xem danh sách biến và đếm số dòng (7.525) để chắc file được đọc đúng; đây cũng là dòng đầu của bảng luồng chọn mẫu.")]),
+"2": ("Tái tạo bảng Luồng chọn mẫu. Mỗi lệnh count đặt sau một bước lọc cho ra đúng một dòng của bảng. Thứ tự lọc giống code Python nên số dòng ở từng bước khớp với báo cáo.",
+ [("tab template", "Đếm quan sát theo mẫu biểu BCTC (bảng Nhóm theo mẫu biểu BCTC trước khi loại)."),
+  ("keep if template == \"nonfin\"", "Chỉ giữ doanh nghiệp phi tài chính: ngân hàng, chứng khoán, bảo hiểm có cấu trúc BCTC và ý nghĩa thanh khoản khác hẳn."),
+  ("drop if missing(...)", "Thiếu một khoản mục thì không tính được biến, nên loại."),
+  ("drop if total_assets <= 0", "Tổng tài sản là mẫu số của ATO và TPR, và ln chỉ xác định khi số dương."),
+  ("drop if revenue <= 0", "Công ty không có doanh thu thì vòng quay tài sản không phản ánh hoạt động."),
+  ("drop if current_liab <= 0", "Nợ ngắn hạn là mẫu số của LIQ."),
+  ("drop if current_assets < 0 | trade_payables < 0", "Số dư âm không có ý nghĩa khi tính tỷ lệ."),
+  ("tab icb2, sort", "Bảng phân bổ mẫu theo ngành ICB cấp 2, sắp xếp từ nhiều đến ít.")]),
+"3": ("Tạo các biến của mô hình và khai báo dữ liệu bảng (công ty × năm).",
+ [("gen ATO / TPR / LIQ", "Tính ba tỷ số đúng công thức trong báo cáo."),
+  ("gen SIZ = ln(total_assets)", "total_assets đã tính bằng tỷ đồng nên khớp với ln(tổng tài sản / 1 tỷ) trong Python. Lấy log để thu hẹp chênh lệch quy mô rất lớn giữa các công ty."),
+  ("gen DLI = (LIQ >= 1)", "Biểu thức logic trả về 1 nếu đúng, 0 nếu sai. Tạo trước winsor để dùng giá trị gốc; ngưỡng 1 không bị winsor ảnh hưởng."),
+  ("label var", "Gắn nhãn tiếng Việt để bảng và biểu đồ dễ đọc."),
+  ("encode ticker, gen(firm)", "Mã cổ phiếu là chữ; Stata cần một biến số làm định danh công ty cho xtset và cho gom cụm."),
+  ("xtset firm year", "Khai báo dữ liệu bảng. Bắt buộc để dùng được toán tử L. (năm trước) ở bước 14."),
+  ("xtdescribe / tab DLI", "Kiểm tra mẫu không cân bằng (bao nhiêu công ty đủ 5 năm) và xem bảng phân bổ DLI.")]),
+"4": ("In bảng thống kê mô tả trước winsor hóa để thấy các giá trị cực đoan.",
+ [("tabstat ..., stat(n mean sd min p25 p50 p75 max skewness)", "Tính đủ các cột Obs, Mean, SD, Min, p25, p50, p75, Max, Skewness như bảng trong báo cáo."),
+  ("columns(statistics)", "Mỗi biến một dòng, mỗi thống kê một cột."),
+  ("format(%10.4f)", "Hiện 4 chữ số thập phân.")]),
+"5": ("Tính ngưỡng p1, p99 và số giá trị bị chặn (bảng Ngưỡng Winsor2), rồi winsor hóa.",
+ [("foreach v in ATO TPR LIQ SIZ { ... }", "Vòng lặp chạy cùng một đoạn lệnh cho cả bốn biến; `v' là tên biến ở mỗi vòng."),
+  ("_pctile `v', p(1 99)", "Tính phân vị 1% và 99%, lưu vào r(r1) và r(r2)."),
+  ("local p1 = r(r1)", "Lưu ngay vào biến tạm (local) vì lệnh count ngay sau sẽ xóa các kết quả r()."),
+  ("count if `v' < `p1'", "Đếm số giá trị dưới p1. Điều kiện !missing() ở vế trên p99 để không đếm ô trống, vì Stata coi giá trị thiếu là vô cùng lớn."),
+  ("winsor2 ..., cuts(1 99) replace", "Thay giá trị dưới p1 bằng p1, trên p99 bằng p99 và ghi đè lên biến gốc. Không xóa dòng nên số quan sát giữ nguyên. Mục đích: giảm ảnh hưởng của giá trị cực đoan lên trung bình, độ lệch chuẩn và OLS.")]),
+"6": ("So sánh thống kê sau winsor với trước winsor và vẽ biểu đồ mô tả.",
+ [("tabstat ...", "Cùng lệnh như bước 4 để so sánh trước và sau."),
+  ("graph hbox", "Biểu đồ hộp ngang: hộp là khoảng p25–p75, vạch giữa là trung vị, râu và chấm là các giá trị xa. Vẽ riêng từng biến vì đơn vị khác nhau."),
+  ("name(g1, replace)", "Đặt tên cho biểu đồ để ghép lại sau đó."),
+  ("graph combine ..., cols(1)", "Ghép bốn biểu đồ thành một hình, xếp dọc."),
+  ("graph export \"...png\", width(1600)", "Lưu thành file PNG đủ nét để chèn vào Word.")]),
+"7": ("Tính Skewness, Kurtosis, CV và kiểm định Jarque–Bera cho từng biến.",
+ [("summarize `v', detail", "Trả về r(skewness), r(kurtosis), r(sd), r(mean), r(N). Stata tính skewness = m3/m2^1.5 và kurtosis = m4/m2² (chuẩn = 3), giống công thức trong báo cáo."),
+  ("local JB = r(N)/6*(S^2 + (K−3)^2/4)", "Tính thống kê Jarque–Bera theo đúng công thức."),
+  ("chi2tail(2, `JB')", "p-value của phân phối χ² với 2 bậc tự do."),
+  ("Vì sao tự tính", "Lệnh có sẵn sktest là một kiểm định khác (D'Agostino), nên muốn có đúng JB như bài giảng thì tính trực tiếp.")]),
+"8": ("Vẽ biểu đồ hai trục: trung bình TPR và ATO theo năm.",
+ [("preserve / restore", "collapse sẽ thay toàn bộ dữ liệu bằng bảng trung bình; preserve lưu tạm dữ liệu gốc, restore khôi phục lại sau khi vẽ."),
+  ("collapse (mean) TPR ATO, by(year)", "Tính trung bình hai biến theo từng năm."),
+  ("replace TPR = TPR * 100", "Đổi TPR sang phần trăm cho dễ đọc."),
+  ("twoway (connected ... yaxis(1)) (connected ... yaxis(2))", "Hai đường trên hai trục tung khác nhau vì hai biến khác đơn vị."),
+  ("///", "Nối dòng lệnh dài sang dòng tiếp theo.")]),
+"9": ("Tạo biến trừ trung bình, biến tương tác và ma trận tương quan.",
+ [("summarize `v', meanonly", "Tính nhanh trung bình và lưu vào r(mean)."),
+  ("gen TPRc = TPR − r(mean)", "Trừ trung bình mẫu (sau winsor, giống Python). Nhờ đó hệ số chính là độ dốc tại mức trung bình, và đa cộng tuyến của biến tích giảm."),
+  ("gen TLI / TLD", "Tạo hai biến tương tác TPRc × LIQc và TPRc × DLI."),
+  ("pwcorr ..., star(.05)", "Ma trận tương quan Pearson; dấu * đánh dấu tương quan có ý nghĩa ở mức 5%."),
+  ("correlate → matrix C = r(C)", "Lấy ma trận tương quan dạng ma trận để heatplot vẽ."),
+  ("heatplot C, values(...) color(hcl diverging)", "Vẽ heatmap có ghi số trong ô; màu xanh là tương quan âm, đỏ là dương.")]),
+"10": ("Tính VIF để kiểm tra đa cộng tuyến (giả định A2).",
+ [("quietly regress", "Chạy hồi quy nhưng ẩn bảng kết quả, vì ở bước này chỉ cần VIF."),
+  ("estat vif", "Tính VIF cho từng biến giải thích của hồi quy vừa chạy. Không đưa biến năm vào, giống báo cáo."),
+  ("Ba lần", "Mỗi lần ứng với một mô hình (cơ sở, tương tác liên tục, tương tác dummy). Theo bài giảng, VIF ≥ 10 là đa cộng tuyến nghiêm trọng.")]),
+"11": ("Ước lượng bốn mô hình OLS gộp và in bảng kết quả.",
+ [("eststo clear / eststo M0:", "Xóa kết quả cũ, rồi lưu kết quả từng mô hình với tên M0, M1… để esttab ghép thành một bảng."),
+  ("vce(cluster firm)", "Sai số chuẩn gom cụm theo công ty: cùng một công ty xuất hiện nhiều năm nên sai số tương quan với nhau (vi phạm A3)."),
+  ("i.year", "Stata tự tạo biến giả năm và bỏ năm đầu (2021) làm năm gốc; đây là δt trong công thức."),
+  ("c.TPRc##c.LIQc", "## tạo cả hai biến chính và biến tích; c. báo biến liên tục, i. báo biến phân loại (như i.DLI). Viết dạng này thay vì đưa TLI vào để lệnh margins hiểu đúng quan hệ tương tác."),
+  ("predict RE2, residuals", "Lưu phần dư của mô hình để kiểm định Jarque–Bera."),
+  ("esttab ..., b(4) se(4) star(...) r2 ar2", "In hệ số và sai số chuẩn 4 chữ số, gắn sao theo mức ý nghĩa 10%, 5%, 1%, kèm R² và R² hiệu chỉnh. Thêm using \"...rtf\" để xuất ra file Word.")]),
+"12": ("Vẽ biểu đồ tương tác kiểu marginsplot, giống hai biểu đồ tương tác trong báo cáo.",
+ [("_pctile / summarize, meanonly", "Tính trước các giá trị cần cố định: khoảng TPR từ p10 đến p90, ba mức LIQ (p25, p50, p75), trung bình SIZ. Tất cả trừ trung bình vì mô hình dùng TPRc và LIQc."),
+  ("local lo / hi / st", "Lưu các con số vào biến tạm; st là bước nhảy để chia khoảng TPR thành 20 đoạn."),
+  ("estimates restore M2", "Gọi lại kết quả mô hình 2, vì sau đó đã chạy mô hình khác."),
+  ("margins, at(TPRc = (...) LIQc = (...) SIZ = ... year = 2021)", "Tính ATO dự báo tại từng tổ hợp giá trị, giữ SIZ ở trung bình và năm gốc 2021 như báo cáo."),
+  ("marginsplot, noci recast(line)", "Vẽ các đường dự báo; noci bỏ khoảng tin cậy cho giống báo cáo (bỏ noci nếu muốn xem khoảng tin cậy)."),
+  ("margins DLI, at(...)", "Tính dự báo riêng cho nhóm DLI = 0 và DLI = 1.")]),
+"13": ("Kiểm tra độ bền bằng hiệu ứng cố định công ty và năm (FE).",
+ [("reghdfe ..., absorb(firm year)", "Hấp thụ hiệu ứng cố định công ty fi và năm δt mà không in ra hàng nghìn hệ số. Chỉ dùng biến động trong cùng một công ty."),
+  ("vce(cluster firm)", "Vẫn gom cụm sai số chuẩn theo công ty."),
+  ("6.997 quan sát", "reghdfe tự loại 18 công ty chỉ có 1 năm (không có biến động trong công ty), nên khớp với Python."),
+  ("xtreg ..., fe", "Cách thay thế không cần reghdfe; hệ số giống nhau.")]),
+"14": ("Kiểm tra độ bền bằng biến giải thích trễ 1 năm, để giảm vấn đề quan hệ ngược ATO → TPR.",
+ [("gen L_TPR = L.TPR", "Lấy giá trị năm trước của cùng công ty (cần xtset ở bước 3). Nếu năm trước bị thiếu thì để trống, đúng yêu cầu năm liền kề."),
+  ("if !missing(L_TPR, L_LIQ, L_SIZ)", "Trừ trung bình chỉ trên các dòng có đủ biến trễ, giống Python."),
+  ("regress ATO c.L_TPRc##c.L_LIQc L_SIZ i.year", "Mô hình 2 với biến trễ; năm gốc tự thành 2022 vì năm 2021 không có năm trước."),
+  ("esttab ..., drop(*.year _cons, relax) mtitles(...)", "Bảng so sánh pooled, FE và biến trễ: ẩn hệ số năm và hằng số; relax để không báo lỗi khi mô hình FE không có hằng số; mtitles đặt tên cột.")]),
+"15": ("Kiểm tra các giả định của OLS.",
+ [("gen TPRc2 = TPRc^2", "A1 – tuyến tính: thêm TPR bình phương; hệ số có ý nghĩa thì quan hệ TPR–ATO cong."),
+  ("estat hettest, rhs iid", "A4 – Breusch–Pagan: rhs dùng tất cả biến vế phải; iid cho dạng n·R² (Koenker), giống báo cáo. H0: phương sai sai số không đổi."),
+  ("regress ... (không vce)", "Hồi quy thường để có thống kê F cổ điển với H0: R² = 0. Khi có vce(cluster), Stata báo F Wald, khác với F trong báo cáo."),
+  ("A2, A3, A5", "Đọc từ VIF và ma trận tương quan (bước 9–10) và từ việc so sánh hệ số TPR giữa pooled, FE và biến trễ (bước 13–14).")]),
+"16": ("Lưu lại dữ liệu sau khi lọc và tạo biến.",
+ [("export delimited ... using \"...csv\"", "Xuất CSV để mở bằng Excel."),
+  ("save \"...dta\"", "Lưu file dữ liệu Stata để lần sau mở nhanh bằng use, không phải đọc và lọc lại.")]),
+}
+
+
 def main() -> None:
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -1186,8 +1289,13 @@ def main() -> None:
                 cur = [line.replace("*====", "").strip(), []]; blocks.append(cur)
             elif cur is not None:
                 cur[1].append(line)
+        def note_html(t):
+            purpose, items = STATA_NOTES.get(t.split(".")[0].strip(), ("", []))
+            rows = "".join(f"<tr><td><code>{xml_escape(c)}</code></td><td>{xml_escape(d)}</td></tr>" for c, d in items)
+            return (f'<div class="read"><b>Bước này làm gì:</b> {xml_escape(purpose)}</div>' if purpose else "") + \
+                   (f'<table class="data text stata-explain"><thead><tr><th>Lệnh</th><th>Chạy gì và vì sao</th></tr></thead><tbody>{rows}</tbody></table>' if rows else "")
         stata_cards = "".join(
-            f'<section class="card"><h3>Bước {xml_escape(t)}</h3><pre class="code stata-code"><code class="language-stata">{xml_escape(chr(10).join(b).strip())}</code></pre></section>'
+            f'<section class="card"><h3>Bước {xml_escape(t)}</h3>{note_html(t)}<p class="legend">Code:</p><pre class="code stata-code"><code class="language-stata">{xml_escape(chr(10).join(b).strip())}</code></pre></section>'
             for t, b in blocks)
     stata_tab_html = (
         '<div id="tab-stata" hidden><section class="card"><h3>Chạy lại toàn bộ bảng và biểu đồ bằng Stata</h3>'
@@ -1225,7 +1333,7 @@ main{{max-width:1180px;margin:28px auto;padding:0 20px 48px}} header,.card{{back
 h1,h2{{color:#123d64}} h1{{margin:0 0 6px}} h2{{margin-top:0}} .tag{{display:inline-block;background:#e9f3ff;color:#145a91;border-radius:999px;padding:4px 11px;font-size:14px}}
 .note{{background:#fff8e6;border-left:4px solid #e6a700;padding:12px 16px}} .data{{border-collapse:collapse;width:100%;font-size:14px;margin:10px 0 18px}}
 .data th,.data td{{border-bottom:1px solid #e6ebf1;padding:8px 10px;text-align:right;white-space:normal;vertical-align:top}} .data th:first-child,.data td:first-child{{text-align:left;white-space:normal}}
-.scroll{{overflow-x:auto}} code{{background:#eef2f7;padding:2px 5px;border-radius:4px}} a{{color:#075ea8}} .formula{{background:#f6f8fb;border:1px solid #e0e7f0;border-radius:10px;padding:14px 18px;margin:12px 0;font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:19px;line-height:1.9;text-align:center;overflow-x:auto}} .formula sub,.formula sup{{font-size:.68em}} .legend{{font-size:14px;color:#4a5a6a}} .data.text td{{text-align:left}} .defs li{{margin:6px 0}} .data td.txt{{text-align:left}} .dt td,.dt th{{white-space:nowrap}} .dt-controls{{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}} .dt-controls input,.dt-controls select{{font:inherit;padding:6px 10px;border:1px solid #c9d6e3;border-radius:8px}} .dl{{margin-left:auto;padding:6px 14px;border:1px solid #123d64;border-radius:999px;text-decoration:none}} .pager{{display:flex;gap:8px;align-items:center;margin-top:8px}} .pager button{{font:inherit;padding:5px 12px;border:1px solid #c9d6e3;background:#fff;border-radius:8px;cursor:pointer}} .pager button:disabled{{opacity:.4;cursor:default}} pre.code{{max-height:75vh;overflow:auto;background:#f6f8fa;border:1px solid #e0e7f0;border-radius:10px;padding:14px;font-size:13px;line-height:1.5;margin:0}} pre.code code{{font-family:Consolas,"Courier New",monospace;background:none;padding:0}} .btn{{font:inherit;padding:6px 14px;border:1px solid #c9d6e3;background:#fff;border-radius:999px;cursor:pointer}} .inline-chart{{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}}
+.scroll{{overflow-x:auto}} code{{background:#eef2f7;padding:2px 5px;border-radius:4px}} a{{color:#075ea8}} .formula{{background:#f6f8fb;border:1px solid #e0e7f0;border-radius:10px;padding:14px 18px;margin:12px 0;font-family:"Cambria Math",Cambria,"Times New Roman",serif;font-size:19px;line-height:1.9;text-align:center;overflow-x:auto}} .formula sub,.formula sup{{font-size:.68em}} .legend{{font-size:14px;color:#4a5a6a}} .data.text td{{text-align:left}} .defs li{{margin:6px 0}} .data td.txt{{text-align:left}} .dt td,.dt th{{white-space:nowrap}} .dt-controls{{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:12px 0}} .dt-controls input,.dt-controls select{{font:inherit;padding:6px 10px;border:1px solid #c9d6e3;border-radius:8px}} .dl{{margin-left:auto;padding:6px 14px;border:1px solid #123d64;border-radius:999px;text-decoration:none}} .pager{{display:flex;gap:8px;align-items:center;margin-top:8px}} .pager button{{font:inherit;padding:5px 12px;border:1px solid #c9d6e3;background:#fff;border-radius:8px;cursor:pointer}} .pager button:disabled{{opacity:.4;cursor:default}} pre.code{{max-height:75vh;overflow:auto;background:#f6f8fa;border:1px solid #e0e7f0;border-radius:10px;padding:14px;font-size:13px;line-height:1.5;margin:0}} pre.code code{{font-family:Consolas,"Courier New",monospace;background:none;padding:0}} .stata-explain td:first-child{{width:34%;white-space:normal}} .stata-explain code{{white-space:normal;word-break:break-word}} .btn{{font:inherit;padding:6px 14px;border:1px solid #c9d6e3;background:#fff;border-radius:999px;cursor:pointer}} .inline-chart{{display:block;width:100%;height:auto;margin:14px auto 6px;border:1px solid #dce3ea;background:#fff}}
 .tabs{{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}} .tabs button{{font:inherit;font-size:15px;padding:8px 18px;border:1px solid #c9d6e3;background:#fff;color:#123d64;border-radius:999px;cursor:pointer}} .tabs button[aria-selected="true"]{{background:#123d64;color:#fff;border-color:#123d64}} .tabs button:focus-visible{{outline:2px solid #e6a700;outline-offset:2px}}
 .read{{background:#eef6f0;border-left:4px solid #3c8d5a;padding:12px 16px;margin:14px 0 4px}} .gallery h3{{margin:0 0 8px;color:#123d64}} [hidden]{{display:none!important}}
 </style></head><body><main>
