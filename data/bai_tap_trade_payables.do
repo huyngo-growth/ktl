@@ -178,7 +178,71 @@ eststo FE3: reghdfe ATO c.TPRc##i.DLI SIZ, absorb(firm year) vce(cluster firm)
 * Cách không cần reghdfe (giữ cả singleton, hệ số giống nhau):
 * xtreg ATO TPRc LIQc SIZ i.year, fe vce(cluster firm)
 
-*==== 14. Kiểm tra độ bền: biến giải thích trễ 1 năm
+*==== 14. Pooled OLS, FEM và REM cho ba mô hình
+* regress = Pooled OLS; xtreg, fe = FEM (within); xtreg, re = REM (GLS). Cả ba gom cụm sai số chuẩn theo công ty.
+eststo POLS1: regress ATO TPRc LIQc SIZ i.year, vce(cluster firm)
+eststo FEM1:  xtreg   ATO TPRc LIQc SIZ i.year, fe vce(cluster firm)
+eststo REM1:  xtreg   ATO TPRc LIQc SIZ i.year, re vce(cluster firm)
+eststo POLS2: regress ATO c.TPRc##c.LIQc SIZ i.year, vce(cluster firm)
+eststo FEM2:  xtreg   ATO c.TPRc##c.LIQc SIZ i.year, fe vce(cluster firm)
+eststo REM2:  xtreg   ATO c.TPRc##c.LIQc SIZ i.year, re vce(cluster firm)
+eststo POLS3: regress ATO c.TPRc##i.DLI SIZ i.year, vce(cluster firm)
+eststo FEM3:  xtreg   ATO c.TPRc##i.DLI SIZ i.year, fe vce(cluster firm)
+eststo REM3:  xtreg   ATO c.TPRc##i.DLI SIZ i.year, re vce(cluster firm)
+esttab POLS1 FEM1 REM1 POLS2 FEM2 REM2 POLS3 FEM3 REM3, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) ///
+    drop(*.year, relax) scalars("r2_w R2 within" "r2_o R2 overall" "sigma_u sigma_u" "sigma_e sigma_e" "rho rho") r2 nogaps ///
+    mtitles("Pooled 1" "FEM 1" "REM 1" "Pooled 2" "FEM 2" "REM 2" "Pooled 3" "FEM 3" "REM 3")
+esttab POLS1 FEM1 REM1 POLS2 FEM2 REM2 POLS3 FEM3 REM3 using "pooled_fem_rem.rtf", replace b(4) se(4) ///
+    star(* 0.10 ** 0.05 *** 0.01) drop(*.year, relax) scalars("r2_w R2 within" "r2_o R2 overall" "rho rho") r2 ///
+    mtitles("Pooled 1" "FEM 1" "REM 1" "Pooled 2" "FEM 2" "REM 2" "Pooled 3" "FEM 3" "REM 3")
+
+*==== 15. Kiểm định chọn mô hình: F, Breusch–Pagan LM, Hausman, Mundlak
+local X1 "TPRc LIQc SIZ"
+local X2 "TPRc LIQc SIZ TLI"
+local X3 "TPRc DLI SIZ TLD"
+forvalues m = 1/3 {
+    display as result _n "===== Mô hình `m' ====="
+    * (a) F test Pooled vs FEM: H0 tất cả u_i = 0
+    quietly xtreg ATO `X`m'' i.year, fe
+    display "F test u_i = 0: F(" e(df_a) ", " e(df_r) ") = " %9.3f e(F_f) "   p = " %9.4g Ftail(e(df_a), e(df_r), e(F_f))
+    estimates store fe`m'
+    * (b) Breusch–Pagan LM Pooled vs REM: H0 Var(u_i) = 0
+    quietly xtreg ATO `X`m'' i.year, re
+    estimates store re`m'
+    xttest0
+    * (c) Hausman FEM vs REM: H0 u_i không tương quan với X (REM phù hợp)
+    hausman fe`m' re`m', sigmamore
+    * (d) Mundlak – bản vững với gom cụm: thêm trung bình theo công ty của các biến X vào REM
+    capture drop mn_*
+    foreach v of local X`m' {
+        bysort firm: egen mn_`v' = mean(`v')
+    }
+    quietly xtreg ATO `X`m'' mn_* i.year, re vce(cluster firm)
+    testparm mn_*
+}
+
+*==== 16. Bản chất FEM: within transformation, LSDV và biến bị loại
+* (a) Within bằng tay: trừ trung bình theo công ty rồi chạy OLS không hằng số
+foreach v in ATO TPRc LIQc SIZ {
+    capture drop w_`v'
+    bysort firm: egen bar_`v' = mean(`v')
+    gen w_`v' = `v' - bar_`v'
+}
+quietly xtreg ATO TPRc LIQc SIZ, fe
+estimates store fe_khongnam
+regress w_ATO w_TPRc w_LIQc w_SIZ, noconstant
+* So sánh: hệ số giống hệt xtreg, fe (sai số chuẩn khác vì OLS tay không trừ bậc tự do của u_i)
+estimates replay fe_khongnam
+* (b) LSDV: OLS với biến giả từng công ty cho cùng hệ số; areg hấp thụ biến giả nên không vượt giới hạn số biến
+areg ATO TPRc LIQc SIZ, absorb(firm)
+* (c) Biến không đổi theo thời gian bị loại khỏi FEM
+encode icb2, gen(nganh)
+xtreg ATO TPRc LIQc SIZ i.year i.nganh, fe
+* Stata báo các biến ngành "omitted because of collinearity": sau within chúng đều bằng 0.
+* (d) Xem minh họa trên một doanh nghiệp
+list ticker year ATO bar_ATO w_ATO TPRc bar_TPRc w_TPRc if ticker == "VNM", clean
+
+*==== 17. Kiểm tra độ bền: biến giải thích trễ 1 năm
 * L. lấy giá trị năm t − 1 của cùng công ty; nếu năm trước bị thiếu thì để trống.
 gen L_TPR = L.TPR
 gen L_LIQ = L.LIQ
@@ -193,7 +257,7 @@ esttab M1 FE1 M2 FE2 M3 FE3 LAG2, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(
     mtitles("M1 Pooled" "M1 FE" "M2 Pooled" "M2 FE" "M3 Pooled" "M3 FE" "M2 trễ 1 năm")
 esttab M1 FE1 M2 FE2 M3 FE3 LAG2 using "so_sanh_pooled_FE.rtf", replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2
 
-*==== 15. Kiểm tra các giả định A1–A5
+*==== 18. Kiểm tra các giả định A1–A5
 * A1 – tuyến tính: thêm TPRc bình phương vào mô hình 1
 gen TPRc2 = TPRc^2
 regress ATO TPRc LIQc SIZ TPRc2 i.year, vce(cluster firm)
@@ -203,8 +267,8 @@ quietly regress ATO TPRc LIQc SIZ TLI i.year
 estat hettest, rhs iid
 * Kiểm định F (H0: R² = 0): hồi quy thường, không gom cụm, để có thống kê F cổ điển
 regress ATO TPRc LIQc SIZ TLI i.year
-* A3, A5: so sánh hệ số TPR giữa M2, FE2 và LAG2 ở bước 14
+* A3, A5: so sánh hệ số TPR giữa M2, FE2 và LAG2 ở bước 17; chọn mô hình ở bước 15
 
-*==== 16. Lưu dữ liệu sau lọc
+*==== 19. Lưu dữ liệu sau lọc
 export delimited ticker year icb2 ATO TPR LIQ SIZ DLI using "du_lieu_sau_loc_stata.csv", replace
 save "du_lieu_sau_loc.dta", replace
