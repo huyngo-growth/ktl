@@ -14,7 +14,7 @@ ssc install colrspace, replace
 * Đặt raw_data.csv cùng thư mục với file .do này, rồi sửa đường dẫn dưới đây cho đúng máy của bạn.
 cd "C:\Users\Admin\Desktop\TradePayables_BaiTap"
 import delimited "raw_data.csv", clear encoding("utf-8") varnames(1)
-* Mỗi dòng là một công ty–năm FY2021–FY2025. Khoản mục tính bằng tỷ đồng; icb2: ngành ICB cấp 2.
+* Mỗi dòng là một công ty–năm FY2021–FY2025; icb2: ngành ICB cấp 2. Các biến đã tính sẵn, chưa winsor.
 describe
 count
 * Kết quả: 7.015 công ty–năm của 1.454 mã.
@@ -22,15 +22,8 @@ count
 *==== 2. Phân bổ mẫu theo ngành (Bảng: Phân bổ mẫu phân tích theo ngành ICB cấp 2)
 tab icb2, sort
 
-*==== 3. Tạo biến và khai báo dữ liệu bảng
-gen ATO = revenue / total_assets
-gen TPR = trade_payables / total_assets
-gen LIQ = current_assets / current_liab
-gen SIZ = ln(total_assets)
-gen LEV = (short_debt + long_debt) / total_assets
-gen CSH = cash / total_assets
-gen ROA = net_income / total_assets
-gen DLI = (LIQ >= 1)
+*==== 3. Gắn nhãn và khai báo dữ liệu bảng
+* Các biến ATO, TPR, LIQ, SIZ, LEV, CSH, ROA, GRW, DLI đã được tính sẵn trong raw_data.csv (chưa winsor).
 label var ATO "Vòng quay tổng tài sản"
 label var TPR "Phải trả người bán / tổng tài sản"
 label var LIQ "Thanh khoản hiện hành"
@@ -39,12 +32,11 @@ label var DLI "Dummy: 1 nếu LIQ >= 1"
 label var LEV "Nợ vay / tổng tài sản"
 label var CSH "Tiền / tổng tài sản"
 label var ROA "Lợi nhuận sau thuế / tổng tài sản"
+label var GRW "Tăng trưởng doanh thu"
 * Biến kiểm soát dùng chung cho mọi mô hình
 global control "SIZ LEV CSH"
 encode ticker, gen(firm)
 xtset firm year
-gen GRW = revenue / L.revenue - 1
-label var GRW "Tăng trưởng doanh thu"
 xtdescribe
 tab DLI
 
