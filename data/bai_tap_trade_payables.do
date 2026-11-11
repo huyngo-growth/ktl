@@ -9,30 +9,17 @@ ssc install heatplot, replace
 ssc install palettes, replace
 ssc install colrspace, replace
 
-*==== 1. Đọc dữ liệu gốc
-* Đặt stata_data.csv cùng thư mục với file .do này, rồi sửa đường dẫn dưới đây cho đúng máy của bạn.
+*==== 1. Đọc dữ liệu đã lọc
+* raw_data.csv đã được lọc sẵn từ dữ liệu gốc (chỉ doanh nghiệp phi tài chính; tổng tài sản, doanh thu, nợ ngắn hạn > 0; không có khoản mục âm hoặc thiếu).
+* Đặt raw_data.csv cùng thư mục với file .do này, rồi sửa đường dẫn dưới đây cho đúng máy của bạn.
 cd "C:\Users\Admin\Desktop\TradePayables_BaiTap"
-import delimited "stata_data.csv", clear encoding("utf-8") varnames(1)
-* Mỗi dòng là một công ty–năm FY2021–FY2025. Khoản mục tính bằng tỷ đồng.
-* template: mẫu biểu BCTC (nonfin = phi tài chính, bank, securities, insurance); icb2: ngành ICB cấp 2.
+import delimited "raw_data.csv", clear encoding("utf-8") varnames(1)
+* Mỗi dòng là một công ty–năm FY2021–FY2025. Khoản mục tính bằng tỷ đồng; icb2: ngành ICB cấp 2.
 describe
 count
+* Kết quả: 7.015 công ty–năm của 1.454 mã.
 
-*==== 2. Lọc mẫu (Bảng: Luồng chọn mẫu; Bảng: Nhóm theo mẫu biểu BCTC)
-tab template
-keep if template == "nonfin"
-count
-drop if missing(revenue, total_assets, current_assets, current_liab, trade_payables)
-count
-drop if total_assets <= 0
-count
-drop if revenue <= 0
-count
-drop if current_liab <= 0
-count
-drop if current_assets < 0 | trade_payables < 0
-count
-* Kết quả cuối: 7.015 công ty–năm của 1.454 mã.
+*==== 2. Phân bổ mẫu theo ngành (Bảng: Phân bổ mẫu phân tích theo ngành ICB cấp 2)
 tab icb2, sort
 
 *==== 3. Tạo biến và khai báo dữ liệu bảng
