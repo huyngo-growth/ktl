@@ -5,10 +5,6 @@ capture ssc install winsor2
 capture ssc install estout
 log using "result.log", replace text
 quietly import delimited "raw_data.csv", clear encoding("utf-8") varnames(1)
-quietly keep if template == "nonfin"
-quietly drop if missing(revenue, total_assets, current_assets, current_liab, trade_payables)
-quietly drop if total_assets <= 0 | revenue <= 0 | current_liab <= 0
-quietly drop if current_assets < 0 | trade_payables < 0
 gen ATO = revenue / total_assets
 gen TPR = trade_payables / total_assets
 gen LIQ = current_assets / current_liab
