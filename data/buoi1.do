@@ -8,12 +8,6 @@ capture ssc install colrspace
 log using "result.log", replace text
 import delimited "raw_data.csv", clear encoding("utf-8") varnames(1)
 count
-gen ATO = revenue / total_assets
-gen TPR = trade_payables / total_assets
-gen LIQ = current_assets / current_liab
-gen SIZ = ln(total_assets)
-gen LEV = (short_debt + long_debt) / total_assets
-gen CSH = cash / total_assets
 label var ATO "Vòng quay tổng tài sản"
 label var TPR "Phải trả người bán / tổng tài sản"
 label var LIQ "Thanh khoản hiện hành"
