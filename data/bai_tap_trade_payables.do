@@ -40,22 +40,32 @@ gen ATO = revenue / total_assets
 gen TPR = trade_payables / total_assets
 gen LIQ = current_assets / current_liab
 gen SIZ = ln(total_assets)
+gen LEV = (short_debt + long_debt) / total_assets
+gen CSH = cash / total_assets
+gen ROA = net_income / total_assets
 gen DLI = (LIQ >= 1)
 label var ATO "Vòng quay tổng tài sản"
 label var TPR "Phải trả người bán / tổng tài sản"
 label var LIQ "Thanh khoản hiện hành"
 label var SIZ "ln(tổng tài sản, tỷ đồng)"
 label var DLI "Dummy: 1 nếu LIQ >= 1"
+label var LEV "Nợ vay / tổng tài sản"
+label var CSH "Tiền / tổng tài sản"
+label var ROA "Lợi nhuận sau thuế / tổng tài sản"
+* Biến kiểm soát dùng chung cho mọi mô hình
+global control "SIZ LEV CSH"
 encode ticker, gen(firm)
 xtset firm year
+gen GRW = revenue / L.revenue - 1
+label var GRW "Tăng trưởng doanh thu"
 xtdescribe
 tab DLI
 
 *==== 4. Thống kê mô tả trước winsor hóa
-tabstat ATO TPR LIQ SIZ, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)
+tabstat ATO TPR LIQ SIZ LEV CSH, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)
 
 *==== 5. Winsor2 p1–p99 (Bảng: Ngưỡng winsor)
-foreach v in ATO TPR LIQ SIZ {
+foreach v in ATO TPR LIQ SIZ LEV CSH {
     _pctile `v', p(1 99)
     local p1 = r(r1)
     local p99 = r(r2)
@@ -64,11 +74,11 @@ foreach v in ATO TPR LIQ SIZ {
     quietly count if `v' > `p99' & !missing(`v')
     display "`v'" _col(6) "p1 = " %9.4f `p1' "   p99 = " %9.4f `p99' "   dưới p1: `nlo'   trên p99: " r(N)
 }
-winsor2 ATO TPR LIQ SIZ, cuts(1 99) replace
+winsor2 ATO TPR LIQ SIZ LEV CSH ROA GRW, cuts(1 99) replace
 * Stata tính phân vị theo định nghĩa hơi khác Python nên ngưỡng có thể lệch ở chữ số thập phân cuối.
 
 *==== 6. Thống kê mô tả sau winsor hóa và biểu đồ mô tả
-tabstat ATO TPR LIQ SIZ, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)
+tabstat ATO TPR LIQ SIZ LEV CSH, stat(n mean sd min p25 p50 p75 max skewness) columns(statistics) format(%10.4f)
 graph hbox ATO, name(g1, replace) title("Vòng quay tổng tài sản", size(medsmall))
 graph hbox TPR, name(g2, replace) title("Phải trả người bán / tài sản", size(medsmall))
 graph hbox LIQ, name(g3, replace) title("Thanh khoản hiện hành", size(medsmall))
@@ -107,19 +117,19 @@ foreach v in TPR LIQ {
 }
 gen TLI = TPRc * LIQc
 gen TLD = TPRc * DLI
-pwcorr ATO TPR LIQ SIZ DLI TLI TLD, star(.05)
-quietly correlate ATO TPR LIQ SIZ DLI TLI TLD
+pwcorr ATO TPR LIQ SIZ LEV CSH DLI TLI TLD, star(.05)
+quietly correlate ATO TPR LIQ SIZ LEV CSH DLI TLI TLD
 matrix C = r(C)
 heatplot C, values(format(%5.3f)) color(hcl diverging, intensity(.6)) legend(off) aspectratio(1) ///
     title("Ma trận hệ số tương quan Pearson") name(tuong_quan, replace)
 graph export "bieu_do_tuong_quan.png", replace width(1600)
 
 *==== 10. VIF cho ba mô hình
-quietly regress ATO TPRc LIQc SIZ
+quietly regress ATO TPRc LIQc $control
 estat vif
-quietly regress ATO TPRc LIQc SIZ TLI
+quietly regress ATO TPRc LIQc $control TLI
 estat vif
-quietly regress ATO TPRc DLI SIZ TLD
+quietly regress ATO TPRc DLI $control TLD
 estat vif
 
 *==== 11. Các mô hình OLS gộp (sai số chuẩn gom cụm theo mã)
@@ -127,10 +137,10 @@ estat vif
 * Stata tính p-value theo phân phối t với (số công ty − 1) bậc tự do nên có thể lệch rất nhỏ so với Python.
 eststo clear
 eststo M0: regress ATO TPRc, vce(cluster firm)
-eststo M1: regress ATO TPRc LIQc SIZ i.year, vce(cluster firm)
-eststo M2: regress ATO c.TPRc##c.LIQc SIZ i.year, vce(cluster firm)
+eststo M1: regress ATO TPRc LIQc $control i.year, vce(cluster firm)
+eststo M2: regress ATO c.TPRc##c.LIQc $control i.year, vce(cluster firm)
 predict RE2, residuals
-eststo M3: regress ATO c.TPRc##i.DLI SIZ i.year, vce(cluster firm)
+eststo M3: regress ATO c.TPRc##i.DLI $control i.year, vce(cluster firm)
 predict RE3, residuals
 esttab M0 M1 M2 M3, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) r2 ar2 nogaps
 esttab M0 M1 M2 M3 using "ket_qua_OLS.rtf", replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) r2 ar2
@@ -157,14 +167,18 @@ local q2 = r(r2) - `mL'
 local q3 = r(r3) - `mL'
 quietly summarize SIZ, meanonly
 local mS = r(mean)
+quietly summarize LEV, meanonly
+local mLEV = r(mean)
+quietly summarize CSH, meanonly
+local mCSH = r(mean)
 estimates restore M2
-margins, at(TPRc = (`lo'(`st')`hi') LIQc = (`q1' `q2' `q3') SIZ = `mS' year = 2021)
+margins, at(TPRc = (`lo'(`st')`hi') LIQc = (`q1' `q2' `q3') SIZ = `mS' LEV = `mLEV' CSH = `mCSH' year = 2021)
 marginsplot, noci recast(line) title("Tác động tương tác: phải trả người bán × thanh khoản") ///
     xtitle("Phải trả người bán / tổng tài sản (đã trừ trung bình)") ytitle("Vòng quay tổng tài sản dự báo") ///
     legend(order(1 "Thanh khoản thấp (p25)" 2 "Thanh khoản trung vị (p50)" 3 "Thanh khoản cao (p75)")) name(tuong_tac, replace)
 graph export "bieu_do_tuong_tac.png", replace width(1600)
 estimates restore M3
-margins DLI, at(TPRc = (`lo'(`st')`hi') SIZ = `mS' year = 2021)
+margins DLI, at(TPRc = (`lo'(`st')`hi') SIZ = `mS' LEV = `mLEV' CSH = `mCSH' year = 2021)
 marginsplot, noci recast(line) title("Tương tác với biến giả thanh khoản 0–1") ///
     xtitle("Phải trả người bán / tổng tài sản (đã trừ trung bình)") ytitle("Vòng quay tổng tài sản dự báo") ///
     legend(order(1 "DLI = 0: TSNH < nợ ngắn hạn" 2 "DLI = 1: TSNH ≥ nợ ngắn hạn")) name(tuong_tac_dummy, replace)
@@ -172,23 +186,23 @@ graph export "bieu_do_tuong_tac_dummy.png", replace width(1600)
 
 *==== 13. Kiểm tra độ bền: hiệu ứng cố định công ty và năm (FE)
 * reghdfe tự loại công ty chỉ có 1 năm (singleton) nên còn 6.997 quan sát, giống Python.
-eststo FE1: reghdfe ATO TPRc LIQc SIZ, absorb(firm year) vce(cluster firm)
-eststo FE2: reghdfe ATO c.TPRc##c.LIQc SIZ, absorb(firm year) vce(cluster firm)
-eststo FE3: reghdfe ATO c.TPRc##i.DLI SIZ, absorb(firm year) vce(cluster firm)
+eststo FE1: reghdfe ATO TPRc LIQc $control, absorb(firm year) vce(cluster firm)
+eststo FE2: reghdfe ATO c.TPRc##c.LIQc $control, absorb(firm year) vce(cluster firm)
+eststo FE3: reghdfe ATO c.TPRc##i.DLI $control, absorb(firm year) vce(cluster firm)
 * Cách không cần reghdfe (giữ cả singleton, hệ số giống nhau):
 * xtreg ATO TPRc LIQc SIZ i.year, fe vce(cluster firm)
 
 *==== 14. Pooled OLS, FEM và REM cho ba mô hình
 * regress = Pooled OLS; xtreg, fe = FEM (within); xtreg, re = REM (GLS). Cả ba gom cụm sai số chuẩn theo công ty.
-eststo POLS1: regress ATO TPRc LIQc SIZ i.year, vce(cluster firm)
-eststo FEM1:  xtreg   ATO TPRc LIQc SIZ i.year, fe vce(cluster firm)
-eststo REM1:  xtreg   ATO TPRc LIQc SIZ i.year, re vce(cluster firm)
-eststo POLS2: regress ATO c.TPRc##c.LIQc SIZ i.year, vce(cluster firm)
-eststo FEM2:  xtreg   ATO c.TPRc##c.LIQc SIZ i.year, fe vce(cluster firm)
-eststo REM2:  xtreg   ATO c.TPRc##c.LIQc SIZ i.year, re vce(cluster firm)
-eststo POLS3: regress ATO c.TPRc##i.DLI SIZ i.year, vce(cluster firm)
-eststo FEM3:  xtreg   ATO c.TPRc##i.DLI SIZ i.year, fe vce(cluster firm)
-eststo REM3:  xtreg   ATO c.TPRc##i.DLI SIZ i.year, re vce(cluster firm)
+eststo POLS1: regress ATO TPRc LIQc $control i.year, vce(cluster firm)
+eststo FEM1:  xtreg   ATO TPRc LIQc $control i.year, fe vce(cluster firm)
+eststo REM1:  xtreg   ATO TPRc LIQc $control i.year, re vce(cluster firm)
+eststo POLS2: regress ATO c.TPRc##c.LIQc $control i.year, vce(cluster firm)
+eststo FEM2:  xtreg   ATO c.TPRc##c.LIQc $control i.year, fe vce(cluster firm)
+eststo REM2:  xtreg   ATO c.TPRc##c.LIQc $control i.year, re vce(cluster firm)
+eststo POLS3: regress ATO c.TPRc##i.DLI $control i.year, vce(cluster firm)
+eststo FEM3:  xtreg   ATO c.TPRc##i.DLI $control i.year, fe vce(cluster firm)
+eststo REM3:  xtreg   ATO c.TPRc##i.DLI $control i.year, re vce(cluster firm)
 esttab POLS1 FEM1 REM1 POLS2 FEM2 REM2 POLS3 FEM3 REM3, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) ///
     drop(*.year, relax) scalars("r2_w R2 within" "r2_o R2 overall" "sigma_u sigma_u" "sigma_e sigma_e" "rho rho") r2 nogaps ///
     mtitles("Pooled 1" "FEM 1" "REM 1" "Pooled 2" "FEM 2" "REM 2" "Pooled 3" "FEM 3" "REM 3")
@@ -196,10 +210,32 @@ esttab POLS1 FEM1 REM1 POLS2 FEM2 REM2 POLS3 FEM3 REM3 using "pooled_fem_rem.rtf
     star(* 0.10 ** 0.05 *** 0.01) drop(*.year, relax) scalars("r2_w R2 within" "r2_o R2 overall" "rho rho") r2 ///
     mtitles("Pooled 1" "FEM 1" "REM 1" "Pooled 2" "FEM 2" "REM 2" "Pooled 3" "FEM 3" "REM 3")
 
+* Kiểm định tổ hợp hệ số (lincom)
+* (a) Mô hình 3: độ dốc của TPR ở nhóm DLI = 1 là α1 + α4
+foreach m in POLS3 FEM3 REM3 {
+    estimates restore `m'
+    display as result "`m': độ dốc TPR khi DLI = 1"
+    lincom TPRc + 1.DLI#c.TPRc
+}
+* (b) Mô hình 2: tác động biên của TPR tại LIQ p25, p50, p75 là α1 + α4 × (LIQ − trung bình)
+quietly summarize LIQ, meanonly
+local mL = r(mean)
+_pctile LIQ, p(25 50 75)
+local c1 = r(r1) - `mL'
+local c2 = r(r2) - `mL'
+local c3 = r(r3) - `mL'
+foreach m in POLS2 FEM2 REM2 {
+    estimates restore `m'
+    foreach k in 1 2 3 {
+        display as result "`m': tác động biên của TPR tại mức LIQ thứ `k'"
+        lincom TPRc + `c`k''*c.TPRc#c.LIQc
+    }
+}
+
 *==== 15. Kiểm định chọn mô hình: F, Breusch–Pagan LM, Hausman, Mundlak
-local X1 "TPRc LIQc SIZ"
-local X2 "TPRc LIQc SIZ TLI"
-local X3 "TPRc DLI SIZ TLD"
+local X1 "TPRc LIQc $control"
+local X2 "TPRc LIQc $control TLI"
+local X3 "TPRc DLI $control TLD"
 forvalues m = 1/3 {
     display as result _n "===== Mô hình `m' ====="
     * (a) F test Pooled vs FEM: H0 tất cả u_i = 0
@@ -223,21 +259,21 @@ forvalues m = 1/3 {
 
 *==== 16. Bản chất FEM: within transformation, LSDV và biến bị loại
 * (a) Within bằng tay: trừ trung bình theo công ty rồi chạy OLS không hằng số
-foreach v in ATO TPRc LIQc SIZ {
+foreach v in ATO TPRc LIQc SIZ LEV CSH {
     capture drop w_`v' bar_`v'
     bysort firm: egen bar_`v' = mean(`v')
     gen w_`v' = `v' - bar_`v'
 }
-quietly xtreg ATO TPRc LIQc SIZ, fe
+quietly xtreg ATO TPRc LIQc $control, fe
 estimates store fe_khongnam
-regress w_ATO w_TPRc w_LIQc w_SIZ, noconstant
+regress w_ATO w_TPRc w_LIQc w_SIZ w_LEV w_CSH, noconstant
 * So sánh: hệ số giống hệt xtreg, fe (sai số chuẩn khác vì OLS tay không trừ bậc tự do của u_i)
 estimates replay fe_khongnam
 * (b) LSDV: OLS với biến giả từng công ty cho cùng hệ số; areg hấp thụ biến giả nên không vượt giới hạn số biến
-areg ATO TPRc LIQc SIZ, absorb(firm)
+areg ATO TPRc LIQc $control, absorb(firm)
 * (c) Biến không đổi theo thời gian bị loại khỏi FEM
 encode icb2, gen(nganh)
-xtreg ATO TPRc LIQc SIZ i.year i.nganh, fe
+xtreg ATO TPRc LIQc $control i.year i.nganh, fe
 * Stata báo các biến ngành "omitted because of collinearity": sau within chúng đều bằng 0.
 * (d) Xem minh họa trên một doanh nghiệp
 list ticker year ATO bar_ATO w_ATO TPRc bar_TPRc w_TPRc if ticker == "VNM", clean
@@ -247,28 +283,44 @@ list ticker year ATO bar_ATO w_ATO TPRc bar_TPRc w_TPRc if ticker == "VNM", clea
 gen L_TPR = L.TPR
 gen L_LIQ = L.LIQ
 gen L_SIZ = L.SIZ
+gen L_LEV = L.LEV
+gen L_CSH = L.CSH
 foreach v in TPR LIQ {
-    quietly summarize L_`v' if !missing(L_TPR, L_LIQ, L_SIZ), meanonly
-    gen L_`v'c = L_`v' - r(mean) if !missing(L_TPR, L_LIQ, L_SIZ)
+    quietly summarize L_`v' if !missing(L_TPR, L_LIQ, L_SIZ, L_LEV, L_CSH), meanonly
+    gen L_`v'c = L_`v' - r(mean) if !missing(L_TPR, L_LIQ, L_SIZ, L_LEV, L_CSH)
 }
-eststo LAG2: regress ATO c.L_TPRc##c.L_LIQc L_SIZ i.year, vce(cluster firm)
+eststo LAG2: regress ATO c.L_TPRc##c.L_LIQc L_SIZ L_LEV L_CSH i.year, vce(cluster firm)
 * Bảng so sánh pooled, FE và biến trễ
 esttab M1 FE1 M2 FE2 M3 FE3 LAG2, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2 nogaps ///
     mtitles("M1 Pooled" "M1 FE" "M2 Pooled" "M2 FE" "M3 Pooled" "M3 FE" "M2 trễ 1 năm")
 esttab M1 FE1 M2 FE2 M3 FE3 LAG2 using "so_sanh_pooled_FE.rtf", replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2
 
+* Biến phụ thuộc thay thế: ROA = lợi nhuận sau thuế / tổng tài sản
+eststo ROAP1: regress ROA TPRc LIQc $control i.year, vce(cluster firm)
+eststo ROAF1: xtreg ROA TPRc LIQc $control i.year, fe vce(cluster firm)
+eststo ROAF2: xtreg ROA c.TPRc##c.LIQc $control i.year, fe vce(cluster firm)
+eststo ROAF3: xtreg ROA c.TPRc##i.DLI $control i.year, fe vce(cluster firm)
+* Thêm tăng trưởng doanh thu GRW (mất năm 2021). Cột SUB chạy cùng mẫu nhưng chưa có GRW để tách tác động của mẫu và của GRW.
+eststo SUB1:  xtreg ATO TPRc LIQc $control i.year if !missing(GRW), fe vce(cluster firm)
+eststo GRWF1: xtreg ATO TPRc LIQc $control GRW i.year, fe vce(cluster firm)
+eststo GRWF2: xtreg ATO c.TPRc##c.LIQc $control GRW i.year, fe vce(cluster firm)
+eststo GRWF3: xtreg ATO c.TPRc##i.DLI $control GRW i.year, fe vce(cluster firm)
+esttab ROAP1 ROAF1 ROAF2 ROAF3 SUB1 GRWF1 GRWF2 GRWF3, b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2 nogaps ///
+    mtitles("ROA Pooled 1" "ROA FEM 1" "ROA FEM 2" "ROA FEM 3" "2022-25 FEM 1" "GRW FEM 1" "GRW FEM 2" "GRW FEM 3")
+esttab ROAP1 ROAF1 ROAF2 ROAF3 SUB1 GRWF1 GRWF2 GRWF3 using "kiem_tra_do_ben_mo_rong.rtf", replace b(4) se(4) star(* 0.10 ** 0.05 *** 0.01) drop(*.year _cons, relax) r2
+
 *==== 18. Kiểm tra các giả định A1–A5
 * A1 – tuyến tính: thêm TPRc bình phương vào mô hình 1
 gen TPRc2 = TPRc^2
-regress ATO TPRc LIQc SIZ TPRc2 i.year, vce(cluster firm)
+regress ATO TPRc LIQc $control TPRc2 i.year, vce(cluster firm)
 * A2 – đa cộng tuyến: xem VIF ở bước 10 và ma trận tương quan ở bước 9 (|Corr| >= 0,8 hoặc VIF >= 10)
 * A4 – phương sai sai số: Breusch–Pagan dạng n·R² cho mô hình 2 (H0: phương sai không đổi)
-quietly regress ATO TPRc LIQc SIZ TLI i.year
+quietly regress ATO TPRc LIQc $control TLI i.year
 estat hettest, rhs iid
 * Kiểm định F (H0: R² = 0): hồi quy thường, không gom cụm, để có thống kê F cổ điển
-regress ATO TPRc LIQc SIZ TLI i.year
+regress ATO TPRc LIQc $control TLI i.year
 * A3, A5: so sánh hệ số TPR giữa M2, FE2 và LAG2 ở bước 17; chọn mô hình ở bước 15
 
 *==== 19. Lưu dữ liệu sau lọc
-export delimited ticker year icb2 ATO TPR LIQ SIZ DLI using "du_lieu_sau_loc_stata.csv", replace
+export delimited ticker year icb2 ATO TPR LIQ SIZ LEV CSH ROA GRW DLI using "du_lieu_sau_loc_stata.csv", replace
 save "du_lieu_sau_loc.dta", replace
